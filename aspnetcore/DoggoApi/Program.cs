@@ -37,14 +37,12 @@ builder.Services.AddAutoMapper(typeof(DoggoMappings));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doggos API V1");
-    });
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doggos API V1");
+});
+app.SeedData();
 
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();

@@ -7,10 +7,7 @@ namespace DoggoApi.Services
     {
         public void Initialize(DoggoDbContext context)
         {
-            //context.FoodItems.Add(new FoodEntity() { Calories = 1000, Type = "Starter", Name = "Lasagne", Created = DateTime.Now });
-            //context.FoodItems.Add(new FoodEntity() { Calories = 1100, Type = "Main", Name = "Hamburger", Created = DateTime.Now });
-            //context.FoodItems.Add(new FoodEntity() { Calories = 1200, Type = "Dessert", Name = "Spaghetti", Created = DateTime.Now });
-            //context.FoodItems.Add(new FoodEntity() { Calories = 1300, Type = "Starter", Name = "Pizza", Created = DateTime.Now });
+            context.Doggos.Add(new DoggoEntity() { ImageUrl = "some-image-url", Breed = "Golden Retriever", Comment = "Comment", Id = "some-id", Name = "Winston", RatingCount = 1, RatingSum = 5, Created = DateTime.Now });
 
             context.SaveChanges();
         }

@@ -1,0 +1,59 @@
+<div
+  class="px-4 my-5 text-center border-bottom"
+  *ngIf="currentDoggo as doggo"
+  [@fade]="status"
+>
+  <h1 class="display-4 fw-bold">{{ doggo.name }}</h1>
+  <div class="col-lg-6 mx-auto">
+    <p class="lead mb-4">{{ doggo.breed }}. {{ doggo.comment }}</p>
+  </div>
+
+  <div class="d-grid gap-2 d-sm-flex justify-content-center mb-3">
+    <div class="btn-group" role="group">
+      <div (click)="rateDoggo(1)" [ngClass]="{ checked: averageRating > 0 }">
+        <i class="fa fa-paw fa-xl"></i>
+      </div>
+
+      <div (click)="rateDoggo(2)" [ngClass]="{ checked: averageRating > 1 }">
+        <i class="fa fa-paw fa-xl"></i>
+      </div>
+
+      <div (click)="rateDoggo(3)" [ngClass]="{ checked: averageRating > 2 }">
+        <i class="fa fa-paw fa-xl"></i>
+      </div>
+
+      <div (click)="rateDoggo(4)" [ngClass]="{ checked: averageRating > 3 }">
+        <i class="fa fa-paw fa-xl"></i>
+      </div>
+
+      <div (click)="rateDoggo(5)" [ngClass]="{ checked: averageRating > 4 }">
+        <i class="fa fa-paw fa-xl"></i>
+      </div>
+    </div>
+  </div>
+
+  <h3 *ngIf="averageRating > 0">{{ averageRating | number: "1.2-2" }} / 5</h3>
+
+  <div class="d-grid gap-2 d-sm-flex justify-content-center mb-5">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-sm px-4"
+      (click)="skipDoggo()"
+    >
+      Skip
+    </button>
+  </div>
+
+  <div class="overflow-hidden">
+    <div class="container px-5">
+      <img
+        [src]="doggo.imageUrl"
+        class="img-fluid border rounded-3 mb-4"
+        alt="Example image"
+        width="700"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+import {
+  getAllDoggos,
+  getAllDoggosButSelected,
+  getSelectedDoggo,
+} from './../../store/doggos.selectors';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Doggo } from '../../models/doggo';
+import { DoggosActions } from '../../store/doggos.actions';
+import { Observable } from 'rxjs';
+
+@Component({
+  selector: 'app-main-doggo',
+  templateUrl: './main-doggo.component.html',
+  styleUrls: ['./main-doggo.component.css'],
+})
+export class MainDoggoComponent implements OnInit {
+  doggos$: Observable<Doggo[]>;
+
+  selectedDoggo$: Observable<Doggo | null>;
+
+  constructor(private store: Store) {
+    this.doggos$ = this.store.pipe(select(getAllDoggosButSelected));
+    this.selectedDoggo$ = this.store.pipe(select(getSelectedDoggo));
+  }
+
+  ngOnInit(): void {
+    this.store.dispatch(DoggosActions.loadDoggos());
+  }
+
+  rateDoggo(rating: number) {
+    this.store.dispatch(DoggosActions.rateDoggo({ rating }));
+    this.store.dispatch(DoggosActions.selectNextDoggo());
+  }
+
+  skipDoggo() {
+    this.store.dispatch(DoggosActions.selectNextDoggo());
+  }
+
+  selectDoggo(id: string) {
+    this.store.dispatch(DoggosActions.selectDoggo({ id }));
+  }
+}

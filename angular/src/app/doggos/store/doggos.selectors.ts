@@ -1,0 +1,39 @@
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { Doggo } from '../models/doggo';
+import { featureName, DoggoState } from './doggos.state';
+
+const getDoggoState = createFeatureSelector<DoggoState>(featureName);
+
+export const getAllDoggos = createSelector(
+  getDoggoState,
+  (state: DoggoState) => state.doggos
+);
+
+export const getSelectedDoggo = createSelector(
+  getDoggoState,
+  (state: DoggoState) => state.selectedDoggo
+);
+
+export const getSelectedDoggoIndex = createSelector(
+  getAllDoggos,
+  getSelectedDoggo,
+  (allDoggos: Doggo[], selectedDoggo: Doggo) => {
+    return allDoggos.findIndex((doggo) => doggo.id === selectedDoggo.id);
+  }
+);
+
+export const getAllDoggosButSelected = createSelector(
+  getAllDoggos,
+  getSelectedDoggo,
+  (allDoggos: Doggo[], selectedDoggo: Doggo) => {
+    if (allDoggos.length === 0) {
+      return [];
+    }
+
+    if (!selectedDoggo) {
+      return allDoggos;
+    }
+
+    return allDoggos.filter((doggo) => doggo.id !== selectedDoggo.id);
+  }
+);

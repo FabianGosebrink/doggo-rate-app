@@ -11,5 +11,13 @@ namespace DoggoApi.Repositories
         }
 
         public DbSet<DoggoEntity> Doggos { get; set; } = null!;
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<DoggoEntity>().HasKey(m => m.Id);
+
+            base.OnModelCreating(builder);
+        }
     }
 }

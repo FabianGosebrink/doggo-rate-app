@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-var connectionString = builder.Configuration.GetConnectionString("Doggos") ?? "Data Source=doggos.db";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=doggos.db";
 builder.Services.AddSqlite<DoggoDbContext>(connectionString);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

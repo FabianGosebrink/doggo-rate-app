@@ -14,7 +14,7 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.addDoggo, (state) => {
+  on(DoggosActions.addDoggo, DoggosActions.loadDoggos, (state) => {
     return {
       ...state,
       loading: true,

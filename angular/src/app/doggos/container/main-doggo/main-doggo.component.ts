@@ -1,5 +1,6 @@
 import {
   getAllDoggosButSelected,
+  getLoading,
   getSelectedDoggo,
 } from './../../store/doggos.selectors';
 import { Component, OnInit } from '@angular/core';
@@ -15,12 +16,13 @@ import { Observable } from 'rxjs';
 })
 export class MainDoggoComponent implements OnInit {
   doggos$: Observable<Doggo[]>;
-
   selectedDoggo$: Observable<Doggo | null>;
+  loading$: Observable<boolean>;
 
   constructor(private store: Store) {
     this.doggos$ = this.store.pipe(select(getAllDoggosButSelected));
     this.selectedDoggo$ = this.store.pipe(select(getSelectedDoggo));
+    this.loading$ = this.store.pipe(select(getLoading));
   }
 
   ngOnInit(): void {

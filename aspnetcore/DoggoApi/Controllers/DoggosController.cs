@@ -13,13 +13,23 @@ namespace DoggoApi.Controllers
     {
         private readonly IDoggoRepository _repository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
         public DoggosController(
             IDoggoRepository doggoRepository,
-            IMapper mapper)
+            IMapper mapper,
+            IConfiguration configuration)
         {
             _repository = doggoRepository;
             _mapper = mapper;
+            _configuration = configuration;
+        }
+
+        [HttpGet]
+        [Route("value")]
+        public ActionResult GetTestValue()
+        {
+            return Ok(_configuration.GetValue<string>("TestName"));
         }
 
         [HttpGet(Name = nameof(GetAllDoggos))]

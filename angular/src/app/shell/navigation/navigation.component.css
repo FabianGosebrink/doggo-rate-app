@@ -1,0 +1,4 @@
+.active {
+  text-decoration: underline var(--bs-gray-500);
+  text-underline-offset: 5px;
+}

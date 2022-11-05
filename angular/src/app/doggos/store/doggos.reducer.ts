@@ -1,4 +1,4 @@
-import { createReducer, on, Action } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { DoggosActions } from './doggos.actions';
 import { DoggoState, initialState } from './doggos.state';
 
@@ -14,7 +14,7 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.addDoggo, DoggosActions.loadDoggos, (state) => {
+  on(DoggosActions.addDoggoWithPicture, DoggosActions.loadDoggos, (state) => {
     return {
       ...state,
       loading: true,

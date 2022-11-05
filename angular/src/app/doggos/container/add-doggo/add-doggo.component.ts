@@ -20,17 +20,33 @@ export class AddDoggoComponent implements OnInit {
 
   lastAddedDoggo$: Observable<Doggo>;
 
+  filename = '';
+
   constructor(private fb: FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
     this.lastAddedDoggo$ = this.store.pipe(select(getLastAddedDoggo));
   }
 
-  addDoggo() {
+  setFilename(files) {
+    if (files[0]) {
+      this.filename = files[0].name;
+    }
+  }
+
+  addDoggo(files) {
     if (this.formGroup.valid) {
+      const formData = new FormData();
+
+      if (files[0]) {
+        formData.append(files[0].name, files[0]);
+      }
+
       const { name, comment, breed } = this.formGroup.value;
 
-      this.store.dispatch(DoggosActions.addDoggo({ name, comment, breed }));
+      this.store.dispatch(
+        DoggosActions.addDoggoWithPicture({ name, comment, breed, formData })
+      );
     }
   }
 }

@@ -1,8 +1,9 @@
+import { UploadService } from './../services/upload.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { concatMap } from 'rxjs';
+import { concatMap, EMPTY } from 'rxjs';
 import { map, tap } from 'rxjs';
 import { selectQueryParams } from '../../router.selectors';
 import { Doggo } from '../models/doggo';
@@ -13,6 +14,7 @@ import {
   getSelectedDoggo,
   getNextDoggoIndex,
 } from './doggos.selectors';
+import { EmptyExpr } from '@angular/compiler';
 
 @Injectable()
 export class DoggosEffects {
@@ -94,11 +96,18 @@ export class DoggosEffects {
     )
   );
 
-  addDoggo$ = createEffect(() =>
+  addDoggoPicture$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(DoggosActions.addDoggo),
-      concatMap(({ name, breed, comment }) => {
-        return this.doggosService.addDoggo(name, breed, comment).pipe(
+      ofType(DoggosActions.addDoggoWithPicture),
+      concatMap(({ name, breed, comment, formData }) => {
+        return this.uploadService.upload(formData).pipe(
+          map(({ path }) => {
+            return { name, breed, comment, path };
+          })
+        );
+      }),
+      concatMap(({ name, breed, comment, path }) => {
+        return this.doggosService.addDoggo(name, breed, comment, path).pipe(
           map((doggo) => {
             return DoggosActions.addDoggoFinished({ doggo });
           })
@@ -125,6 +134,7 @@ export class DoggosEffects {
     private store: Store,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private doggosService: DoggosService
+    private doggosService: DoggosService,
+    private uploadService: UploadService
   ) {}
 }

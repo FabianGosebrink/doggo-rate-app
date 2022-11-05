@@ -10,8 +10,15 @@ export const DoggosActions = createActionGroup({
     'Rate Doggo Finished': props<{ doggo: Doggo }>(),
     'Select Next Doggo': emptyProps(),
     'Select Doggo': props<{ id: string }>(),
-    'Add Doggo': props<{ name: string; breed: string; comment: string }>(),
+
+    'Add Doggo With Picture': props<{
+      name: string;
+      breed: string;
+      comment: string;
+      formData: FormData;
+    }>(),
     'Add Doggo Finished': props<{ doggo: Doggo }>(),
+
     'Navigate To Last Added Doggo': props<{ id: string }>(),
     'Delete Doggo': props<{ doggo: Doggo }>(),
     'Delete Doggo Finished': props<{ doggo: Doggo }>(),

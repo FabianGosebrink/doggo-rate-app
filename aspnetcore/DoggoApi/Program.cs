@@ -1,7 +1,9 @@
+using Azure.Storage.Blobs;
 using DoggoApi.Helpers;
 using DoggoApi.MappingProfiles;
 using DoggoApi.Repositories;
 using DoggoApi.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,8 +32,10 @@ builder.Services.AddCustomCors("AllowAllOrigins");
 
 builder.Services.AddSingleton<ISeedDataService, SeedDataService>();
 builder.Services.AddScoped<IDoggoRepository, DoggoSqlRepository>();
+builder.Services.AddScoped<IBlobService, BlobService>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 
+builder.Services.AddScoped(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlobStorage")));
 builder.Services.AddAutoMapper(typeof(DoggoMappings));
 
 var app = builder.Build();

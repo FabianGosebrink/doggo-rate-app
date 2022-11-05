@@ -1,5 +1,5 @@
 import { ShellModule } from './shell/shell.module';
-import { NgModule } from '@angular/core';
+import { InjectionToken, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routes } from './app-routing.module';
@@ -10,7 +10,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { Capacitor } from '@capacitor/core';
 import { environment } from '../environments/environment';
+
+const IS_NATIVE = new InjectionToken<string>('is_native');
+
+const platformFactory = () => {
+  return Capacitor.isNativePlatform();
+};
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,9 +32,12 @@ import { environment } from '../environments/environment';
     }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production,
+    }),
   ],
-  providers: [],
+  providers: [{ provide: IS_NATIVE, useFactory: platformFactory }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

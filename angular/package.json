@@ -21,6 +21,7 @@
     "@capacitor/android": "^4.4.0",
     "@capacitor/angular": "^2.0.3",
     "@capacitor/core": "latest",
+    "@capacitor/device": "^4.0.1",
     "@ngrx/effects": "^14.3.2",
     "@ngrx/router-store": "^14.3.2",
     "@ngrx/store": "^14.3.2",

@@ -14,6 +14,7 @@
                                   "capacitor://localhost",
                                   "ionic://localhost",
                                   "http://localhost",
+                                  "http://localhost/",
                                   "http://localhost:4200")
                             .AllowAnyHeader()
                             .AllowAnyMethod()

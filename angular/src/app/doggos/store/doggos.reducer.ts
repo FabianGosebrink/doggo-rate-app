@@ -47,5 +47,16 @@ export const doggosReducer = createReducer<DoggoState>(
       doggos: [...state.doggos, doggo],
       lastAddedDoggo: doggo,
     };
+  }),
+
+  on(DoggosActions.deleteDoggoFinished, (state, { doggo }) => {
+    const doggos = [...state.doggos].filter(
+      (existing) => existing.id !== doggo.id
+    );
+
+    return {
+      ...state,
+      doggos,
+    };
   })
 );

@@ -13,6 +13,7 @@ import { DoggosEffects } from './store/doggos.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { AddDoggoComponent } from './container/add-doggo/add-doggo.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MyDoggosComponent } from './container/my-doggos/my-doggos.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     DoggoListComponent,
     DoggoRateComponent,
     AddDoggoComponent,
+    MyDoggosComponent,
   ],
   imports: [
     CommonModule,

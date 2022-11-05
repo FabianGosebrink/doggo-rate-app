@@ -107,6 +107,19 @@ export class DoggosEffects {
     )
   );
 
+  deleteDoggo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DoggosActions.deleteDoggo),
+      concatMap(({ doggo }) => {
+        return this.doggosService.deleteDoggo(doggo).pipe(
+          map((doggo) => {
+            return DoggosActions.deleteDoggoFinished({ doggo });
+          })
+        );
+      })
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private store: Store,

@@ -1,8 +1,8 @@
 import { MainDoggoComponent } from './container/main-doggo/main-doggo.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { AddDoggoComponent } from './container/add-doggo/add-doggo.component';
+import { MyDoggosComponent } from './container/my-doggos/my-doggos.component';
 
 const routes: Routes = [
   {
@@ -12,6 +12,10 @@ const routes: Routes = [
   {
     path: 'add',
     component: AddDoggoComponent,
+  },
+  {
+    path: 'my',
+    component: MyDoggosComponent,
   },
 ];
 

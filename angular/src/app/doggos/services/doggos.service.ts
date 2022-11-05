@@ -32,6 +32,12 @@ export class DoggosService {
     return this.http.post<Doggo>(`${environment.server}api/doggos`, toSend);
   }
 
+  deleteDoggo(doggo: Doggo): Observable<Doggo> {
+    return this.http
+      .delete(`${environment.server}api/doggos/${doggo.id}`)
+      .pipe(map(() => doggo));
+  }
+
   update(doggo: Doggo): Observable<Doggo> {
     doggo.imageUrl = '';
     return this.http

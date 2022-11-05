@@ -6,4 +6,5 @@ export interface Doggo {
   imageUrl: string;
   ratingSum: number;
   ratingCount: number;
+  created: Date;
 }

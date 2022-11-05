@@ -15,9 +15,9 @@ namespace DoggoApi.Repositories
             _dbContext = dbContext;
         }
 
-        public DoggoEntity GetSingle(string id)
+        public DoggoEntity? GetSingle(Guid id)
         {
-            return _dbContext.Doggos.FirstOrDefault(x => x.Id == id);
+            return _dbContext.Doggos.FirstOrDefault(x => x.Id == id.ToString());
         }
 
         public void Add(DoggoEntity item)
@@ -25,7 +25,7 @@ namespace DoggoApi.Repositories
             _dbContext.Doggos.Add(item);
         }
 
-        public void Delete(string id)
+        public void Delete(Guid id)
         {
             DoggoEntity foodItem = GetSingle(id);
             _dbContext.Doggos.Remove(foodItem);
@@ -33,6 +33,7 @@ namespace DoggoApi.Repositories
 
         public DoggoEntity Update(DoggoEntity item)
         {
+            item.Id = item.Id.ToString();
             _dbContext.Doggos.Update(item);
             return item;
         }

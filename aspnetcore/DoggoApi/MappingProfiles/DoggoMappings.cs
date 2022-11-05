@@ -8,6 +8,8 @@ namespace DoggoApi.MappingProfiles
     {
         public DoggoMappings() { 
             CreateMap<DoggoEntity, DoggoDto>().ReverseMap();
+            CreateMap<DoggoEntity, DoggoCreateDto>().ReverseMap();
+            CreateMap<DoggoEntity, DoggoUpdateDto>().ReverseMap();
         }
     }
 }

@@ -9,6 +9,11 @@ namespace DoggoApi.Services
         {
             context.Database.EnsureCreated();
 
+            if (context.Doggos.Any())
+            {
+                return;
+            }
+
             context.Doggos.Add(new DoggoEntity() { ImageUrl = "some-image-url", Breed = "Golden Retriever", Comment = "Comment", Id = Guid.NewGuid().ToString(), Name = "Winston", RatingCount = 1, RatingSum = 5, Created = DateTime.Now });
 
             context.SaveChanges();

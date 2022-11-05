@@ -4,5 +4,6 @@ export interface Doggo {
   breed: string;
   comment: string;
   imageUrl: string;
-  ratings: number[];
+  ratingSum: number;
+  ratingCount: number;
 }

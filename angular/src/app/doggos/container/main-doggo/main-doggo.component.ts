@@ -1,5 +1,4 @@
 import {
-  getAllDoggos,
   getAllDoggosButSelected,
   getSelectedDoggo,
 } from './../../store/doggos.selectors';
@@ -30,7 +29,6 @@ export class MainDoggoComponent implements OnInit {
 
   rateDoggo(rating: number) {
     this.store.dispatch(DoggosActions.rateDoggo({ rating }));
-    this.store.dispatch(DoggosActions.selectNextDoggo());
   }
 
   skipDoggo() {

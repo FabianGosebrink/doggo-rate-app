@@ -5,9 +5,15 @@ import { Store, select } from '@ngrx/store';
 import { concatMap } from 'rxjs';
 import { map, tap } from 'rxjs';
 import { selectQueryParams } from '../../router.selectors';
+import { Doggo } from '../models/doggo';
 import { DoggosService } from '../services/doggos.service';
 import { DoggosActions } from './doggos.actions';
-import { getSelectedDoggoIndex, getAllDoggos } from './doggos.selectors';
+import {
+  getSelectedDoggoIndex,
+  getAllDoggos,
+  getSelectedDoggo,
+  getNextDoggoIndex,
+} from './doggos.selectors';
 
 @Injectable()
 export class DoggosEffects {
@@ -38,6 +44,35 @@ export class DoggosEffects {
         const newSelectedDoggo = allDoggos[nextIndex];
 
         return DoggosActions.selectDoggo({ id: newSelectedDoggo.id });
+      })
+    )
+  );
+
+  rateDoggo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DoggosActions.rateDoggo),
+      concatLatestFrom(() => [
+        this.store.pipe(select(getSelectedDoggo)),
+        this.store.pipe(select(getAllDoggos)),
+        this.store.pipe(select(getNextDoggoIndex)),
+      ]),
+      concatMap(([{ rating }, selectedDoggo, allDoggos, nextDoggoIndex]) => {
+        const ratedCurrentDoggo: Doggo = {
+          ...selectedDoggo,
+          ratingCount: selectedDoggo.ratingCount + 1,
+          ratingSum: selectedDoggo.ratingSum + rating,
+        };
+
+        return this.doggosService.update(ratedCurrentDoggo).pipe(
+          concatMap((result) => {
+            const newSelectedDoggo = allDoggos[nextDoggoIndex];
+
+            return [
+              DoggosActions.rateDoggoFinished({ doggo: result }),
+              DoggosActions.selectDoggo({ id: newSelectedDoggo.id }),
+            ];
+          })
+        );
       })
     )
   );

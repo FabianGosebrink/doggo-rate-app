@@ -33,7 +33,7 @@ export class DoggoRateComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['currentDoggo'].currentValue) {
-      this.averageRating = this.getAverageRating(this.currentDoggo.ratings);
+      this.averageRating = this.getAverageRating(this.currentDoggo);
       this.status = 'fadeIn';
     }
   }
@@ -53,11 +53,9 @@ export class DoggoRateComponent implements OnInit, OnChanges {
     this.skipped.emit();
   }
 
-  private getAverageRating(allRatings: number[]): number {
-    if (allRatings.length === 0) {
-      return 0;
-    }
+  private getAverageRating(currentDoggo: Doggo): number {
+    const { ratingCount, ratingSum } = currentDoggo;
 
-    return allRatings.reduce((a, b) => a + b, 0) / allRatings.length;
+    return ratingSum / ratingCount;
   }
 }

@@ -13,15 +13,10 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.rateDoggo, (state, { rating }) => {
-    const selectedDoggoRatings = state.selectedDoggo?.ratings ?? [];
-    const newRatings = [...selectedDoggoRatings, rating];
-    const updatedDoggo = { ...state.selectedDoggo, ratings: newRatings };
-    const currentDoggoIndex = state.doggos.findIndex(
-      (x) => x.id === state.selectedDoggo.id
-    );
+  on(DoggosActions.rateDoggoFinished, (state, { doggo }) => {
+    const currentDoggoIndex = state.doggos.findIndex((x) => x.id === doggo.id);
     const allDoggosCopy = [...state.doggos];
-    allDoggosCopy.splice(currentDoggoIndex, 1, updatedDoggo);
+    allDoggosCopy.splice(currentDoggoIndex, 1, doggo);
 
     return {
       ...state,

@@ -22,6 +22,14 @@ export const getSelectedDoggoIndex = createSelector(
   }
 );
 
+export const getNextDoggoIndex = createSelector(
+  getAllDoggos,
+  getSelectedDoggoIndex,
+  (allDoggos: Doggo[], currentDoggoIndex: number) => {
+    return (currentDoggoIndex + 1) % allDoggos.length;
+  }
+);
+
 export const getAllDoggosButSelected = createSelector(
   getAllDoggos,
   getSelectedDoggo,

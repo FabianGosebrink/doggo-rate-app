@@ -30,6 +30,11 @@ export const getNextDoggoIndex = createSelector(
   }
 );
 
+export const getLastAddedDoggo = createSelector(
+  getDoggoState,
+  (state: DoggoState) => state.lastAddedDoggo
+);
+
 export const getAllDoggosButSelected = createSelector(
   getAllDoggos,
   getSelectedDoggo,

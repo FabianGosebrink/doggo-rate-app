@@ -9,7 +9,6 @@ import { Doggo } from '../models/doggo';
 import { DoggosService } from '../services/doggos.service';
 import { DoggosActions } from './doggos.actions';
 import {
-  getSelectedDoggoIndex,
   getAllDoggos,
   getSelectedDoggo,
   getNextDoggoIndex,
@@ -36,12 +35,11 @@ export class DoggosEffects {
     this.actions$.pipe(
       ofType(DoggosActions.selectNextDoggo),
       concatLatestFrom(() => [
-        this.store.pipe(select(getSelectedDoggoIndex)),
         this.store.pipe(select(getAllDoggos)),
+        this.store.pipe(select(getNextDoggoIndex)),
       ]),
-      map(([action, currentDoggoIndex, allDoggos]) => {
-        const nextIndex = (currentDoggoIndex + 1) % allDoggos.length;
-        const newSelectedDoggo = allDoggos[nextIndex];
+      map(([action, allDoggos, nextDoggoIndex]) => {
+        const newSelectedDoggo = allDoggos[nextDoggoIndex];
 
         return DoggosActions.selectDoggo({ id: newSelectedDoggo.id });
       })
@@ -82,7 +80,7 @@ export class DoggosEffects {
       ofType(DoggosActions.loadDoggos),
       concatLatestFrom(() => this.store.select(selectQueryParams)),
       concatMap(([action, { doggoId }]) => {
-        return this.doggosService.getItems().pipe(
+        return this.doggosService.getDoggos().pipe(
           concatMap((doggos) => {
             const currentDoggoId = doggoId || doggos[0]?.id || '-1';
 
@@ -90,6 +88,19 @@ export class DoggosEffects {
               DoggosActions.loadDoggosFinished({ doggos }),
               DoggosActions.selectDoggo({ id: currentDoggoId }),
             ];
+          })
+        );
+      })
+    )
+  );
+
+  addDoggo$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DoggosActions.addDoggo),
+      concatMap(({ name, breed, comment }) => {
+        return this.doggosService.addDoggo(name, breed, comment).pipe(
+          map((doggo) => {
+            return DoggosActions.addDoggoFinished({ doggo });
           })
         );
       })

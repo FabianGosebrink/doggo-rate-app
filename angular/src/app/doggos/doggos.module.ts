@@ -11,15 +11,23 @@ import { featureName } from './store/doggos.state';
 import { EffectsModule } from '@ngrx/effects';
 import { DoggosEffects } from './store/doggos.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { AddDoggoComponent } from './container/add-doggo/add-doggo.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [MainDoggoComponent, DoggoListComponent, DoggoRateComponent],
+  declarations: [
+    MainDoggoComponent,
+    DoggoListComponent,
+    DoggoRateComponent,
+    AddDoggoComponent,
+  ],
   imports: [
     CommonModule,
     DoggosRoutingModule,
     StoreModule.forFeature(featureName, doggosReducer),
     EffectsModule.forFeature([DoggosEffects]),
     // BrowserAnimationsModule,
+    ReactiveFormsModule,
   ],
 })
 export class DoggosModule {}

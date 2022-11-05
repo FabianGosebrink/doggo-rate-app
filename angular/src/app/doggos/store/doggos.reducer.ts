@@ -9,7 +9,15 @@ export const doggosReducer = createReducer<DoggoState>(
     return {
       ...state,
       loading: false,
+      lastAddedDoggo: null,
       doggos,
+    };
+  }),
+
+  on(DoggosActions.addDoggo, (state) => {
+    return {
+      ...state,
+      loading: true,
     };
   }),
 
@@ -30,6 +38,14 @@ export const doggosReducer = createReducer<DoggoState>(
     return {
       ...state,
       selectedDoggo: newSelectedDoggo,
+    };
+  }),
+
+  on(DoggosActions.addDoggoFinished, (state, { doggo }) => {
+    return {
+      ...state,
+      doggos: [...state.doggos, doggo],
+      lastAddedDoggo: doggo,
     };
   })
 );

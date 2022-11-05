@@ -13,7 +13,7 @@ const IMAGE_URL =
 export class DoggosService {
   constructor(private http: HttpClient) {}
 
-  getItems(): Observable<Doggo[]> {
+  getDoggos(): Observable<Doggo[]> {
     return this.http.get<Doggo[]>(`${environment.server}api/doggos`).pipe(
       map((x) =>
         x.map((doggo) => {
@@ -24,6 +24,12 @@ export class DoggosService {
         })
       )
     );
+  }
+
+  addDoggo(name: string, breed: string, comment: string): Observable<Doggo> {
+    const toSend = { name, breed, comment, imageUrl: '' };
+
+    return this.http.post<Doggo>(`${environment.server}api/doggos`, toSend);
   }
 
   update(doggo: Doggo): Observable<Doggo> {

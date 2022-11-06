@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { from, map, Observable } from 'rxjs';
+import { decode } from 'base64-arraybuffer';
 
 @Injectable({ providedIn: 'root' })
 export class MobileCameraService {
@@ -9,11 +10,14 @@ export class MobileCameraService {
       Camera.getPhoto({
         quality: 90,
         allowEditing: false,
-        resultType: CameraResultType.DataUrl,
+        resultType: CameraResultType.Base64,
       })
     ).pipe(
       map((photo) => {
-        const blob = this.dataUriToBlob(photo.dataUrl);
+        const blob = new Blob([new Uint8Array(decode(photo.base64String))], {
+          type: `image/${photo.format}`,
+        });
+
         const formData = new FormData();
         formData.append('image.jpg', blob);
 

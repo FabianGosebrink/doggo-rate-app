@@ -1,5 +1,5 @@
+import { HttpService } from './../../common/http.service';
 import { environment } from './../../../environments/environment.prod';
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, timer, Observable } from 'rxjs';
 import { Doggo } from '../models/doggo';
@@ -8,7 +8,7 @@ import { Doggo } from '../models/doggo';
   providedIn: 'root',
 })
 export class DoggosService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpService) {}
 
   getDoggos(): Observable<Doggo[]> {
     return this.http.get<Doggo[]>(`${environment.server}api/doggos`);

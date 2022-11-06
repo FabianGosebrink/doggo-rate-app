@@ -13,7 +13,7 @@
   >
 </div>
 
-<form [formGroup]="formGroup" (ngSubmit)="addDoggo(fileInput.files)">
+<form [formGroup]="formGroup" (ngSubmit)="addDoggo()">
   <div class="mb-3">
     <label for="doggoname" class="form-label">Name</label>
     <input
@@ -41,17 +41,30 @@
       formControlName="comment"
     />
   </div>
-  <button type="button" (click)="fileInput.click()">Choose File</button>
+
   <input
     hidden
     #fileInput
     type="file"
     id="file"
-    (change)="setFilename(fileInput.files)"
+    accept="image/*"
+    (change)="setFormData(fileInput.files)"
   />
+
+  <div *ngIf="!isNative">
+    <button type="button" (click)="fileInput.click()">Choose File</button>
+  </div>
+
+  <button
+    type="submit"
+    class="btn btn-primary"
+    *ngIf="isNative"
+    (click)="takePhoto()"
+  >
+    Take picture
+  </button>
+
   <label>{{ filename }}</label>
-  <br />
-  <br />
   <button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">
     Add Doggo
   </button>

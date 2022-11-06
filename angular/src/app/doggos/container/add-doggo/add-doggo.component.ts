@@ -1,10 +1,12 @@
 import { getLastAddedDoggo } from './../../store/doggos.selectors';
 import { Observable } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { DoggosActions } from '../../store/doggos.actions';
 import { Doggo } from '../../models/doggo';
+import { IS_NATIVE } from 'src/app/common/is-native';
+import { MobileCameraService } from '../../services/mobile-camera.service';
 
 @Component({
   selector: 'app-add-doggo',
@@ -22,30 +24,45 @@ export class AddDoggoComponent implements OnInit {
 
   filename = '';
 
-  constructor(private fb: FormBuilder, private store: Store) {}
+  private formData: FormData;
+
+  constructor(
+    private fb: FormBuilder,
+    private store: Store,
+    private mobileCameraService: MobileCameraService,
+    @Inject(IS_NATIVE) public isNative: boolean
+  ) {}
 
   ngOnInit(): void {
     this.lastAddedDoggo$ = this.store.pipe(select(getLastAddedDoggo));
   }
 
-  setFilename(files) {
+  setFormData(files) {
     if (files[0]) {
+      const formData = new FormData();
+      formData.append(files[0].name, files[0]);
       this.filename = files[0].name;
     }
   }
 
-  addDoggo(files) {
+  takePhoto() {
+    this.mobileCameraService.getPhoto().subscribe((formData) => {
+      this.formData = formData;
+      this.filename = 'image.jpg';
+    });
+  }
+
+  addDoggo() {
     if (this.formGroup.valid) {
-      const formData = new FormData();
-
-      if (files[0]) {
-        formData.append(files[0].name, files[0]);
-      }
-
       const { name, comment, breed } = this.formGroup.value;
 
       this.store.dispatch(
-        DoggosActions.addDoggoWithPicture({ name, comment, breed, formData })
+        DoggosActions.addDoggoWithPicture({
+          name,
+          comment,
+          breed,
+          formData: this.formData,
+        })
       );
     }
   }

@@ -12,8 +12,7 @@ import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { Capacitor } from '@capacitor/core';
 import { environment } from '../environments/environment';
-
-const IS_NATIVE = new InjectionToken<string>('is_native');
+import { IS_NATIVE } from './common/is-native';
 
 const platformFactory = () => {
   return Capacitor.isNativePlatform();

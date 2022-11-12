@@ -14,4 +14,8 @@ export class NavigationComponent implements OnInit {
   login() {
     this.oidcSecurityService.authorize();
   }
+
+  logout() {
+    this.oidcSecurityService.logoff();
+  }
 }

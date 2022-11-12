@@ -20,8 +20,18 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkAuth('');
+
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      this.zone.run(() => {
+        this.checkAuth(event.url);
+      });
+    });
+  }
+
+  private checkAuth(url: string) {
     this.oidcSecurityService
-      .checkAuth()
+      .checkAuth(url)
       .subscribe((response: LoginResponse) => {
         console.log('app', response);
         this.store.dispatch(
@@ -31,32 +41,5 @@ export class AppComponent implements OnInit {
           })
         );
       });
-
-    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-      this.zone.run(() => {
-        // // Example url: https://beerswift.app/tabs/tab2
-        // // slug = /tabs/tab2
-        // const slug = event.url.split(".app").pop();
-        // if (slug) {
-        //     this.router.navigateByUrl(slug);
-        // }
-        // // If no match, do nothing - let regular routing
-        // // logic take over
-
-        this.oidcSecurityService
-          .checkAuth(event.url)
-          .subscribe((response: LoginResponse) => {
-            console.log('app', response);
-            this.store.dispatch(
-              AuthActions.loginComplete({
-                isLoggedIn: response.isAuthenticated,
-                profile: response.userData,
-              })
-            );
-          });
-
-        console.log(event);
-      });
-    });
   }
 }

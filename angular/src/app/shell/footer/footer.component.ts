@@ -1,5 +1,7 @@
+import { selectCurrentUserIdentifier } from './../../auth/store/auth.selectors';
 import { Component, OnInit } from '@angular/core';
 import { Device, DeviceInfo } from '@capacitor/device';
+import { Store, select } from '@ngrx/store';
 import { from, Observable } from 'rxjs';
 
 @Component({
@@ -10,7 +12,11 @@ import { from, Observable } from 'rxjs';
 export class FooterComponent implements OnInit {
   deviceInfo$: Observable<DeviceInfo>;
 
-  constructor() {}
+  userEmail$: Observable<string>;
+
+  constructor(private store: Store) {
+    this.userEmail$ = store.pipe(select(selectCurrentUserIdentifier));
+  }
 
   ngOnInit(): void {
     this.deviceInfo$ = from(Device.getInfo());

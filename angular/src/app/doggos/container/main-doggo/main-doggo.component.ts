@@ -19,13 +19,13 @@ export class MainDoggoComponent implements OnInit {
   selectedDoggo$: Observable<Doggo | null>;
   loading$: Observable<boolean>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store) {}
+
+  ngOnInit(): void {
     this.doggos$ = this.store.pipe(select(getAllDoggosButSelected));
     this.selectedDoggo$ = this.store.pipe(select(getSelectedDoggo));
     this.loading$ = this.store.pipe(select(getLoading));
-  }
 
-  ngOnInit(): void {
     this.store.dispatch(DoggosActions.loadDoggos());
   }
 

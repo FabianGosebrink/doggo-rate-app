@@ -13,6 +13,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { Capacitor } from '@capacitor/core';
 import { environment } from '../environments/environment';
 import { IS_NATIVE } from './common/is-native';
+import { AuthConfigModule } from './auth/auth-config.module';
+import { authReducer } from './auth/store/auth.reducer';
 
 const platformFactory = () => {
   return Capacitor.isNativePlatform();
@@ -28,6 +30,7 @@ const platformFactory = () => {
     BrowserAnimationsModule,
     StoreModule.forRoot({
       router: routerReducer,
+      auth: authReducer,
     }),
     EffectsModule.forRoot([]),
     StoreRouterConnectingModule.forRoot(),
@@ -35,6 +38,7 @@ const platformFactory = () => {
       maxAge: 25,
       logOnly: environment.production,
     }),
+    AuthConfigModule,
   ],
   providers: [{ provide: IS_NATIVE, useFactory: platformFactory }],
   bootstrap: [AppComponent],

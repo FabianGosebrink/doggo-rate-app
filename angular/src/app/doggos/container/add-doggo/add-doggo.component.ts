@@ -1,4 +1,4 @@
-import { getLastAddedDoggo } from './../../store/doggos.selectors';
+import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
 import { Observable } from 'rxjs';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -21,6 +21,7 @@ export class AddDoggoComponent implements OnInit {
   });
 
   lastAddedDoggo$: Observable<Doggo>;
+  loading$: Observable<boolean>;
 
   filename = '';
 
@@ -35,6 +36,7 @@ export class AddDoggoComponent implements OnInit {
 
   ngOnInit(): void {
     this.lastAddedDoggo$ = this.store.pipe(select(getLastAddedDoggo));
+    this.loading$ = this.store.pipe(select(getLoading));
   }
 
   setFormData(files) {
@@ -42,6 +44,7 @@ export class AddDoggoComponent implements OnInit {
       const formData = new FormData();
       formData.append(files[0].name, files[0]);
       this.filename = files[0].name;
+      this.formData = formData;
     }
   }
 

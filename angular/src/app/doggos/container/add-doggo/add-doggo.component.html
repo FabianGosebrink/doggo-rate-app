@@ -52,20 +52,36 @@
   />
 
   <div *ngIf="!isNative">
-    <button type="button" (click)="fileInput.click()">Choose File</button>
+    <button class="mb-10" type="button" (click)="fileInput.click()">
+      Choose File
+    </button>
   </div>
 
-  <button
-    type="submit"
-    class="btn btn-primary"
-    *ngIf="isNative"
-    (click)="takePhoto()"
-  >
-    Take picture
-  </button>
+  <label>{{ filename }} </label>
 
-  <label>{{ filename }}</label>
-  <button type="submit" class="btn btn-primary" [disabled]="!formGroup.valid">
-    Add Doggo
-  </button>
+  <div class="d-flex justify-content-between mt-3">
+    <button
+      type="button"
+      class="btn btn-primary mb-10"
+      *ngIf="isNative"
+      (click)="takePhoto()"
+    >
+      <i class="fa-solid fa-camera"></i> Take picture
+    </button>
+
+    <button
+      type="submit"
+      class="btn btn-primary mt-6"
+      [disabled]="!formGroup.valid || (loading$ | async) === true"
+    >
+      <div
+        class="spinner-border spinner-border-sm"
+        role="status"
+        *ngIf="(loading$ | async) === true"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      Add Doggo
+    </button>
+  </div>
 </form>

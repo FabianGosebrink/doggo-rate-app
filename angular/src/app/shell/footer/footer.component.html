@@ -5,7 +5,7 @@
     <span class="mb-3 mb-md-0 text-muted"
       >&copy; 2022 Offering Solutions Software - Running on platform "{{
         (deviceInfo$ | async)?.platform
-      }}"
+      }}" - LoggedIn as {{ userEmail$ | async }}
     </span>
   </div>
 </footer>

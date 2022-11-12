@@ -11,4 +11,4 @@
   ></app-doggo-list>
 </ng-template>
 
-<div *ngIf="loading$ | async; else content"></div>
+<div *ngIf="(loading$ | async) === true; else content">Loading...</div>

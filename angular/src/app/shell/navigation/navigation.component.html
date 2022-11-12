@@ -11,7 +11,7 @@
           >Home</a
         >
       </li>
-      <li>
+      <li *ngIf="loggedIn">
         <a
           [routerLink]="'doggos/add'"
           routerLinkActive="active"
@@ -19,7 +19,7 @@
           >Add</a
         >
       </li>
-      <li>
+      <li *ngIf="loggedIn">
         <a
           [routerLink]="'doggos/my'"
           routerLinkActive="active"
@@ -35,6 +35,7 @@
       (click)="logout()"
       type="button"
       class="btn btn-outline-primary me-2"
+      *ngIf="loggedIn"
     >
       Logout
     </button>
@@ -42,6 +43,7 @@
       (click)="login()"
       type="button"
       class="btn btn-outline-primary me-2"
+      *ngIf="!loggedIn"
     >
       Login
     </button>

@@ -33,7 +33,6 @@ export class AppComponent implements OnInit {
     this.oidcSecurityService
       .checkAuth(url)
       .subscribe((response: LoginResponse) => {
-        console.log('app', response);
         this.store.dispatch(
           AuthActions.loginComplete({
             isLoggedIn: response.isAuthenticated,

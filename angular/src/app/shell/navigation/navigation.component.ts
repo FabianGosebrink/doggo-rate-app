@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
+import { selectIsLoggedIn } from './../../auth/store/auth.selectors';
+import { Observable } from 'rxjs';
+import { Component, Input, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-navigation',
@@ -7,6 +10,8 @@ import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
   styleUrls: ['./navigation.component.css'],
 })
 export class NavigationComponent implements OnInit {
+  @Input() loggedIn = false;
+
   constructor(private oidcSecurityService: OidcSecurityService) {}
 
   ngOnInit(): void {}

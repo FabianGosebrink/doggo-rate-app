@@ -6,7 +6,7 @@ import { MyDoggosComponent } from './container/my-doggos/my-doggos.component';
 
 const routes: Routes = [
   {
-    path: 'start',
+    path: '',
     component: MainDoggoComponent,
   },
   {
@@ -17,7 +17,6 @@ const routes: Routes = [
     path: 'my',
     component: MyDoggosComponent,
   },
-  { path: '', redirectTo: 'start', pathMatch: 'full' },
 ];
 
 @NgModule({

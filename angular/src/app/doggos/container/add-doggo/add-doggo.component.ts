@@ -49,11 +49,9 @@ export class AddDoggoComponent implements OnInit {
   }
 
   takePhoto() {
-    this.mobileCameraService.getPhoto().subscribe((formData) => {
+    this.mobileCameraService.getPhoto().subscribe(({ formData, fileName }) => {
       this.formData = formData;
-      this.filename = `mobile-image-${Math.random()
-        .toString(36)
-        .slice(2, 7)}.jpg`;
+      this.filename = fileName;
     });
   }
 

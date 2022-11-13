@@ -5,7 +5,7 @@ import { decode } from 'base64-arraybuffer';
 
 @Injectable({ providedIn: 'root' })
 export class MobileCameraService {
-  getPhoto(): Observable<FormData> {
+  getPhoto(): Observable<{ formData: FormData; fileName: string }> {
     return from(
       Camera.getPhoto({
         quality: 90,
@@ -17,28 +17,16 @@ export class MobileCameraService {
         const blob = new Blob([new Uint8Array(decode(photo.base64String))], {
           type: `image/${photo.format}`,
         });
-
+        const fileName = `mobile-image-${Math.random()
+          .toString(36)
+          .slice(2, 7)}.jpg`;
+        const file = new File([blob], fileName);
         const formData = new FormData();
-        formData.append('image.jpg', blob);
 
-        return formData;
+        formData.append(fileName, file);
+
+        return { formData, fileName };
       })
     );
-  }
-
-  private dataUriToBlob(dataURI: string) {
-    const splitDataURI = dataURI.split(',');
-    const byteString =
-      splitDataURI[0].indexOf('base64') >= 0
-        ? Buffer.from(splitDataURI[1]).toString('base64')
-        : decodeURI(splitDataURI[1]);
-    const mimeString = splitDataURI[0].split(':')[1].split(';')[0];
-
-    const ia = new Uint8Array(byteString.length);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ia], { type: mimeString });
   }
 }

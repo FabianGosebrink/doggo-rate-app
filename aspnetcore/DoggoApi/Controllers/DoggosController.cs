@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using DoggoApi.Dtos;
 using DoggoApi.Entities;
+using DoggoApi.Hubs;
 using DoggoApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 
 namespace DoggoApi.Controllers
@@ -16,18 +18,21 @@ namespace DoggoApi.Controllers
         private readonly IDoggoRepository _repository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor; 
+        private readonly IHubContext<DoggoHub> _hubContext;
 
         public DoggosController(
             IDoggoRepository doggoRepository,
             IMapper mapper,
             IConfiguration configuration,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IHubContext<DoggoHub> hubContext)
         {
             _repository = doggoRepository;
             _mapper = mapper;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -80,7 +85,7 @@ namespace DoggoApi.Controllers
         }
 
         [HttpPost(Name = nameof(AddDoggo))]
-        public ActionResult<DoggoDto> AddDoggo([FromBody] DoggoCreateDto createDto)
+        public async Task<ActionResult<DoggoDto>> AddDoggo([FromBody] DoggoCreateDto createDto)
         {
             if (createDto == null)
             {
@@ -108,6 +113,8 @@ namespace DoggoApi.Controllers
 
             DoggoEntity newItem = _repository.GetSingle(Guid.Parse(toAdd.Id));
             DoggoDto dto = _mapper.Map<DoggoDto>(newItem);
+
+            await _hubContext.Clients.All.SendAsync("DoggoAdded", dto);
 
             return CreatedAtRoute(nameof(GetSingleDoggo),
                 new { id = newItem.Id }, dto);
@@ -158,7 +165,7 @@ namespace DoggoApi.Controllers
 
         [HttpDelete]
         [Route("{id:guid}", Name = nameof(RemoveDoggo))]
-        public ActionResult RemoveDoggo(Guid id)
+        public async Task<ActionResult> RemoveDoggo(Guid id)
         {
             DoggoEntity existingEntity = _repository.GetSingle(id);
 
@@ -185,6 +192,8 @@ namespace DoggoApi.Controllers
             {
                 throw new Exception("Deleting an item failed on save.");
             }
+
+            await _hubContext.Clients.All.SendAsync("DoggoDeleted", id);
 
             return NoContent();
         }

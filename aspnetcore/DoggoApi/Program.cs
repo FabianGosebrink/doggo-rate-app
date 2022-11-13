@@ -1,6 +1,7 @@
 using Azure.Storage.Blobs;
 using DoggoApi;
 using DoggoApi.Helpers;
+using DoggoApi.Hubs;
 using DoggoApi.MappingProfiles;
 using DoggoApi.Repositories;
 using DoggoApi.Services;
@@ -68,6 +69,7 @@ builder.Services.AddScoped<IDoggoRepository, DoggoSqlRepository>();
 builder.Services.AddScoped<IBlobService, BlobService>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddSignalR();
 
 builder.Services.AddScoped(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlobStorage")));
 builder.Services.AddAutoMapper(typeof(DoggoMappings));
@@ -82,7 +84,10 @@ app.UseSwaggerUI(c =>
 });
 app.SeedData();
 
-app.UseDeveloperExceptionPage();
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+}
 
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
@@ -91,5 +96,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<DoggoHub>("/doggoHub");
 
 app.Run();

@@ -1,0 +1,7 @@
+{
+  "name": "my-electron-app",
+  "version": "0.0.1",
+  "author": "Fabian Gosebrink",
+  "description": "My Electron app",
+  "main": "main.js"
+}

@@ -9,7 +9,9 @@
     "build-dev": "ng build --configuration development",
     "cap:sync": "ng build && npx cap sync android",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build-desktop": "node build/build-desktop.js",
+    "build:and:start:mobile": "npm run cap:sync && npx cap run android"
   },
   "private": true,
   "dependencies": {
@@ -42,14 +44,16 @@
     "@angular-devkit/build-angular": "^14.2.8",
     "@angular/cli": "~14.2.8",
     "@angular/compiler-cli": "^14.2.0",
+    "@capacitor/cli": "latest",
     "@types/jasmine": "~4.0.0",
+    "chalk": "^5.1.2",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.7.2",
-    "@capacitor/cli": "latest"
+    "shelljs": "^0.8.5",
+    "typescript": "~4.7.2"
   }
 }

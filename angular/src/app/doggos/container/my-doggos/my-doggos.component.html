@@ -9,14 +9,19 @@
     <img
       [src]="doggo.imageUrl"
       alt="twbs"
-      width="32"
-      height="32"
+      width="80"
+      height="80"
       class="rounded-circle flex-shrink-0"
     />
     <div class="d-flex gap-2 w-100 justify-content-between">
       <div>
         <h6 class="mb-0">{{ doggo.name }} ({{ doggo.breed }})</h6>
-        <p class="mb-0 opacity-75">{{ doggo.comment }}</p>
+        <p class="mb-0 opacity-75">
+          {{ doggo.ratingSum / (doggo.ratingCount || 1) }}/5
+        </p>
+        <p class="mb-0 opacity-75">
+          {{ doggo.comment }}
+        </p>
         <p class="mb-0 opacity-75">{{ doggo.created | date: "medium" }}</p>
       </div>
       <div>

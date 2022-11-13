@@ -14,7 +14,7 @@ namespace DoggoApi.Services
                 return;
             }
 
-            context.Doggos.Add(new DoggoEntity() { ImageUrl = "some-image-url", Breed = "Golden Retriever", Comment = "Comment", Id = Guid.NewGuid().ToString(), Name = "Winston", RatingCount = 1, RatingSum = 5, Created = DateTime.Now });
+            context.Doggos.Add(new DoggoEntity() { ImageUrl = "https://offeringsolutionscdn.blob.core.windows.net/doggos/signal-2022-11-13-084404_007.jpg", Breed = "Golden Retriever", Comment = "Comment", Id = Guid.NewGuid().ToString(), Name = "Winston", RatingCount = 1, RatingSum = 5, Created = DateTime.Now });
 
             context.SaveChanges();
         }

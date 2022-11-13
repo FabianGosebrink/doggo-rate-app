@@ -56,6 +56,8 @@ export class SignalRService {
       )
     );
 
+    this.registerOnEvents();
+
     this.connection
       .start()
       .then(() =>
@@ -75,15 +77,12 @@ export class SignalRService {
     }
   }
 
-  registerOnEvents() {
+  private registerOnEvents() {
     this.connection.on('DoggoAdded', (doggo) => {
-      console.log('DoggoAdded', doggo);
       this.store.dispatch(DoggosActions.addDoggoRealtimeFinished({ doggo }));
     });
 
     this.connection.on('DoggoDeleted', (id) => {
-      console.log('DoggoDeleted', id);
-      // this.itemDeletedInternal.next(id);
       this.store.dispatch(DoggosActions.deleteDoggoRealtimeFinished({ id }));
     });
   }

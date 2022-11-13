@@ -7,6 +7,11 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./doggos/doggos.module').then((m) => m.DoggosModule),
   },
+  {
+    path: 'about',
+    loadChildren: () =>
+      import('./about/about.module').then((m) => m.AboutModule),
+  },
   { path: '', redirectTo: '/doggos', pathMatch: 'full' },
 ];
 

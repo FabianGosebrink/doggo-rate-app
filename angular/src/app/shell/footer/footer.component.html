@@ -1,11 +1,14 @@
-<footer
-  class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top"
->
-  <div>
+<footer class="py-3 my-4 border-top">
+  <div class="d-flex flex-wrap justify-content-between">
     <span class="mb-3 mb-md-0 text-muted"
       >&copy; 2022 Offering Solutions Software - Running on platform "{{
         (deviceInfo$ | async)?.platform
-      }}" - LoggedIn as {{ userEmail$ | async }}
+      }}"
+    </span>
+    <span
+      class="mb-3 mb-md-0 text-muted"
+      *ngIf="userEmail$ | async as userEmail"
+      >LoggedIn as {{ userEmail }}
     </span>
   </div>
 </footer>

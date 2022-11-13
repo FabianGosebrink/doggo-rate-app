@@ -26,7 +26,6 @@ export class MainDoggoComponent implements OnInit {
     this.selectedDoggo$ = this.store.pipe(select(getSelectedDoggo));
     this.loading$ = this.store.pipe(select(getLoading));
 
-    console.log('LOAD!!!');
     this.store.dispatch(DoggosActions.loadDoggos());
   }
 

@@ -137,7 +137,7 @@ export class DoggosEffects {
       concatMap(({ doggo }) => {
         return this.doggosService.deleteDoggo(doggo).pipe(
           map((doggo) => {
-            return DoggosActions.deleteDoggoFinished({ doggo });
+            return DoggosActions.deleteDoggoFinished({ id: doggo.id });
           })
         );
       })

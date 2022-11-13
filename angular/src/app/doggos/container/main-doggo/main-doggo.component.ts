@@ -1,9 +1,10 @@
+import { SignalRService } from './../../../common/signalr.service';
 import {
   getAllDoggosButSelected,
   getLoading,
   getSelectedDoggo,
 } from './../../store/doggos.selectors';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Doggo } from '../../models/doggo';
 import { DoggosActions } from '../../store/doggos.actions';

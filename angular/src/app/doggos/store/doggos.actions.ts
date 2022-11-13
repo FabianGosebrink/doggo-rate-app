@@ -22,9 +22,11 @@ export const DoggosActions = createActionGroup({
       formData: FormData;
     }>(),
     'Add Doggo Finished': props<{ doggo: Doggo }>(),
+    'Add Doggo Realtime Finished': props<{ doggo: Doggo }>(),
 
     'Navigate To Last Added Doggo': props<{ id: string }>(),
     'Delete Doggo': props<{ doggo: Doggo }>(),
-    'Delete Doggo Finished': props<{ doggo: Doggo }>(),
+    'Delete Doggo Finished': props<{ id: string }>(),
+    'Delete Doggo Realtime Finished': props<{ id: string }>(),
   },
 });

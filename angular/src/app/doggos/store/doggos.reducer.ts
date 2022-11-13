@@ -5,23 +5,18 @@ import { DoggoState, initialState } from './doggos.state';
 export const doggosReducer = createReducer<DoggoState>(
   initialState,
 
-  on(DoggosActions.loadDoggosFinished, (state, { doggos }) => {
-    return {
-      ...state,
-      loading: false,
-      lastAddedDoggo: null,
-      doggos,
-    };
-  }),
-
-  on(DoggosActions.loadMyDoggosFinished, (state, { doggos }) => {
-    return {
-      ...state,
-      loading: false,
-      lastAddedDoggo: null,
-      myDoggos: doggos,
-    };
-  }),
+  on(
+    DoggosActions.loadDoggosFinished,
+    DoggosActions.loadMyDoggosFinished,
+    (state, { doggos }) => {
+      return {
+        ...state,
+        loading: false,
+        lastAddedDoggo: null,
+        doggos,
+      };
+    }
+  ),
 
   on(DoggosActions.addDoggoWithPicture, DoggosActions.loadDoggos, (state) => {
     return {
@@ -59,18 +54,36 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.deleteDoggoFinished, (state, { doggo }) => {
-    const doggos = [...state.doggos].filter(
-      (existing) => existing.id !== doggo.id
-    );
-    const myDoggos = [...state.myDoggos].filter(
-      (existing) => existing.id !== doggo.id
-    );
-
+  on(DoggosActions.addDoggoRealtimeFinished, (state, { doggo }) => {
     return {
       ...state,
-      doggos,
-      myDoggos,
+      doggos: [...state.doggos, doggo],
+      loading: false,
     };
-  })
+  }),
+
+  on(
+    DoggosActions.deleteDoggoFinished,
+    DoggosActions.deleteDoggoRealtimeFinished,
+    (state, { id }) => {
+      const doggos = [...state.doggos].filter((existing) => existing.id !== id);
+
+      if (state.selectedDoggo?.id === id) {
+        const currentIndex = state.doggos.findIndex((doggo) => doggo.id === id);
+        const nextIndex = (currentIndex + 1) % state.doggos.length;
+        const selectedDoggo = state.doggos[nextIndex];
+
+        return {
+          ...state,
+          doggos,
+          selectedDoggo,
+        };
+      }
+
+      return {
+        ...state,
+        doggos,
+      };
+    }
+  )
 );

@@ -1,3 +1,4 @@
+import { selectUserSubject } from './../../auth/store/auth.selectors';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Doggo } from '../models/doggo';
 import { featureName, DoggoState } from './doggos.state';
@@ -10,8 +11,10 @@ export const getAllDoggos = createSelector(
 );
 
 export const getMyDoggos = createSelector(
-  getDoggoState,
-  (state: DoggoState) => state.myDoggos
+  getAllDoggos,
+  selectUserSubject,
+  (allDoggos: Doggo[], userSubject: string) =>
+    allDoggos.filter((doggo) => doggo.userId === userSubject)
 );
 
 export const getLoading = createSelector(

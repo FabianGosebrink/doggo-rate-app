@@ -27,6 +27,7 @@
     "@capacitor/camera": "^4.1.3",
     "@capacitor/core": "latest",
     "@capacitor/device": "^4.0.1",
+    "@microsoft/signalr": "^7.0.0",
     "@ngrx/effects": "^14.3.2",
     "@ngrx/router-store": "^14.3.2",
     "@ngrx/store": "^14.3.2",

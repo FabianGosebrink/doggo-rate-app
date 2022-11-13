@@ -4,6 +4,7 @@ import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Store } from '@ngrx/store';
 import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 import { AuthActions } from './auth/store/auth.actions';
+import { SignalRService } from './common/signalr.service';
 
 @Component({
   selector: 'app-root',
@@ -16,10 +17,13 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store,
     private zone: NgZone,
-    private oidcSecurityService: OidcSecurityService
+    private oidcSecurityService: OidcSecurityService,
+    private signalRService: SignalRService
   ) {}
 
   ngOnInit(): void {
+    this.signalRService.start();
+
     this.checkAuth('');
 
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {

@@ -7,4 +7,5 @@ export interface Doggo {
   ratingSum: number;
   ratingCount: number;
   created: Date;
+  userId: string;
 }

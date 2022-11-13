@@ -71,7 +71,7 @@ namespace DoggoApi.Controllers
 
             if (userId == null)
             {
-                return Ok(null);
+                return Ok(Array.Empty<DoggoDto>());
             }
 
             List<DoggoEntity> doggos = _repository.GetAllForUser(userId).ToList();
@@ -87,9 +87,17 @@ namespace DoggoApi.Controllers
                 return BadRequest();
             }
 
+            string? userId = _httpContextAccessor.HttpContext?.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).SingleOrDefault()?.Value;
+
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+
             DoggoEntity toAdd = _mapper.Map<DoggoEntity>(createDto);
             toAdd.Created = DateTime.UtcNow;
             toAdd.Id = Guid.NewGuid().ToString();
+            toAdd.UserId = userId;
 
             _repository.Add(toAdd);
 
@@ -122,6 +130,18 @@ namespace DoggoApi.Controllers
                 return NotFound();
             }
 
+            string? userId = _httpContextAccessor.HttpContext?.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).SingleOrDefault()?.Value;
+
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+
+            if (userId != existingEntity.UserId)
+            {
+                return BadRequest();
+            }
+
             _mapper.Map(updateDto, existingEntity);
 
             _repository.Update(existingEntity);
@@ -140,11 +160,23 @@ namespace DoggoApi.Controllers
         [Route("{id:guid}", Name = nameof(RemoveDoggo))]
         public ActionResult RemoveDoggo(Guid id)
         {
-            DoggoEntity entity = _repository.GetSingle(id);
+            DoggoEntity existingEntity = _repository.GetSingle(id);
 
-            if (entity == null)
+            if (existingEntity == null)
             {
                 return NotFound();
+            }
+
+            string? userId = _httpContextAccessor.HttpContext?.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).SingleOrDefault()?.Value;
+
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+
+            if (userId != existingEntity.UserId)
+            {
+                return BadRequest();
             }
 
             _repository.Delete(id);

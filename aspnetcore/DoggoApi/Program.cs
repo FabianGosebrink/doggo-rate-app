@@ -6,6 +6,8 @@ using DoggoApi.Repositories;
 using DoggoApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Security.Claims;
@@ -79,6 +81,8 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Doggos API V1");
 });
 app.SeedData();
+
+app.UseDeveloperExceptionPage();
 
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();

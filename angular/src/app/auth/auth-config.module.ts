@@ -18,7 +18,7 @@ const authFactory = (isNative: boolean) => {
     responseType: 'code',
     silentRenew: true,
     useRefreshToken: true,
-    postLogoutRedirectUri: window.location.origin,
+    postLogoutRedirectUri: isNative ? callbackUri : window.location.origin,
     customParamsAuthRequest: {
       audience: environment.server,
     },

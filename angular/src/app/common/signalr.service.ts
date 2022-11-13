@@ -34,16 +34,44 @@ export class SignalRService {
 
     this.connection = new HubConnectionBuilder()
       .withUrl(`${environment.server}doggoHub`)
+      .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)
       .build();
 
-    this.registerOnEvents();
-    this.connection.start().catch((err) => console.log(err.toString()));
+    this.connection.onreconnecting(() =>
+      this.store.dispatch(
+        DoggosActions.setRealTimeConnection({ connection: 'Reconnecting' })
+      )
+    );
+
+    this.connection.onreconnected(() =>
+      this.store.dispatch(
+        DoggosActions.setRealTimeConnection({ connection: 'On' })
+      )
+    );
+
+    this.connection.onclose(() =>
+      this.store.dispatch(
+        DoggosActions.setRealTimeConnection({ connection: 'Off' })
+      )
+    );
+
+    this.connection
+      .start()
+      .then(() =>
+        this.store.dispatch(
+          DoggosActions.setRealTimeConnection({ connection: 'On' })
+        )
+      )
+      .catch((err) => console.log(err.toString()));
   }
 
   stop() {
     if (this.connection) {
       this.connection.stop();
+      this.store.dispatch(
+        DoggosActions.setRealTimeConnection({ connection: 'Off' })
+      );
     }
   }
 

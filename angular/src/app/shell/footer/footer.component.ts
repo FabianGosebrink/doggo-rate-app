@@ -1,3 +1,5 @@
+import { getRealTimeConnection } from './../../doggos/store/doggos.selectors';
+import { environment } from './../../../environments/environment';
 import { selectCurrentUserIdentifier } from './../../auth/store/auth.selectors';
 import { Component, OnInit } from '@angular/core';
 import { Device, DeviceInfo } from '@capacitor/device';
@@ -14,8 +16,13 @@ export class FooterComponent implements OnInit {
 
   userEmail$: Observable<string>;
 
+  backendUrl = environment.server;
+
+  realTimeConnection$: Observable<string>;
+
   constructor(private store: Store) {
     this.userEmail$ = store.pipe(select(selectCurrentUserIdentifier));
+    this.realTimeConnection$ = store.pipe(select(getRealTimeConnection));
   }
 
   ngOnInit(): void {

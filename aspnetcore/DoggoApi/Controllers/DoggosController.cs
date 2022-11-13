@@ -35,7 +35,7 @@ namespace DoggoApi.Controllers
         [AllowAnonymous]
         public ActionResult GetTestValue()
         {
-            return Ok(_configuration.GetValue("Auth0"));
+            return Ok(_configuration.GetValue<string>("Auth0:Audience"));
         }
 
         [HttpGet(Name = nameof(GetAllDoggos))]

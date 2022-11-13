@@ -1,4 +1,4 @@
-import { getAllDoggos } from './../../store/doggos.selectors';
+import { getMyDoggos } from './../../store/doggos.selectors';
 import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -14,11 +14,11 @@ export class MyDoggosComponent implements OnInit {
   doggos$: Observable<Doggo[]>;
 
   constructor(private store: Store) {
-    this.doggos$ = this.store.pipe(select(getAllDoggos));
+    this.doggos$ = this.store.pipe(select(getMyDoggos));
   }
 
   ngOnInit(): void {
-    this.store.dispatch(DoggosActions.loadDoggos());
+    this.store.dispatch(DoggosActions.loadMyDoggos());
   }
 
   deleteDoggo(doggo: Doggo) {

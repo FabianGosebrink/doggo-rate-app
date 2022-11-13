@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { Capacitor } from '@capacitor/core';
@@ -15,6 +15,7 @@ import { environment } from '../environments/environment';
 import { IS_NATIVE } from './common/is-native';
 import { AuthConfigModule } from './auth/auth-config.module';
 import { authReducer } from './auth/store/auth.reducer';
+import { AuthInterceptor } from 'angular-auth-oidc-client';
 
 const platformFactory = () => {
   return Capacitor.isNativePlatform();
@@ -40,7 +41,10 @@ const platformFactory = () => {
     }),
     AuthConfigModule,
   ],
-  providers: [{ provide: IS_NATIVE, useFactory: platformFactory }],
+  providers: [
+    { provide: IS_NATIVE, useFactory: platformFactory },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

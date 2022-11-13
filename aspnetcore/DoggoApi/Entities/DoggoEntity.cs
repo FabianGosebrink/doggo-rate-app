@@ -10,5 +10,6 @@
         public int RatingSum { get; set; }
         public int RatingCount { get; set; }
         public DateTime Created { get; set; }
+        public string UserId { get; set; }
     }
 }

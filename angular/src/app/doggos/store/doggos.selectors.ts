@@ -9,6 +9,11 @@ export const getAllDoggos = createSelector(
   (state: DoggoState) => state.doggos
 );
 
+export const getMyDoggos = createSelector(
+  getDoggoState,
+  (state: DoggoState) => state.myDoggos
+);
+
 export const getLoading = createSelector(
   getDoggoState,
   (state: DoggoState) => state.loading

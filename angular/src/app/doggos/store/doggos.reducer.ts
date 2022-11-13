@@ -14,6 +14,15 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
+  on(DoggosActions.loadMyDoggosFinished, (state, { doggos }) => {
+    return {
+      ...state,
+      loading: false,
+      lastAddedDoggo: null,
+      myDoggos: doggos,
+    };
+  }),
+
   on(DoggosActions.addDoggoWithPicture, DoggosActions.loadDoggos, (state) => {
     return {
       ...state,

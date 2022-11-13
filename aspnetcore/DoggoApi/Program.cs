@@ -1,10 +1,14 @@
 using Azure.Storage.Blobs;
+using DoggoApi;
 using DoggoApi.Helpers;
 using DoggoApi.MappingProfiles;
 using DoggoApi.Repositories;
 using DoggoApi.Services;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,13 +31,41 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-
 builder.Services.AddCustomCors("AllowAllOrigins");
+
+string auth0Audience = builder.Configuration["Auth0:Audience"];
+string auth0Domain = builder.Configuration["Auth0:Domain"];
+string clientId = builder.Configuration["Auth0:ClientId"];
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
+     {
+         c.Authority = auth0Domain;
+         c.Audience = auth0Audience;
+         c.TokenValidationParameters = new TokenValidationParameters
+         {
+             ValidAudience = auth0Audience,
+             ValidIssuer = auth0Domain,
+             NameClaimType = ClaimTypes.NameIdentifier
+         };
+     });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("access:api", policy =>
+    {
+        policy.Requirements.Add(new UserApiScopeHandlerRequirement("access:api"));
+        policy.RequireClaim("azp", clientId);
+        policy.RequireClaim("iss", auth0Domain);
+    });
+});
+builder.Services.AddSingleton<IAuthorizationHandler, UserApiScopeHandler>();
 
 builder.Services.AddSingleton<ISeedDataService, SeedDataService>();
 builder.Services.AddScoped<IDoggoRepository, DoggoSqlRepository>();
 builder.Services.AddScoped<IBlobService, BlobService>();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped(x => new BlobServiceClient(builder.Configuration.GetValue<string>("AzureBlobStorage")));
 builder.Services.AddAutoMapper(typeof(DoggoMappings));
@@ -51,6 +83,7 @@ app.SeedData();
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

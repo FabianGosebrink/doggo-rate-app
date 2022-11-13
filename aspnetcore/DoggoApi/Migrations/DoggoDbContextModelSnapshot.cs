@@ -47,6 +47,10 @@ namespace DoggoApi.Migrations
                     b.Property<int>("RatingSum")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Doggos");

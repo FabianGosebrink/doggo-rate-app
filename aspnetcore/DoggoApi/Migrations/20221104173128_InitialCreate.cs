@@ -20,7 +20,8 @@ namespace DoggoApi.Migrations
                     ImageUrl = table.Column<string>(type: "TEXT", nullable: false),
                     RatingSum = table.Column<int>(type: "INTEGER", nullable: false),
                     RatingCount = table.Column<int>(type: "INTEGER", nullable: false),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
                 },
                 constraints: table =>
                 {

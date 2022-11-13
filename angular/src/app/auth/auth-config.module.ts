@@ -13,15 +13,15 @@ const authFactory = (isNative: boolean) => {
     authority: 'https://dev-2fwvrhka.us.auth0.com',
     redirectUrl: isNative ? callbackUri : window.location.origin,
     clientId: 'W6a2DDLMzlWPF6vZ5AKKNnFVonklSU0m',
-    scope: 'openid profile email offline_access',
+    scope: 'openid profile email offline_access access:api',
     responseType: 'code',
     silentRenew: true,
     useRefreshToken: true,
     postLogoutRedirectUri: window.location.origin,
-    // customParamsAuthRequest: {
-    //   audience: 'https://localhost:5001',
-    // },
-    // secureRoutes: ['https://localhost:5001'],
+    customParamsAuthRequest: {
+      audience: 'https://localhost:7019/',
+    },
+    secureRoutes: ['https://localhost:7019'],
   };
   return new StsConfigStaticLoader(config);
 };

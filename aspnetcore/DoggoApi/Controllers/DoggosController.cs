@@ -2,37 +2,44 @@
 using DoggoApi.Dtos;
 using DoggoApi.Entities;
 using DoggoApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Security.Claims;
 
 namespace DoggoApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize("access:api")]
     public class DoggosController : ControllerBase
     {
         private readonly IDoggoRepository _repository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public DoggosController(
             IDoggoRepository doggoRepository,
             IMapper mapper,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IHttpContextAccessor httpContextAccessor)
         {
             _repository = doggoRepository;
             _mapper = mapper;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
         [Route("value")]
+        [AllowAnonymous]
         public ActionResult GetTestValue()
         {
             return Ok(_configuration.GetValue<string>("TestName"));
         }
 
         [HttpGet(Name = nameof(GetAllDoggos))]
+        [AllowAnonymous]
         public ActionResult GetAllDoggos()
         {
             List<DoggoEntity> doggos = _repository.GetAll().ToList();
@@ -54,6 +61,22 @@ namespace DoggoApi.Controllers
             DoggoDto item = _mapper.Map<DoggoDto>(entity);
 
             return Ok(item);
+        }
+
+        [HttpGet]
+        [Route("my", Name = nameof(GetMyDoggos))]
+        public ActionResult GetMyDoggos()
+        {
+            string? userId = _httpContextAccessor.HttpContext?.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).SingleOrDefault()?.Value;
+
+            if (userId == null)
+            {
+                return Ok(null);
+            }
+
+            List<DoggoEntity> doggos = _repository.GetAllForUser(userId).ToList();
+
+            return Ok(_mapper.Map<DoggoDto[]>(doggos));
         }
 
         [HttpPost(Name = nameof(AddDoggo))]

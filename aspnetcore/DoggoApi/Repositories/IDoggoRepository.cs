@@ -9,6 +9,7 @@ namespace DoggoApi.Repositories
         void Delete(Guid id);
         DoggoEntity Update(DoggoEntity item);
         IQueryable<DoggoEntity> GetAll();
+        IQueryable<DoggoEntity> GetAllForUser(string userId);
         int Count();
         bool Save();
     }

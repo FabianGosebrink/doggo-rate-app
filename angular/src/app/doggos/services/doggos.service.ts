@@ -14,6 +14,10 @@ export class DoggosService {
     return this.http.get<Doggo[]>(`${environment.server}api/doggos`);
   }
 
+  getMyDoggos(): Observable<Doggo[]> {
+    return this.http.get<Doggo[]>(`${environment.server}api/doggos/my`);
+  }
+
   addDoggo(
     name: string,
     breed: string,

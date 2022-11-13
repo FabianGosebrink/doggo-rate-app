@@ -1,3 +1,4 @@
+import { selectUserSubject } from './../../auth/store/auth.selectors';
 import { UploadService } from './../services/upload.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -90,6 +91,20 @@ export class DoggosEffects {
               DoggosActions.loadDoggosFinished({ doggos }),
               DoggosActions.selectDoggo({ id: currentDoggoId }),
             ];
+          })
+        );
+      })
+    )
+  );
+
+  loadMyDoggos$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DoggosActions.loadMyDoggos),
+      concatLatestFrom(() => this.store.select(selectUserSubject)),
+      concatMap(([action, subject]) => {
+        return this.doggosService.getMyDoggos().pipe(
+          map((doggos) => {
+            return DoggosActions.loadMyDoggosFinished({ doggos });
           })
         );
       })

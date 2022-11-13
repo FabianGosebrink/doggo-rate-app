@@ -23,7 +23,8 @@ namespace DoggoApi.Services
                     Name = "Winston", 
                     RatingCount = 1, 
                     RatingSum = 5, 
-                    Created = DateTime.UtcNow 
+                    Created = DateTime.UtcNow,
+                    UserId = "auth0|636fa1daf2a83ac5dee785d1"
                 });
 
             context.SaveChanges();

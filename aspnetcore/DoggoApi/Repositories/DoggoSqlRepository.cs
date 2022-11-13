@@ -43,6 +43,11 @@ namespace DoggoApi.Repositories
             return _dbContext.Doggos;
         }
 
+        public IQueryable<DoggoEntity> GetAllForUser(string userId)
+        {
+            return _dbContext.Doggos.Where(x => x.UserId == userId);
+        }
+
         public int Count()
         {
             return _dbContext.Doggos.Count();

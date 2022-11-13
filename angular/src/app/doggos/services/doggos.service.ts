@@ -1,7 +1,7 @@
 import { HttpService } from './../../common/http.service';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import { map, timer, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Doggo } from '../models/doggo';
 
 @Injectable({

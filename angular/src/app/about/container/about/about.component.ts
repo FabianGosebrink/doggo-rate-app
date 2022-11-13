@@ -15,7 +15,6 @@ export class AboutComponent implements OnInit {
       map((info) => {
         const toReturn = {};
         Object.entries(info).forEach(([key, value]) => {
-          console.log(`${key}: ${value}`);
           toReturn[key] = value;
         });
 

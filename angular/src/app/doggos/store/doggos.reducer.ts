@@ -54,6 +54,7 @@ export const doggosReducer = createReducer<DoggoState>(
     return {
       ...state,
       doggos: [...state.doggos, doggo],
+      loading: false,
       lastAddedDoggo: doggo,
     };
   }),
@@ -62,10 +63,14 @@ export const doggosReducer = createReducer<DoggoState>(
     const doggos = [...state.doggos].filter(
       (existing) => existing.id !== doggo.id
     );
+    const myDoggos = [...state.myDoggos].filter(
+      (existing) => existing.id !== doggo.id
+    );
 
     return {
       ...state,
       doggos,
+      myDoggos,
     };
   })
 );

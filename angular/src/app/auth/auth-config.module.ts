@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { NgModule } from '@angular/core';
 import {
   AuthModule,
@@ -19,9 +20,9 @@ const authFactory = (isNative: boolean) => {
     useRefreshToken: true,
     postLogoutRedirectUri: window.location.origin,
     customParamsAuthRequest: {
-      audience: 'https://localhost:7019/',
+      audience: environment.server,
     },
-    secureRoutes: ['https://localhost:7019'],
+    secureRoutes: [environment.server],
   };
   return new StsConfigStaticLoader(config);
 };

@@ -1,20 +1,20 @@
-import { ShellModule } from './shell/shell.module';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { EffectsModule } from '@ngrx/effects';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AuthInterceptor } from 'angular-auth-oidc-client';
+import { environment } from '../environments/environment';
 import { routes } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { StoreModule } from '@ngrx/store';
-import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { EffectsModule } from '@ngrx/effects';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
-import { AuthConfigModule } from './auth/auth-config.module';
-import { authReducer } from './auth/store/auth.reducer';
-import { AuthInterceptor } from 'angular-auth-oidc-client';
+import { AuthenticationModule } from './auth/auth.module';
 import { AuthEffects } from './auth/store/auth.effects';
+import { authReducer } from './auth/store/auth.reducer';
+import { ShellModule } from './shell/shell.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,7 +34,7 @@ import { AuthEffects } from './auth/store/auth.effects';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    AuthConfigModule,
+    AuthenticationModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

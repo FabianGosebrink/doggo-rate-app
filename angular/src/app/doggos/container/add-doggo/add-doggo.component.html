@@ -51,7 +51,7 @@
     (change)="setFormData(fileInput.files)"
   />
 
-  <div *ngIf="!isNative">
+  <div *ngIf="!isMobile">
     <button class="mb-10" type="button" (click)="fileInput.click()">
       Choose File
     </button>
@@ -63,7 +63,7 @@
     <button
       type="button"
       class="btn btn-primary mb-10"
-      *ngIf="isNative"
+      *ngIf="isMobile"
       (click)="takePhoto()"
     >
       <i class="fa-solid fa-camera"></i> Take picture

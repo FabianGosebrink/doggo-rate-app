@@ -1,8 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Store } from '@ngrx/store';
-import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 import { AuthActions } from './auth/store/auth.actions';
 import { SignalRService } from './common/signalr.service';
 
@@ -17,14 +15,22 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store,
     private zone: NgZone,
-    private oidcSecurityService: OidcSecurityService,
     private signalRService: SignalRService
   ) {}
 
   ngOnInit(): void {
+    this.checkAuth('');
+
     this.signalRService.start();
 
-    this.checkAuth('');
+    if ((window as any).electronAPI) {
+      (window as any).electronAPI.authEvent((event, value) => {
+        console.log('Received Auth Event', value);
+        this.zone.run(() => {
+          this.checkAuth(value);
+        });
+      });
+    }
 
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
@@ -34,15 +40,10 @@ export class AppComponent implements OnInit {
   }
 
   private checkAuth(url: string) {
-    this.oidcSecurityService
-      .checkAuth(url)
-      .subscribe((response: LoginResponse) => {
-        this.store.dispatch(
-          AuthActions.loginComplete({
-            isLoggedIn: response.isAuthenticated,
-            profile: response.userData,
-          })
-        );
-      });
+    this.store.dispatch(
+      AuthActions.checkAuth({
+        url,
+      })
+    );
   }
 }

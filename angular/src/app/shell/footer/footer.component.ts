@@ -1,3 +1,4 @@
+import { PlatformInformationService } from './../../common/platform-information.service';
 import { getRealTimeConnection } from './../../doggos/store/doggos.selectors';
 import { environment } from './../../../environments/environment';
 import { selectCurrentUserIdentifier } from './../../auth/store/auth.selectors';
@@ -12,7 +13,7 @@ import { from, Observable } from 'rxjs';
   styleUrls: ['./footer.component.css'],
 })
 export class FooterComponent implements OnInit {
-  deviceInfo$: Observable<DeviceInfo>;
+  deviceInfo: string;
 
   userEmail$: Observable<string>;
 
@@ -20,12 +21,15 @@ export class FooterComponent implements OnInit {
 
   realTimeConnection$: Observable<string>;
 
-  constructor(private store: Store) {
+  constructor(
+    private store: Store,
+    private platformInformationService: PlatformInformationService
+  ) {
     this.userEmail$ = store.pipe(select(selectCurrentUserIdentifier));
     this.realTimeConnection$ = store.pipe(select(getRealTimeConnection));
   }
 
   ngOnInit(): void {
-    this.deviceInfo$ = from(Device.getInfo());
+    this.deviceInfo = this.platformInformationService.platform;
   }
 }

@@ -5,20 +5,34 @@ import {
   StsConfigLoader,
   StsConfigStaticLoader,
 } from 'angular-auth-oidc-client';
-import { IS_NATIVE } from '../common/is-native';
+import { PlatformInformationService } from '../common/platform-information.service';
 
-const callbackUri = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
+const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
+const webCallbackUrl = `${window.location.origin}/callback`;
+const desktopCallbackUrl = `http://localhost/callback`;
 
-const authFactory = (isNative: boolean) => {
+const authFactory = (
+  platformInformationService: PlatformInformationService
+) => {
+  let redirectUrl = webCallbackUrl;
+  let postLogoutRedirectUri = webCallbackUrl;
+  if (platformInformationService.isElectron) {
+    redirectUrl = desktopCallbackUrl;
+    postLogoutRedirectUri = desktopCallbackUrl;
+  } else if (platformInformationService.isMobile) {
+    redirectUrl = mobileCallbackUrl;
+    postLogoutRedirectUri = mobileCallbackUrl;
+  }
+
   const config = {
     authority: 'https://dev-2fwvrhka.us.auth0.com',
-    redirectUrl: isNative ? callbackUri : window.location.origin,
+    redirectUrl,
     clientId: 'W6a2DDLMzlWPF6vZ5AKKNnFVonklSU0m',
     scope: 'openid profile email offline_access access:api',
     responseType: 'code',
     silentRenew: true,
     useRefreshToken: true,
-    postLogoutRedirectUri: isNative ? callbackUri : window.location.origin,
+    postLogoutRedirectUri,
     customParamsAuthRequest: {
       audience: environment.server,
     },
@@ -33,7 +47,7 @@ const authFactory = (isNative: boolean) => {
       loader: {
         provide: StsConfigLoader,
         useFactory: authFactory,
-        deps: [IS_NATIVE],
+        deps: [PlatformInformationService],
       },
     }),
   ],

@@ -10,6 +10,8 @@ import { Observable, from, map } from 'rxjs';
 export class AboutComponent implements OnInit {
   deviceInfo$: Observable<{}>;
 
+  userAgent = window.navigator.userAgent;
+
   ngOnInit(): void {
     this.deviceInfo$ = from(Device.getInfo()).pipe(
       map((info) => {

@@ -1,6 +1,6 @@
 const { app, BrowserWindow, globalShortcut, ipcMain } = require("electron");
-
 const { buildTrayIcon } = require("./trayIcon");
+const path = require("path");
 
 let mainWindow = null;
 
@@ -17,8 +17,10 @@ const createWindow = () => {
     height: 768,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
+      preload: path.join(__dirname, "preload.js"),
     },
-    icon: __dirname + "/icon.ico",
+    icon: path.join(__dirname, "icon.ico"),
   });
 
   mainWindow.loadFile("index.html");
@@ -33,7 +35,7 @@ const createWindow = () => {
   });
 
   const filter = {
-    urls: ["https://localhost/callback*"],
+    urls: ["http://localhost/callback*", "http://localhost:4200/callback*"],
   };
 
   const {
@@ -41,6 +43,7 @@ const createWindow = () => {
   } = mainWindow.webContents;
 
   webRequest.onBeforeRequest(filter, ({ url }) => {
+    console.log("authEvent", url);
     mainWindow.webContents.send("authEvent", url);
   });
 

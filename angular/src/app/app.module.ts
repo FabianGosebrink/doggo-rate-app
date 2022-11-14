@@ -1,5 +1,5 @@
 import { ShellModule } from './shell/shell.module';
-import { InjectionToken, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { routes } from './app-routing.module';
@@ -10,16 +10,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { Capacitor } from '@capacitor/core';
 import { environment } from '../environments/environment';
-import { IS_NATIVE } from './common/is-native';
 import { AuthConfigModule } from './auth/auth-config.module';
 import { authReducer } from './auth/store/auth.reducer';
 import { AuthInterceptor } from 'angular-auth-oidc-client';
-
-const platformFactory = () => {
-  return Capacitor.isNativePlatform();
-};
+import { AuthEffects } from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +28,7 @@ const platformFactory = () => {
       router: routerReducer,
       auth: authReducer,
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -42,7 +37,6 @@ const platformFactory = () => {
     AuthConfigModule,
   ],
   providers: [
-    { provide: IS_NATIVE, useFactory: platformFactory },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

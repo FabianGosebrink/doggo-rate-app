@@ -1,22 +1,21 @@
-const { app, Menu, Tray } = require('electron');
-
-const path = require('path');
+const { app, Menu, Tray } = require("electron");
+const path = require("path");
 
 let buildTrayIcon = (mainWindow) => {
-  let trayIconPath = path.join(__dirname, 'icon.ico');
+  let trayIconPath = path.join(__dirname, "icon.ico");
 
   tray = new Tray(trayIconPath);
-  tray.setToolTip('my-electron-app');
+  tray.setToolTip("my-electron-app");
 
   var contextMenu = Menu.buildFromTemplate([
     {
-      label: 'Open application',
+      label: "Open application",
       click: function () {
         mainWindow.show();
       },
     },
     {
-      label: 'Quit',
+      label: "Quit",
       click: function () {
         app.isQuiting = true;
         app.quit();

@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --configuration development",
     "start:prod": "ng serve --configuration production",
-    "build": "ng build",
+    "build": "ng build --output-path=dist/apps/web",
     "build-dev": "ng build --configuration development",
     "cap:sync": "ng build && npx cap sync android",
     "watch": "ng build --watch --configuration development",
@@ -36,6 +36,7 @@
     "@ngrx/store-devtools": "^14.3.2",
     "angular-auth-oidc-client": "14.1.5",
     "base64-arraybuffer": "^1.0.2",
+    "electron": "^21.2.3",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

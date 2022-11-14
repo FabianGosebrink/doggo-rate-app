@@ -1,8 +1,4 @@
-import { selectIsLoggedIn } from './../../auth/store/auth.selectors';
-import { Observable } from 'rxjs';
-import { Component, Input, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navigation',
@@ -11,16 +7,16 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class NavigationComponent implements OnInit {
   @Input() loggedIn = false;
-
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  @Output() dologin = new EventEmitter();
+  @Output() doLogout = new EventEmitter();
 
   ngOnInit(): void {}
 
   login() {
-    this.oidcSecurityService.authorize();
+    this.dologin.emit();
   }
 
   logout() {
-    this.oidcSecurityService.logoff();
+    this.doLogout.emit();
   }
 }

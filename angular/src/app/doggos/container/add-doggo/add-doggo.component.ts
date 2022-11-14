@@ -1,11 +1,11 @@
+import { PlatformInformationService } from './../../../common/platform-information.service';
 import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
 import { Observable } from 'rxjs';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
 import { DoggosActions } from '../../store/doggos.actions';
 import { Doggo } from '../../models/doggo';
-import { IS_NATIVE } from 'src/app/common/is-native';
 import { MobileCameraService } from '../../services/mobile-camera.service';
 
 @Component({
@@ -27,11 +27,15 @@ export class AddDoggoComponent implements OnInit {
 
   private formData: FormData;
 
+  get isMobile() {
+    return this.platformInformationService.isMobile;
+  }
+
   constructor(
     private fb: FormBuilder,
     private store: Store,
     private mobileCameraService: MobileCameraService,
-    @Inject(IS_NATIVE) public isNative: boolean
+    private platformInformationService: PlatformInformationService
   ) {}
 
   ngOnInit(): void {

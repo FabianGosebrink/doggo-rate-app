@@ -1,4 +1,4 @@
-var shell = require("shelljs");
+const shell = require("shelljs");
 
 const BASE_HREF = "./";
 const OUTPUT_TEMP_PATH = ".temp/desktop";

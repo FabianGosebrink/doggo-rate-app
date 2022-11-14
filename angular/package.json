@@ -7,11 +7,10 @@
     "start:prod": "ng serve --configuration production",
     "build": "ng build --output-path=dist/apps/web",
     "build-dev": "ng build --configuration development",
-    "cap:sync": "ng build && npx cap sync android",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build-desktop": "node build/build-desktop.js",
-    "build:and:start:mobile": "npm run cap:sync && npx cap run android"
+    "build-mobile": "node build/build-mobile.js"
   },
   "private": true,
   "dependencies": {
@@ -26,6 +25,7 @@
     "@capacitor/android": "^4.4.0",
     "@capacitor/angular": "^2.0.3",
     "@capacitor/app": "^4.1.0",
+    "@capacitor/assets": "^2.0.1",
     "@capacitor/camera": "^4.1.3",
     "@capacitor/core": "latest",
     "@capacitor/device": "^4.0.1",

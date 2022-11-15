@@ -1,5 +1,5 @@
-import { Doggo } from './../doggos/models/doggo';
-import { environment } from './../../environments/environment';
+import { Doggo } from '../../doggos/models/doggo';
+import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import {
   HubConnection,
@@ -9,7 +9,7 @@ import {
 } from '@microsoft/signalr';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { DoggosActions } from '../doggos/store/doggos.actions';
+import { DoggosActions } from '../../doggos/store/doggos.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {

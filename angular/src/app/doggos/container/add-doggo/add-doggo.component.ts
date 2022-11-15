@@ -1,4 +1,4 @@
-import { PlatformInformationService } from './../../../common/platform-information.service';
+import { PlatformInformationService } from '../../../common/platform-information/platform-information.service';
 import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';

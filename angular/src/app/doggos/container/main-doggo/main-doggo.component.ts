@@ -1,4 +1,4 @@
-import { SignalRService } from './../../../common/signalr.service';
+import { SignalRService } from '../../../common/real-time/signalr.service';
 import {
   getAllDoggosButSelected,
   getLoading,

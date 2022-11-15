@@ -10,3 +10,6 @@ project(':capacitor-camera').projectDir = new File('../node_modules/@capacitor/c
 
 include ':capacitor-device'
 project(':capacitor-device').projectDir = new File('../node_modules/@capacitor/device/android')
+
+include ':capacitor-toast'
+project(':capacitor-toast').projectDir = new File('../node_modules/@capacitor/toast/android')

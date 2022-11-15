@@ -8,6 +8,7 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthInterceptor } from 'angular-auth-oidc-client';
+import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
 import { routes } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +36,9 @@ import { ShellModule } from './shell/shell.module';
       logOnly: environment.production,
     }),
     AuthenticationModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

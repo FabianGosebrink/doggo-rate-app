@@ -1,4 +1,4 @@
-import { PlatformInformationService } from './../../common/platform-information.service';
+import { PlatformInformationService } from '../../common/platform-information/platform-information.service';
 import { getRealTimeConnection } from './../../doggos/store/doggos.selectors';
 import { environment } from './../../../environments/environment';
 import { selectCurrentUserIdentifier } from './../../auth/store/auth.selectors';

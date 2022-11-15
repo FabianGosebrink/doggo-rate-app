@@ -48,6 +48,10 @@ const createWindow = () => {
   });
 
   buildTrayIcon(mainWindow);
+
+  if (process.platform === "win32") {
+    app.setAppUserModelId(app.name);
+  }
 };
 
 app.isReady() ? createWindow() : app.on("ready", createWindow);

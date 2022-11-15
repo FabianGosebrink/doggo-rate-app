@@ -1,7 +1,7 @@
 {
-  "name": "my-electron-app",
+  "name": "rate-my-doggo",
   "version": "0.0.1",
   "author": "Fabian Gosebrink",
-  "description": "My Electron app",
+  "description": "Rate My Doggo App",
   "main": "main.js"
 }

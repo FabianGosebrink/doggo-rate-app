@@ -1,21 +1,20 @@
-import { selectUserSubject } from './../../auth/store/auth.selectors';
-import { UploadService } from './../services/upload.service';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
-import { concatMap, EMPTY } from 'rxjs';
-import { map, tap } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { catchError, concatMap, map, of, tap } from 'rxjs';
+import { NotificationService } from '../../common/notifications/notification.service';
 import { selectQueryParams } from '../../router.selectors';
 import { Doggo } from '../models/doggo';
 import { DoggosService } from '../services/doggos.service';
+import { selectUserSubject } from './../../auth/store/auth.selectors';
+import { UploadService } from './../services/upload.service';
 import { DoggosActions } from './doggos.actions';
 import {
   getAllDoggos,
-  getSelectedDoggo,
   getNextDoggoIndex,
+  getSelectedDoggo,
 } from './doggos.selectors';
-import { EmptyExpr } from '@angular/compiler';
 
 @Injectable()
 export class DoggosEffects {
@@ -87,10 +86,17 @@ export class DoggosEffects {
           concatMap((doggos) => {
             const currentDoggoId = doggoId || doggos[0]?.id || '-1';
 
+            this.notificationService.showSuccess();
+
             return [
               DoggosActions.loadDoggosFinished({ doggos }),
               DoggosActions.selectDoggo({ id: currentDoggoId }),
             ];
+          }),
+          catchError(() => {
+            this.notificationService.showError();
+
+            return of(DoggosActions.loadDoggosError());
           })
         );
       })
@@ -150,6 +156,7 @@ export class DoggosEffects {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private doggosService: DoggosService,
-    private uploadService: UploadService
+    private uploadService: UploadService,
+    private notificationService: NotificationService
   ) {}
 }

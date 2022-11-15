@@ -6,12 +6,15 @@ export const DoggosActions = createActionGroup({
   events: {
     'Load Doggos': emptyProps(),
     'Load Doggos Finished': props<{ doggos: Doggo[] }>(),
+    'Load Doggos Error': emptyProps(),
 
     'Load My Doggos': emptyProps(),
     'Load My Doggos Finished': props<{ doggos: Doggo[] }>(),
+    'Load My Doggos Error': emptyProps(),
 
     'Rate Doggo': props<{ rating: number }>(),
     'Rate Doggo Finished': props<{ doggo: Doggo }>(),
+
     'Select Next Doggo': emptyProps(),
     'Select Doggo': props<{ id: string }>(),
 

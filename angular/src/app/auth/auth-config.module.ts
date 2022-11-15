@@ -5,7 +5,7 @@ import {
   StsConfigLoader,
   StsConfigStaticLoader,
 } from 'angular-auth-oidc-client';
-import { PlatformInformationService } from '../common/platform-information.service';
+import { PlatformInformationService } from '../common/platform-information/platform-information.service';
 
 const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
 const webCallbackUrl = `${window.location.origin}/callback`;

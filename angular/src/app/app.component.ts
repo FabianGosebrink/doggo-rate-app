@@ -2,7 +2,7 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Store } from '@ngrx/store';
 import { AuthActions } from './auth/store/auth.actions';
-import { SignalRService } from './common/signalr.service';
+import { SignalRService } from './common/real-time/signalr.service';
 
 @Component({
   selector: 'app-root',

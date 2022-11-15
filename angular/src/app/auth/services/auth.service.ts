@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
-import { PlatformInformationService } from '../../common/platform-information.service';
+import { PlatformInformationService } from '../../common/platform-information/platform-information.service';
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,4 @@
-import { HttpService } from './../../common/http.service';
+import { HttpService } from '../../common/http/http.service';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';

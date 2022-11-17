@@ -1,3 +1,4 @@
+import { AuthActions } from './../../auth/store/auth.actions';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
@@ -5,7 +6,6 @@ import { select, Store } from '@ngrx/store';
 import { catchError, concatMap, map, of, tap } from 'rxjs';
 import { NotificationService } from '../../common/notifications/notification.service';
 import { selectQueryParams } from '../../router.selectors';
-import { Doggo } from '../models/doggo';
 import { DoggosService } from '../services/doggos.service';
 import { selectUserSubject } from './../../auth/store/auth.selectors';
 import { UploadService } from './../services/upload.service';
@@ -88,7 +88,6 @@ export class DoggosEffects {
             return [
               DoggosActions.loadDoggosFinished({ doggos }),
               DoggosActions.selectDoggo({ id: currentDoggoId }),
-              DoggosActions.loadMyDoggos(),
             ];
           }),
           catchError(() => {
@@ -103,7 +102,7 @@ export class DoggosEffects {
 
   loadMyDoggos$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(DoggosActions.loadMyDoggos),
+      ofType(DoggosActions.loadMyDoggos, AuthActions.loginComplete),
       concatLatestFrom(() => this.store.select(selectUserSubject)),
       concatMap(([action, subject]) => {
         return this.doggosService

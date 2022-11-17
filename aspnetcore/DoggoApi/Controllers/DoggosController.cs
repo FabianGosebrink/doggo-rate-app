@@ -115,8 +115,6 @@ namespace DoggoApi.Controllers
             DoggoEntity? newItem = _repository.GetSingle(Guid.Parse(toAdd.Id));
             DoggoDto dto = _mapper.Map<DoggoDto>(newItem);
 
-            await _hubContext.Clients.All.SendAsync("DoggoAdded", dto);
-
             return CreatedAtRoute(nameof(GetSingleDoggo),
                 new { id = newItem?.Id }, dto);
         }

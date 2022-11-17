@@ -10,12 +10,12 @@ const routes: Routes = [
     component: MainDoggoComponent,
   },
   {
-    path: 'add',
-    component: AddDoggoComponent,
-  },
-  {
     path: 'my',
     component: MyDoggosComponent,
+  },
+  {
+    path: 'my/add',
+    component: AddDoggoComponent,
   },
 ];
 

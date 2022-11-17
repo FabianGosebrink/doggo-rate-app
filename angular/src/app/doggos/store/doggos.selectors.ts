@@ -1,7 +1,6 @@
-import { selectUserSubject } from './../../auth/store/auth.selectors';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { Doggo } from '../models/doggo';
-import { featureName, DoggoState } from './doggos.state';
+import { DoggoState, featureName } from './doggos.state';
 
 const getDoggoState = createFeatureSelector<DoggoState>(featureName);
 

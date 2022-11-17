@@ -1,5 +1,3 @@
-import { Doggo } from '../../doggos/models/doggo';
-import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import {
   HubConnection,
@@ -7,23 +5,13 @@ import {
   HubConnectionState,
   LogLevel,
 } from '@microsoft/signalr';
-import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { environment } from '../../../environments/environment';
 import { DoggosActions } from '../../doggos/store/doggos.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
   private connection: HubConnection;
-  private itemAddedInternal = new Subject<Doggo>();
-  private itemDeletedInternal = new Subject<string>();
-
-  get itemAdded() {
-    return this.itemAddedInternal.asObservable();
-  }
-
-  get itemDeleted() {
-    return this.itemDeletedInternal.asObservable();
-  }
 
   constructor(private store: Store) {}
 
@@ -81,10 +69,6 @@ export class SignalRService {
   }
 
   private registerOnServerEvents() {
-    this.connection.on('doggoadded', (doggo) => {
-      this.store.dispatch(DoggosActions.addDoggoRealtimeFinished({ doggo }));
-    });
-
     this.connection.on('doggodeleted', (id) => {
       this.store.dispatch(DoggosActions.deleteDoggoRealtimeFinished({ id }));
     });

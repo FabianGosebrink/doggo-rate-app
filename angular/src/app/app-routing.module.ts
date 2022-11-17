@@ -8,7 +8,6 @@ export const routes: Routes = [
     path: 'doggos',
     loadChildren: () =>
       import('./doggos/doggos.module').then((m) => m.DoggosModule),
-    canLoad: [AuthGuard],
   },
   {
     path: 'about',

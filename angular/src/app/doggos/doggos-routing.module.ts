@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddDoggoComponent } from './container/add-doggo/add-doggo.component';
 import { MyDoggosComponent } from './container/my-doggos/my-doggos.component';
+import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,10 +13,12 @@ const routes: Routes = [
   {
     path: 'my',
     component: MyDoggosComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'my/add',
     component: AddDoggoComponent,
+    canActivate: [AuthGuard],
   },
 ];
 

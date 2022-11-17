@@ -30,8 +30,8 @@ export class AuthGuard implements CanActivate, CanLoad {
   private handleAuth(url) {
     return this.oidcSecurityService.isAuthenticated$.pipe(
       take(1),
-      map((isLoggedIn) => {
-        if (!isLoggedIn) {
+      map(({ isAuthenticated }) => {
+        if (!isAuthenticated) {
           this.router.navigate(['']);
           return false;
         }

@@ -57,15 +57,6 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.addDoggoRealtimeFinished, (state, { doggo }) => {
-    return {
-      ...state,
-      doggos: [...state.doggos, doggo],
-      myDoggos: [...state.myDoggos, doggo],
-      loading: false,
-    };
-  }),
-
   on(DoggosActions.setRealTimeConnection, (state, { connection }) => {
     return {
       ...state,

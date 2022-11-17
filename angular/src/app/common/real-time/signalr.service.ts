@@ -38,25 +38,8 @@ export class SignalRService {
       .configureLogging(LogLevel.Information)
       .build();
 
-    this.connection.onreconnecting(() =>
-      this.store.dispatch(
-        DoggosActions.setRealTimeConnection({ connection: 'Reconnecting' })
-      )
-    );
-
-    this.connection.onreconnected(() =>
-      this.store.dispatch(
-        DoggosActions.setRealTimeConnection({ connection: 'On' })
-      )
-    );
-
-    this.connection.onclose(() =>
-      this.store.dispatch(
-        DoggosActions.setRealTimeConnection({ connection: 'Off' })
-      )
-    );
-
-    this.registerOnEvents();
+    this.registerOnCOnnectionEvents();
+    this.registerOnServerEvents();
 
     this.connection
       .start()
@@ -77,13 +60,37 @@ export class SignalRService {
     }
   }
 
-  private registerOnEvents() {
-    this.connection.on('DoggoAdded', (doggo) => {
+  private registerOnCOnnectionEvents() {
+    this.connection.onreconnecting(() =>
+      this.store.dispatch(
+        DoggosActions.setRealTimeConnection({ connection: 'Reconnecting' })
+      )
+    );
+
+    this.connection.onreconnected(() =>
+      this.store.dispatch(
+        DoggosActions.setRealTimeConnection({ connection: 'On' })
+      )
+    );
+
+    this.connection.onclose(() =>
+      this.store.dispatch(
+        DoggosActions.setRealTimeConnection({ connection: 'Off' })
+      )
+    );
+  }
+
+  private registerOnServerEvents() {
+    this.connection.on('doggoadded', (doggo) => {
       this.store.dispatch(DoggosActions.addDoggoRealtimeFinished({ doggo }));
     });
 
-    this.connection.on('DoggoDeleted', (id) => {
+    this.connection.on('doggodeleted', (id) => {
       this.store.dispatch(DoggosActions.deleteDoggoRealtimeFinished({ id }));
+    });
+
+    this.connection.on('doggorated', (doggo) => {
+      this.store.dispatch(DoggosActions.rateDoggoRealtimeFinished({ doggo }));
     });
   }
 }

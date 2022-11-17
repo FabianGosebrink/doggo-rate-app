@@ -1,22 +1,28 @@
 import { createReducer, on } from '@ngrx/store';
+import { Doggo } from '../models/doggo';
 import { DoggosActions } from './doggos.actions';
 import { DoggoState, initialState } from './doggos.state';
 
 export const doggosReducer = createReducer<DoggoState>(
   initialState,
 
-  on(
-    DoggosActions.loadDoggosFinished,
-    DoggosActions.loadMyDoggosFinished,
-    (state, { doggos }) => {
-      return {
-        ...state,
-        loading: false,
-        lastAddedDoggo: null,
-        doggos,
-      };
-    }
-  ),
+  on(DoggosActions.loadDoggosFinished, (state, { doggos }) => {
+    return {
+      ...state,
+      loading: false,
+      lastAddedDoggo: null,
+      doggos,
+    };
+  }),
+
+  on(DoggosActions.loadMyDoggosFinished, (state, { doggos }) => {
+    return {
+      ...state,
+      loading: false,
+      lastAddedDoggo: null,
+      myDoggos: doggos,
+    };
+  }),
 
   on(DoggosActions.addDoggoWithPicture, DoggosActions.loadDoggos, (state) => {
     return {
@@ -26,22 +32,18 @@ export const doggosReducer = createReducer<DoggoState>(
   }),
 
   on(DoggosActions.rateDoggoFinished, (state, { doggo }) => {
-    const currentDoggoIndex = state.doggos.findIndex((x) => x.id === doggo.id);
-    const allDoggosCopy = [...state.doggos];
-    allDoggosCopy.splice(currentDoggoIndex, 1, doggo);
-
     return {
       ...state,
-      doggos: allDoggosCopy,
+      doggos: replaceItemInArray(state.doggos, doggo),
     };
   }),
 
   on(DoggosActions.selectDoggo, (state, { id }) => {
-    const newSelectedDoggo = state.doggos.find((doggo) => doggo.id === id);
+    const selectedDoggo = state.doggos.find((doggo) => doggo.id === id);
 
     return {
       ...state,
-      selectedDoggo: newSelectedDoggo,
+      selectedDoggo,
     };
   }),
 
@@ -49,6 +51,7 @@ export const doggosReducer = createReducer<DoggoState>(
     return {
       ...state,
       doggos: [...state.doggos, doggo],
+      myDoggos: [...state.myDoggos, doggo],
       loading: false,
       lastAddedDoggo: doggo,
     };
@@ -58,6 +61,7 @@ export const doggosReducer = createReducer<DoggoState>(
     return {
       ...state,
       doggos: [...state.doggos, doggo],
+      myDoggos: [...state.myDoggos, doggo],
       loading: false,
     };
   }),
@@ -73,7 +77,8 @@ export const doggosReducer = createReducer<DoggoState>(
     DoggosActions.deleteDoggoFinished,
     DoggosActions.deleteDoggoRealtimeFinished,
     (state, { id }) => {
-      const doggos = [...state.doggos].filter((existing) => existing.id !== id);
+      const doggos = removeItemFromArray(state.doggos, id);
+      const myDoggos = removeItemFromArray(state.myDoggos, id);
 
       if (state.selectedDoggo?.id === id) {
         const currentIndex = state.doggos.findIndex((doggo) => doggo.id === id);
@@ -83,14 +88,28 @@ export const doggosReducer = createReducer<DoggoState>(
         return {
           ...state,
           doggos,
+          myDoggos,
           selectedDoggo,
         };
       }
 
       return {
         ...state,
+        myDoggos,
         doggos,
       };
     }
   )
 );
+
+function replaceItemInArray(array: Doggo[], newItem: Doggo): Doggo[] {
+  const currentDoggoIndex = array.findIndex((x) => x.id === newItem.id);
+  const allDoggosCopy = [...array];
+  allDoggosCopy.splice(currentDoggoIndex, 1, newItem);
+
+  return allDoggosCopy;
+}
+
+function removeItemFromArray(array: Doggo[], id: string): Doggo[] {
+  return [...array].filter((existing) => existing.id !== id);
+}

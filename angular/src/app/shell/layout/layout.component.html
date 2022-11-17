@@ -2,6 +2,7 @@
   [loggedIn]="isLoggedIn$ | async"
   (dologin)="login()"
   (doLogout)="logout()"
+  [doggoCount]="myDoggoCount$ | async"
 ></app-navigation>
 
 <router-outlet></router-outlet>

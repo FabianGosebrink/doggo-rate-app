@@ -11,10 +11,24 @@ export const getAllDoggos = createSelector(
 );
 
 export const getMyDoggos = createSelector(
-  getAllDoggos,
-  selectUserSubject,
-  (allDoggos: Doggo[], userSubject: string) =>
-    allDoggos.filter((doggo) => doggo.userId === userSubject)
+  getDoggoState,
+  (state: DoggoState) => state?.myDoggos || []
+);
+
+export const getAllIdsOfMyDoggos = createSelector(
+  getMyDoggos,
+  (myDoggos: Doggo[]) => {
+    if (myDoggos.length === 0) {
+      return [];
+    }
+
+    return myDoggos.map((x) => x.id);
+  }
+);
+
+export const getMyDoggosCount = createSelector(
+  getMyDoggos,
+  (myDoggos: Doggo[]) => myDoggos?.length || 0
 );
 
 export const getLoading = createSelector(

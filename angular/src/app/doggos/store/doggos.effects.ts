@@ -12,6 +12,7 @@ import { UploadService } from './../services/upload.service';
 import { DoggosActions } from './doggos.actions';
 import {
   getAllDoggos,
+  getAllIdsOfMyDoggos,
   getNextDoggoIndex,
   getSelectedDoggo,
 } from './doggos.selectors';
@@ -57,13 +58,9 @@ export class DoggosEffects {
         this.store.pipe(select(getNextDoggoIndex)),
       ]),
       concatMap(([{ rating }, selectedDoggo, allDoggos, nextDoggoIndex]) => {
-        const ratedCurrentDoggo: Doggo = {
-          ...selectedDoggo,
-          ratingCount: selectedDoggo.ratingCount + 1,
-          ratingSum: selectedDoggo.ratingSum + rating,
-        };
+        const { id } = selectedDoggo;
 
-        return this.doggosService.update(ratedCurrentDoggo).pipe(
+        return this.doggosService.rate(id, rating).pipe(
           concatMap((result) => {
             const newSelectedDoggo = allDoggos[nextDoggoIndex];
 
@@ -86,11 +83,12 @@ export class DoggosEffects {
           concatMap((doggos) => {
             const currentDoggoId = doggoId || doggos[0]?.id || '-1';
 
-            this.notificationService.showSuccess();
+            this.notificationService.showSuccess('Doggos Loaded');
 
             return [
               DoggosActions.loadDoggosFinished({ doggos }),
               DoggosActions.selectDoggo({ id: currentDoggoId }),
+              DoggosActions.loadMyDoggos(),
             ];
           }),
           catchError(() => {
@@ -108,11 +106,11 @@ export class DoggosEffects {
       ofType(DoggosActions.loadMyDoggos),
       concatLatestFrom(() => this.store.select(selectUserSubject)),
       concatMap(([action, subject]) => {
-        return this.doggosService.getMyDoggos().pipe(
-          map((doggos) => {
-            return DoggosActions.loadMyDoggosFinished({ doggos });
-          })
-        );
+        return this.doggosService
+          .getMyDoggos()
+          .pipe(
+            map((doggos) => DoggosActions.loadMyDoggosFinished({ doggos }))
+          );
       })
     )
   );
@@ -148,6 +146,23 @@ export class DoggosEffects {
         );
       })
     )
+  );
+
+  rateDoggoRealtimeFinished$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(DoggosActions.rateDoggoRealtimeFinished),
+        concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
+        tap(([{ doggo }, ids]) => {
+          const { name, id } = doggo;
+          const isMyDoggo = ids.includes(id);
+
+          if (isMyDoggo) {
+            this.notificationService.showSuccess(`${name} was just rated!!!`);
+          }
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

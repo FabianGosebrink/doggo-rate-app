@@ -15,6 +15,7 @@ namespace DoggoApi.Controllers
     [Authorize("access:api")]
     public class DoggosController : ControllerBase
     {
+        public const int MAX_DOGGO_RATING_VALUE = 5;
         private readonly IDoggoRepository _repository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
@@ -111,19 +112,57 @@ namespace DoggoApi.Controllers
                 throw new Exception("Creating an item failed on save.");
             }
 
-            DoggoEntity newItem = _repository.GetSingle(Guid.Parse(toAdd.Id));
+            DoggoEntity? newItem = _repository.GetSingle(Guid.Parse(toAdd.Id));
             DoggoDto dto = _mapper.Map<DoggoDto>(newItem);
 
             await _hubContext.Clients.All.SendAsync("DoggoAdded", dto);
 
             return CreatedAtRoute(nameof(GetSingleDoggo),
-                new { id = newItem.Id }, dto);
+                new { id = newItem?.Id }, dto);
         }
 
+        [HttpPut]
+        [Route("rate/{id:guid}", Name = nameof(RateDoggo))]
+        [AllowAnonymous]
+        public async Task<ActionResult<DoggoDto>> RateDoggo(Guid id, [FromBody] DoggoRateDto rateDto)
+        {
+            if (rateDto == null)
+            {
+                return BadRequest();
+            }
+
+            DoggoEntity? existingEntity = _repository.GetSingle(id);
+
+            if (existingEntity == null)
+            {
+                return NotFound();
+            }
+
+            if (rateDto.Value > MAX_DOGGO_RATING_VALUE)
+            {
+                return BadRequest();
+            }
+
+            existingEntity.RatingCount = existingEntity.RatingCount + 1;
+            existingEntity.RatingSum = existingEntity.RatingSum + rateDto.Value;
+
+            _repository.Update(existingEntity);
+
+            if (!_repository.Save())
+            {
+                throw new Exception("Updating an item failed on save.");
+            }
+
+            DoggoDto dto = _mapper.Map<DoggoDto>(existingEntity);
+
+            await _hubContext.Clients.All.SendAsync("DoggoRated", dto);
+
+            return Ok(dto);
+        }
 
         [HttpPut]
         [Route("{id:guid}", Name = nameof(UpdateDoggo))]
-        public ActionResult<DoggoDto> UpdateDoggo(Guid id, [FromBody] DoggoUpdateDto updateDto)
+        public async Task<ActionResult<DoggoDto>> UpdateDoggo(Guid id, [FromBody] DoggoUpdateDto updateDto)
         {
             if (updateDto == null)
             {
@@ -160,6 +199,8 @@ namespace DoggoApi.Controllers
 
             DoggoDto dto = _mapper.Map<DoggoDto>(existingEntity);
 
+            await _hubContext.Clients.All.SendAsync("DoggoUpdated", dto);
+
             return Ok(dto);
         }
 
@@ -167,7 +208,7 @@ namespace DoggoApi.Controllers
         [Route("{id:guid}", Name = nameof(RemoveDoggo))]
         public async Task<ActionResult> RemoveDoggo(Guid id)
         {
-            DoggoEntity existingEntity = _repository.GetSingle(id);
+            DoggoEntity? existingEntity = _repository.GetSingle(id);
 
             if (existingEntity == null)
             {

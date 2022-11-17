@@ -14,6 +14,7 @@ export const DoggosActions = createActionGroup({
 
     'Rate Doggo': props<{ rating: number }>(),
     'Rate Doggo Finished': props<{ doggo: Doggo }>(),
+    'Rate Doggo Realtime Finished': props<{ doggo: Doggo }>(),
 
     'Select Next Doggo': emptyProps(),
     'Select Doggo': props<{ id: string }>(),

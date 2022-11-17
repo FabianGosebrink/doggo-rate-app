@@ -1,7 +1,5 @@
 const shell = require("shelljs");
 
-const IMG_ASSETS = "assets/img";
-
 shell.echo("Start building mobile");
 
 console.log("build angular");

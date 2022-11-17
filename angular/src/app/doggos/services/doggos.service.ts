@@ -35,10 +35,9 @@ export class DoggosService {
       .pipe(map(() => doggo));
   }
 
-  update(doggo: Doggo): Observable<Doggo> {
-    return this.http.put<Doggo>(
-      `${environment.server}api/doggos/${doggo.id}`,
-      doggo
-    );
+  rate(id: string, value: number): Observable<Doggo> {
+    return this.http.put<Doggo>(`${environment.server}api/doggos/rate/${id}`, {
+      value,
+    });
   }
 }

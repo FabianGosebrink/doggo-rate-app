@@ -26,6 +26,8 @@ export const DoggosActions = createActionGroup({
       formData: FormData;
     }>(),
     'Add Doggo Finished': props<{ doggo: Doggo }>(),
+    'Add Doggo Realtime Finished': props<{ doggo: Doggo }>(),
+    'Add Doggo From Realtime': props<{ doggo: Doggo }>(),
 
     'Navigate To Last Added Doggo': props<{ id: string }>(),
     'Delete Doggo': props<{ doggo: Doggo }>(),

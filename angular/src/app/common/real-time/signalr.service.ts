@@ -69,6 +69,10 @@ export class SignalRService {
   }
 
   private registerOnServerEvents() {
+    this.connection.on('doggoadded', (doggo) => {
+      this.store.dispatch(DoggosActions.addDoggoRealtimeFinished({ doggo }));
+    });
+
     this.connection.on('doggodeleted', (id) => {
       this.store.dispatch(DoggosActions.deleteDoggoRealtimeFinished({ id }));
     });

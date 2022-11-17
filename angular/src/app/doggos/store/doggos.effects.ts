@@ -164,6 +164,21 @@ export class DoggosEffects {
     { dispatch: false }
   );
 
+  addDoggoRealtimeFinished$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DoggosActions.rateDoggoRealtimeFinished),
+      concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
+      map(([{ doggo }, ids]) => {
+        const { name, id } = doggo;
+        const isMyDoggo = ids.includes(id);
+
+        if (!isMyDoggo) {
+          return DoggosActions.addDoggoFromRealtime({ doggo });
+        }
+      })
+    )
+  );
+
   constructor(
     private actions$: Actions,
     private store: Store,

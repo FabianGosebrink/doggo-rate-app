@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { catchError, concatMap, map, of, tap } from 'rxjs';
+import { catchError, concatMap, EMPTY, map, of, tap } from 'rxjs';
 import { NotificationService } from '../../common/notifications/notification.service';
 import { selectQueryParams } from '../../router.selectors';
 import { DoggosService } from '../services/doggos.service';
@@ -168,13 +168,15 @@ export class DoggosEffects {
     this.actions$.pipe(
       ofType(DoggosActions.rateDoggoRealtimeFinished),
       concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
-      map(([{ doggo }, ids]) => {
-        const { name, id } = doggo;
+      concatMap(([{ doggo }, ids]) => {
+        const { id } = doggo;
         const isMyDoggo = ids.includes(id);
 
         if (!isMyDoggo) {
-          return DoggosActions.addDoggoFromRealtime({ doggo });
+          return [DoggosActions.addDoggoFromRealtime({ doggo })];
         }
+
+        return EMPTY;
       })
     )
   );

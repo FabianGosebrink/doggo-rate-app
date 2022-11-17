@@ -166,7 +166,7 @@ export class DoggosEffects {
 
   addDoggoRealtimeFinished$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(DoggosActions.rateDoggoRealtimeFinished),
+      ofType(DoggosActions.addDoggoRealtimeFinished),
       concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
       concatMap(([{ doggo }, ids]) => {
         const { id } = doggo;

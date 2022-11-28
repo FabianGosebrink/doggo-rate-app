@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.checkAuth('');
+    this.checkAuth(null);
 
     this.signalRService.start();
 

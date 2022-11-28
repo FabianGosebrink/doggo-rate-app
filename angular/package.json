@@ -35,7 +35,7 @@
     "@ngrx/router-store": "^14.3.2",
     "@ngrx/store": "^14.3.2",
     "@ngrx/store-devtools": "^14.3.2",
-    "angular-auth-oidc-client": "14.1.5",
+    "angular-auth-oidc-client": "^15.0.2",
     "base64-arraybuffer": "^1.0.2",
     "electron": "^21.2.3",
     "ngx-toastr": "^15.2.2",

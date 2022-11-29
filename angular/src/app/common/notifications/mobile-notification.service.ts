@@ -6,14 +6,14 @@ import { NotificationService } from './notification.service';
   providedIn: 'root',
 })
 export class MobileNotificationService implements NotificationService {
-  showError(message?: string, title?: string) {
+  showError(message?: string, title?: string): void {
     Toast.show({
       text: title || message || 'Error',
       position: 'bottom',
     }).then();
   }
 
-  showSuccess(message?: string, title?: string) {
+  showSuccess(message?: string, title?: string): void {
     Toast.show({
       text: title || message || 'Success',
       position: 'bottom',

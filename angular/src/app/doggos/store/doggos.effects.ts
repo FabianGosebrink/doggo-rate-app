@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { select, Store } from '@ngrx/store';
-import { catchError, concatMap, EMPTY, map, of, tap } from 'rxjs';
+import { catchError, concatMap, EMPTY, map, of, switchMap, tap } from 'rxjs';
 import { NotificationService } from '../../common/notifications/notification.service';
 import { selectQueryParams } from '../../router.selectors';
 import { DoggosService } from '../services/doggos.service';
@@ -114,7 +114,7 @@ export class DoggosEffects {
     )
   );
 
-  addDoggoPicture$ = createEffect(() =>
+  addDoggoWithPicture$ = createEffect(() =>
     this.actions$.pipe(
       ofType(DoggosActions.addDoggoWithPicture),
       concatMap(({ name, breed, comment, formData }) => {
@@ -167,16 +167,27 @@ export class DoggosEffects {
   addDoggoRealtimeFinished$ = createEffect(() =>
     this.actions$.pipe(
       ofType(DoggosActions.addDoggoRealtimeFinished),
-      concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
-      concatMap(([{ doggo }, ids]) => {
-        const { id } = doggo;
-        const isMyDoggo = ids.includes(id);
+      concatLatestFrom(() => this.store.select(selectUserSubject)),
+      concatMap(([{ doggo }, userSub]) => {
+        const { userId } = doggo;
+        const isMyDoggo = userId === userSub;
 
-        if (!isMyDoggo) {
-          return [DoggosActions.addDoggoFromRealtime({ doggo })];
+        if (isMyDoggo) {
+          return [
+            DoggosActions.addDoggoToAllDoggos({
+              doggo,
+            }),
+            DoggosActions.addDoggoToMyDoggos({
+              doggo,
+            }),
+          ];
         }
 
-        return EMPTY;
+        return [
+          DoggosActions.addDoggoToAllDoggos({
+            doggo,
+          }),
+        ];
       })
     )
   );

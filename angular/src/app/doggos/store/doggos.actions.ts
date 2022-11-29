@@ -27,7 +27,8 @@ export const DoggosActions = createActionGroup({
     }>(),
     'Add Doggo Finished': props<{ doggo: Doggo }>(),
     'Add Doggo Realtime Finished': props<{ doggo: Doggo }>(),
-    'Add Doggo From Realtime': props<{ doggo: Doggo }>(),
+    'Add Doggo To My Doggos': props<{ doggo: Doggo }>(),
+    'Add Doggo To All Doggos': props<{ doggo: Doggo }>(),
 
     'Navigate To Last Added Doggo': props<{ id: string }>(),
     'Delete Doggo': props<{ doggo: Doggo }>(),

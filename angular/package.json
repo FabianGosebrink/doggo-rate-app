@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --configuration development",
     "start:prod": "ng serve --configuration production",
-    "build": "ng build --output-path=dist/apps/web",
+    "build": "ng build --output-path=dist/web",
     "build-dev": "ng build --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

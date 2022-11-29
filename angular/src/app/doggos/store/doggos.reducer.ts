@@ -15,7 +15,7 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.addDoggoFromRealtime, (state, { doggo }) => {
+  on(DoggosActions.addDoggoToAllDoggos, (state, { doggo }) => {
     return {
       ...state,
       doggos: [...state.doggos, doggo],
@@ -55,13 +55,10 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.addDoggoFinished, (state, { doggo }) => {
+  on(DoggosActions.addDoggoToMyDoggos, (state, { doggo }) => {
     return {
       ...state,
-      doggos: [...state.doggos, doggo],
       myDoggos: [...state.myDoggos, doggo],
-      loading: false,
-      lastAddedDoggo: doggo,
     };
   }),
 

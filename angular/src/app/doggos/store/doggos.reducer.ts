@@ -59,6 +59,7 @@ export const doggosReducer = createReducer<DoggoState>(
     return {
       ...state,
       myDoggos: [...state.myDoggos, doggo],
+      lastAddedDoggo: doggo,
     };
   }),
 

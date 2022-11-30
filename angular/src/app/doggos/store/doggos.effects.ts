@@ -7,7 +7,10 @@ import { catchError, concatMap, EMPTY, map, of, switchMap, tap } from 'rxjs';
 import { NotificationService } from '../../common/notifications/notification.service';
 import { selectQueryParams } from '../../router.selectors';
 import { DoggosService } from '../services/doggos.service';
-import { selectUserSubject } from './../../auth/store/auth.selectors';
+import {
+  selectIsLoggedIn,
+  selectUserSubject,
+} from './../../auth/store/auth.selectors';
 import { UploadService } from './../services/upload.service';
 import { DoggosActions } from './doggos.actions';
 import {
@@ -96,6 +99,20 @@ export class DoggosEffects {
             return of(DoggosActions.loadDoggosError());
           })
         );
+      })
+    )
+  );
+
+  loadMyDoggosInitially$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DoggosActions.loadDoggosFinished),
+      concatLatestFrom(() => this.store.select(selectIsLoggedIn)),
+      concatMap(([_, isLoggedIn]) => {
+        if (isLoggedIn) {
+          return [DoggosActions.loadMyDoggos()];
+        }
+
+        return EMPTY;
       })
     )
   );

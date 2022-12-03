@@ -11,11 +11,13 @@ export function notificationFactory(
   mobileNotificationService: MobileNotificationService
 ): NotificationService {
   const { isElectron, isMobile } = platformInformationService;
+
   if (isElectron) {
     return desktopNotificationService;
   } else if (isMobile) {
     return mobileNotificationService;
   }
+
   return webNotificationService;
 }
 

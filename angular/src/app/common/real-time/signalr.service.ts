@@ -26,7 +26,7 @@ export class SignalRService {
       .configureLogging(LogLevel.Information)
       .build();
 
-    this.registerOnCOnnectionEvents();
+    this.registerOnConnectionEvents();
     this.registerOnServerEvents();
 
     this.connection
@@ -48,7 +48,7 @@ export class SignalRService {
     }
   }
 
-  private registerOnCOnnectionEvents() {
+  private registerOnConnectionEvents() {
     this.connection.onreconnecting(() =>
       this.store.dispatch(
         DoggosActions.setRealTimeConnection({ connection: 'Reconnecting' })

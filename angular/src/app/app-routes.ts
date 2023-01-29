@@ -4,8 +4,7 @@ import { CallbackComponent } from './shell/callback/callback.component';
 export const APP_ROUTES: Routes = [
   {
     path: 'doggos',
-    loadChildren: () =>
-      import('./doggos/doggos.module').then((m) => m.DoggosModule),
+    loadChildren: () => import('./doggos').then((m) => m.DOGGOS_ROUTES),
   },
   {
     path: 'about',

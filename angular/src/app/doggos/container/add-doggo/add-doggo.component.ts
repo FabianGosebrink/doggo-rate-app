@@ -1,17 +1,21 @@
-import { PlatformInformationService } from '../../../common/platform-information/platform-information.service';
-import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
-import { Observable } from 'rxjs';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Store, select } from '@ngrx/store';
-import { DoggosActions } from '../../store/doggos.actions';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { PlatformInformationService } from '../../../common/platform-information/platform-information.service';
 import { Doggo } from '../../models/doggo';
 import { MobileCameraService } from '../../services/mobile-camera.service';
+import { DoggosActions } from '../../store/doggos.actions';
+import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
 
 @Component({
   selector: 'app-add-doggo',
+  standalone: true,
   templateUrl: './add-doggo.component.html',
   styleUrls: ['./add-doggo.component.css'],
+  imports: [AsyncPipe, RouterLink, NgIf, ReactiveFormsModule],
 })
 export class AddDoggoComponent implements OnInit {
   formGroup = this.fb.group({

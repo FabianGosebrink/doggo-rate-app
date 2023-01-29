@@ -1,19 +1,23 @@
-import { SignalRService } from '../../../common/real-time/signalr.service';
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { Doggo } from '../../models/doggo';
+import { DoggoListComponent } from '../../presentational/doggo-list/doggo-list.component';
+import { DoggoRateComponent } from '../../presentational/doggo-rate/doggo-rate.component';
+import { DoggosActions } from '../../store/doggos.actions';
 import {
   getAllDoggosButSelected,
   getLoading,
   getSelectedDoggo,
 } from './../../store/doggos.selectors';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { Doggo } from '../../models/doggo';
-import { DoggosActions } from '../../store/doggos.actions';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-doggo',
   templateUrl: './main-doggo.component.html',
+  standalone: true,
   styleUrls: ['./main-doggo.component.css'],
+  imports: [AsyncPipe, DoggoListComponent, DoggoRateComponent, NgIf],
 })
 export class MainDoggoComponent implements OnInit {
   doggos$: Observable<Doggo[]>;

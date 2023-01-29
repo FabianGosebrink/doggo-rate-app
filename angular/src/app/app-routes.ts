@@ -1,8 +1,7 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { CallbackComponent } from './shell/callback/callback.component';
 
-export const routes: Routes = [
+export const APP_ROUTES: Routes = [
   {
     path: 'doggos',
     loadChildren: () =>
@@ -18,9 +17,3 @@ export const routes: Routes = [
   },
   { path: '', redirectTo: '/doggos', pathMatch: 'full' },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule {}

@@ -3,10 +3,10 @@ import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { provideEffects } from '@ngrx/effects';
-import { provideRouterStore, routerReducer } from '@ngrx/router-store';
-import { provideStore } from '@ngrx/store';
-import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
   AuthInterceptor,
   AuthModule,
@@ -65,14 +65,18 @@ bootstrapApplication(AppComponent, {
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideRouter(APP_ROUTES),
     provideHttpClient(),
-    provideStore({ router: routerReducer, auth: authReducer }),
-    provideRouterStore(),
-    provideEffects([AuthEffects]),
-    provideStoreDevtools({
-      maxAge: 25,
-      logOnly: environment.production,
-    }),
-
+    importProvidersFrom(
+      StoreModule.forRoot({
+        router: routerReducer,
+        auth: authReducer,
+      }),
+      EffectsModule.forRoot([AuthEffects]),
+      StoreRouterConnectingModule.forRoot(),
+      StoreDevtoolsModule.instrument({
+        maxAge: 25,
+        logOnly: environment.production,
+      })
+    ),
     importProvidersFrom(
       AuthModule.forRoot({
         loader: {

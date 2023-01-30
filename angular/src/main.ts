@@ -75,9 +75,7 @@ bootstrapApplication(AppComponent, {
       StoreDevtoolsModule.instrument({
         maxAge: 25,
         logOnly: environment.production,
-      })
-    ),
-    importProvidersFrom(
+      }),
       AuthModule.forRoot({
         loader: {
           provide: StsConfigLoader,

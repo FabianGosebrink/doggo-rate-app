@@ -3,11 +3,14 @@ import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Store } from '@ngrx/store';
 import { AuthActions } from './auth/store/auth.actions';
 import { SignalRService } from './common/real-time/signalr.service';
+import { LayoutComponent } from './shell/layout/layout.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
+  standalone: true,
   styleUrls: ['./app.component.css'],
+  imports: [LayoutComponent],
 })
 export class AppComponent implements OnInit {
   title = 'ratemydoggo';

@@ -40,9 +40,23 @@ export const doggosReducer = createReducer<DoggoState>(
   }),
 
   on(DoggosActions.rateDoggoFinished, (state, { doggo }) => {
+    const newDoggos = replaceItemInArray(state.doggos, doggo);
+
+    if (state.selectedDoggo.id === doggo.id) {
+      const updatedSelectedDoggo = newDoggos.find(
+        (dog) => dog.id === state.selectedDoggo.id
+      );
+
+      return {
+        ...state,
+        doggos: newDoggos,
+        selectedDoggo: updatedSelectedDoggo,
+      };
+    }
+
     return {
       ...state,
-      doggos: replaceItemInArray(state.doggos, doggo),
+      doggos: newDoggos,
     };
   }),
 

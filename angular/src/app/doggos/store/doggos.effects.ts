@@ -64,13 +64,10 @@ export class DoggosEffects {
         const { id } = selectedDoggo;
 
         return this.doggosService.rate(id, rating).pipe(
-          concatMap((result) => {
+          concatMap(() => {
             const newSelectedDoggo = allDoggos[nextDoggoIndex];
 
-            return [
-              DoggosActions.rateDoggoFinished({ doggo: result }),
-              DoggosActions.selectDoggo({ id: newSelectedDoggo.id }),
-            ];
+            return [DoggosActions.selectDoggo({ id: newSelectedDoggo.id })];
           })
         );
       })
@@ -164,21 +161,21 @@ export class DoggosEffects {
     )
   );
 
-  rateDoggoRealtimeFinished$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(DoggosActions.rateDoggoRealtimeFinished),
-        concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
-        tap(([{ doggo }, ids]) => {
-          const { name, id } = doggo;
-          const isMyDoggo = ids.includes(id);
+  rateDoggoRealtimeFinished$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(DoggosActions.rateDoggoRealtimeFinished),
+      concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
+      map(([{ doggo }, ids]) => {
+        const { name, id } = doggo;
+        const isMyDoggo = ids.includes(id);
 
-          if (isMyDoggo) {
-            this.notificationService.showSuccess(`${name} was just rated!!!`);
-          }
-        })
-      ),
-    { dispatch: false }
+        if (isMyDoggo) {
+          this.notificationService.showSuccess(`${name} was just rated!!!`);
+        }
+
+        return DoggosActions.rateDoggoFinished({ doggo });
+      })
+    )
   );
 
   addDoggoRealtimeFinished$ = createEffect(() =>

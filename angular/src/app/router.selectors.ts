@@ -1,5 +1,5 @@
 import {
-  getSelectors,
+  getRouterSelectors,
   RouterReducerState,
   SerializedRouterStateSnapshot,
 } from '@ngrx/router-store';
@@ -19,7 +19,7 @@ export const {
   selectRouteData, // select the current route data
   selectUrl, // select the current url
   selectTitle, // Select the title if available
-} = getSelectors();
+} = getRouterSelectors();
 
 export function getAllRouteParameters(snapshot: SerializedRouterStateSnapshot) {
   let route = snapshot.root;

@@ -1,7 +1,6 @@
-import { importProvidersFrom } from '@angular/core';
 import { Routes } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { createFeature, provideState } from '@ngrx/store';
 import { isAuthenticated } from '../auth/auth.guard';
 import { AddDoggoComponent } from './container/add-doggo/add-doggo.component';
 import { MainDoggoComponent } from './container/main-doggo/main-doggo.component';
@@ -10,18 +9,16 @@ import { DoggosEffects } from './store/doggos.effects';
 import { doggosReducer } from './store/doggos.reducer';
 import { featureName } from './store/doggos.state';
 
+export const doggosFeature = createFeature({
+  name: featureName,
+  reducer: doggosReducer,
+});
+
 export const DOGGOS_ROUTES: Routes = [
   {
     path: '',
     component: MainDoggoComponent,
-    providers: [
-      importProvidersFrom(
-        // register feature reducer
-        StoreModule.forFeature(featureName, doggosReducer),
-        // run feature effects
-        EffectsModule.forFeature([DoggosEffects])
-      ),
-    ],
+    providers: [provideState(doggosFeature), provideEffects([DoggosEffects])],
   },
   {
     path: 'my',

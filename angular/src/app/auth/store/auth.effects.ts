@@ -1,33 +1,49 @@
-import { LoginResponse } from 'angular-auth-oidc-client';
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { tap, concatMap, map, from } from 'rxjs';
+import { LoginResponse } from 'angular-auth-oidc-client';
+import { concatMap, from, map, tap } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { AuthActions } from './auth.actions';
 
-@Injectable()
-export class AuthEffects {
-  constructor(
-    private actions$: Actions,
-    private authService: AuthService,
-    private router: Router
-  ) {}
+export const login = createEffect(
+  (actions$ = inject(Actions), authService = inject(AuthService)) => {
+    return actions$.pipe(
+      ofType(AuthActions.login),
+      tap(() => authService.login())
+    );
+  },
+  { functional: true, dispatch: false }
+);
 
-  login$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.login),
-        tap(() => this.authService.login())
-      ),
-    { dispatch: false }
-  );
+export const logout = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    router = inject(Router)
+  ) => {
+    return actions$.pipe(
+      ofType(AuthActions.logout),
+      concatMap(() => from(router.navigate(['/doggos']))),
+      map(() => {
+        authService.logout();
+        return AuthActions.logoutComplete();
+      })
+    );
+  },
+  { functional: true }
+);
 
-  checkAuth$ = createEffect(() =>
-    this.actions$.pipe(
+export const checkAuth = createEffect(
+  (
+    actions$ = inject(Actions),
+    authService = inject(AuthService),
+    router = inject(Router)
+  ) => {
+    return actions$.pipe(
       ofType(AuthActions.checkAuth),
       concatMap(({ url }) =>
-        this.authService.checkAuth(url).pipe(
+        authService.checkAuth(url).pipe(
           map((response: LoginResponse) =>
             AuthActions.loginComplete({
               isLoggedIn: response.isAuthenticated,
@@ -36,17 +52,7 @@ export class AuthEffects {
           )
         )
       )
-    )
-  );
-
-  logout$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(AuthActions.logout),
-      concatMap(() => from(this.router.navigate(['/doggos']))),
-      map(() => {
-        this.authService.logout();
-        return AuthActions.logoutComplete();
-      })
-    )
-  );
-}
+    );
+  },
+  { functional: true }
+);

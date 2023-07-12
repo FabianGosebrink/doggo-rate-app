@@ -2,7 +2,7 @@ import { importProvidersFrom } from '@angular/core';
 import { Routes } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { AuthGuard } from '../auth/auth.guard';
+import { isAuthenticated } from '../auth/auth.guard';
 import { AddDoggoComponent } from './container/add-doggo/add-doggo.component';
 import { MainDoggoComponent } from './container/main-doggo/main-doggo.component';
 import { MyDoggosComponent } from './container/my-doggos/my-doggos.component';
@@ -26,11 +26,11 @@ export const DOGGOS_ROUTES: Routes = [
   {
     path: 'my',
     component: MyDoggosComponent,
-    canActivate: [AuthGuard],
+    canActivate: [isAuthenticated],
   },
   {
     path: 'my/add',
     component: AddDoggoComponent,
-    canActivate: [AuthGuard],
+    canActivate: [isAuthenticated],
   },
 ];

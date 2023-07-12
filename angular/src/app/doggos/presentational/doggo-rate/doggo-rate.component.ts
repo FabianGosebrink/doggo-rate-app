@@ -6,12 +6,13 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { timer } from 'rxjs';
 import { Doggo } from '../../models/doggo';
+
+const ANIMATION_DURATION = 1000;
 
 @Component({
   selector: 'app-doggo-rate',
@@ -21,13 +22,15 @@ import { Doggo } from '../../models/doggo';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fade', [
-      transition('* => fadeIn', [animate(1000, style({ opacity: 1 }))]),
+      transition('* => fadeIn', [
+        animate(ANIMATION_DURATION, style({ opacity: 1 })),
+      ]),
       transition('* => fadeOut', [animate(1200, style({ opacity: 0 }))]),
     ]),
   ],
   imports: [DecimalPipe, NgClass, NgIf],
 })
-export class DoggoRateComponent implements OnInit, OnChanges {
+export class DoggoRateComponent implements OnChanges {
   @Input() currentDoggo: Doggo | null = null;
   @Output() rated = new EventEmitter<number>();
   @Output() skipped = new EventEmitter();
@@ -36,8 +39,6 @@ export class DoggoRateComponent implements OnInit, OnChanges {
 
   status: 'fadeIn' | 'fadeOut' = 'fadeIn';
 
-  constructor() {}
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['currentDoggo'].currentValue) {
       this.averageRating = this.getAverageRating(this.currentDoggo);
@@ -45,13 +46,11 @@ export class DoggoRateComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {}
-
   rateDoggo(rating: number) {
     this.averageRating = rating;
     this.status = 'fadeOut';
 
-    timer(1000).subscribe(() => {
+    timer(ANIMATION_DURATION).subscribe(() => {
       this.rated.emit(rating);
     });
   }

@@ -1,8 +1,8 @@
 <app-navigation
-  [loggedIn]="isLoggedIn$ | async"
+  [loggedIn]="isLoggedIn()"
   (dologin)="login()"
   (doLogout)="logout()"
-  [doggoCount]="myDoggoCount$ | async"
+  [doggoCount]="myDoggoCount()"
 ></app-navigation>
 
 <router-outlet></router-outlet>

@@ -3,7 +3,7 @@
     <div class="d-flex flex-column bd-highlight mb-3">
       <span class="mb-3 mb-md-0 text-muted">Backend: {{ backendUrl }} </span>
       <span class="mb-3 mb-md-0 text-muted"
-        >RealTime: {{ realTimeConnection$ | async }}
+        >RealTime: {{ realTimeConnection() }}
       </span>
       <span class="mb-3 mb-md-0 text-muted"
         >&copy; 2023 Offering Solutions Software
@@ -13,9 +13,7 @@
       <span class="mb-3 mb-md-0 text-muted"
         >Running on platform "{{ deviceInfo }}"
       </span>
-      <span
-        class="mb-3 mb-md-0 text-muted"
-        *ngIf="userEmail$ | async as userEmail"
+      <span class="mb-3 mb-md-0 text-muted" *ngIf="userEmail()"
         >LoggedIn as {{ userEmail }}
       </span>
     </div>

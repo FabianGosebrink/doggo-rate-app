@@ -1,7 +1,6 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { PlatformInformationService } from '../../common/platform-information/platform-information.service';
 import { environment } from './../../../environments/environment';
 import { selectCurrentUserIdentifier } from './../../auth/store/auth.selectors';
@@ -12,26 +11,19 @@ import { getRealTimeConnection } from './../../doggos/store/doggos.selectors';
   templateUrl: './footer.component.html',
   standalone: true,
   styleUrls: ['./footer.component.css'],
-  imports: [AsyncPipe, NgIf],
+  imports: [NgIf],
 })
-export class FooterComponent implements OnInit {
-  deviceInfo: string;
+export class FooterComponent {
+  private readonly store = inject(Store);
+  private readonly platformInformationService = inject(
+    PlatformInformationService
+  );
 
-  userEmail$: Observable<string>;
+  deviceInfo = this.platformInformationService.platform;
+
+  userEmail = this.store.selectSignal(selectCurrentUserIdentifier);
 
   backendUrl = environment.server;
 
-  realTimeConnection$: Observable<string>;
-
-  constructor(
-    private store: Store,
-    private platformInformationService: PlatformInformationService
-  ) {
-    this.userEmail$ = store.pipe(select(selectCurrentUserIdentifier));
-    this.realTimeConnection$ = store.pipe(select(getRealTimeConnection));
-  }
-
-  ngOnInit(): void {
-    this.deviceInfo = this.platformInformationService.platform;
-  }
+  realTimeConnection = this.store.selectSignal(getRealTimeConnection);
 }

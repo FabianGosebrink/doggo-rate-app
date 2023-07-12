@@ -1,8 +1,6 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { getMyDoggosCount } from '../../doggos/store/doggos.selectors';
 import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
@@ -14,18 +12,13 @@ import { selectIsLoggedIn } from './../../auth/store/auth.selectors';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
   standalone: true,
-  imports: [FooterComponent, NavigationComponent, RouterModule, AsyncPipe],
+  imports: [FooterComponent, NavigationComponent, RouterModule],
 })
-export class LayoutComponent implements OnInit {
-  isLoggedIn$: Observable<boolean>;
-  myDoggoCount$: Observable<number>;
+export class LayoutComponent {
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {}
-
-  ngOnInit(): void {
-    this.isLoggedIn$ = this.store.pipe(select(selectIsLoggedIn));
-    this.myDoggoCount$ = this.store.pipe(select(getMyDoggosCount));
-  }
+  isLoggedIn = this.store.selectSignal(selectIsLoggedIn);
+  myDoggoCount = this.store.selectSignal(getMyDoggosCount);
 
   login() {
     this.store.dispatch(AuthActions.login());

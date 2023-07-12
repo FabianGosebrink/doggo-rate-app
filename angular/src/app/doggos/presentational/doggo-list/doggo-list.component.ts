@@ -4,7 +4,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 import { Doggo } from '../../models/doggo';
@@ -17,14 +16,10 @@ import { Doggo } from '../../models/doggo';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NgFor],
 })
-export class DoggoListComponent implements OnInit {
+export class DoggoListComponent {
   @Input() doggos: Doggo[] | null = [];
 
   @Output() doggoSelected = new EventEmitter<string>();
-
-  constructor() {}
-
-  ngOnInit(): void {}
 
   selectDoggo(doggo: Doggo) {
     this.doggoSelected.emit(doggo.id);

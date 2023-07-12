@@ -1,10 +1,10 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpService } from '../../common/http/http.service';
 import { environment } from './../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
 
 @Injectable({ providedIn: 'root' })
 export class UploadService {
-  constructor(private http: HttpClient) {}
+  private readonly http = inject(HttpService);
 
   upload(formData: FormData) {
     return this.http.post<{ path: string }>(

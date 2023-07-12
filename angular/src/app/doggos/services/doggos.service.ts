@@ -1,14 +1,14 @@
-import { HttpService } from '../../common/http/http.service';
-import { environment } from './../../../environments/environment';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { HttpService } from '../../common/http/http.service';
 import { Doggo } from '../models/doggo';
+import { environment } from './../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DoggosService {
-  constructor(private http: HttpService) {}
+  private readonly http = inject(HttpService);
 
   getDoggos(): Observable<Doggo[]> {
     return this.http.get<Doggo[]>(`${environment.server}api/doggos`);

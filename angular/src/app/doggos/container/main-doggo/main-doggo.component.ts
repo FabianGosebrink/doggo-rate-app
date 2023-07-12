@@ -1,8 +1,6 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Doggo } from '../../models/doggo';
+import { Component, OnInit, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { DoggoListComponent } from '../../presentational/doggo-list/doggo-list.component';
 import { DoggoRateComponent } from '../../presentational/doggo-rate/doggo-rate.component';
 import { DoggosActions } from '../../store/doggos.actions';
@@ -20,17 +18,13 @@ import {
   imports: [AsyncPipe, DoggoListComponent, DoggoRateComponent, NgIf],
 })
 export class MainDoggoComponent implements OnInit {
-  doggos$: Observable<Doggo[]>;
-  selectedDoggo$: Observable<Doggo | null>;
-  loading$: Observable<boolean>;
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {}
+  doggos = this.store.selectSignal(getAllDoggosButSelected);
+  selectedDoggo = this.store.selectSignal(getSelectedDoggo);
+  loading = this.store.selectSignal(getLoading);
 
   ngOnInit(): void {
-    this.doggos$ = this.store.pipe(select(getAllDoggosButSelected));
-    this.selectedDoggo$ = this.store.pipe(select(getSelectedDoggo));
-    this.loading$ = this.store.pipe(select(getLoading));
-
     this.store.dispatch(DoggosActions.loadDoggos());
   }
 

@@ -1,12 +1,12 @@
-import { AuthActions } from './../../auth/store/auth.actions';
-import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { select, Store } from '@ngrx/store';
-import { catchError, concatMap, EMPTY, map, of, switchMap, tap } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { EMPTY, catchError, concatMap, map, of, tap } from 'rxjs';
 import { NotificationService } from '../../common/notifications/notification.service';
 import { selectQueryParams } from '../../router.selectors';
 import { DoggosService } from '../services/doggos.service';
+import { AuthActions } from './../../auth/store/auth.actions';
 import {
   selectIsLoggedIn,
   selectUserSubject,
@@ -20,50 +20,55 @@ import {
   getSelectedDoggo,
 } from './doggos.selectors';
 
-@Injectable()
-export class DoggosEffects {
-  updateRoute$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(DoggosActions.selectDoggo),
-        tap(({ id }) => {
-          this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: { doggoId: id },
-            queryParamsHandling: 'merge',
-          });
-        })
-      ),
-    { dispatch: false }
-  );
+export const updateRoute = createEffect(
+  (actions$ = inject(Actions), router = inject(Router)) => {
+    return actions$.pipe(
+      ofType(DoggosActions.selectDoggo),
+      tap(({ id }) => {
+        router.navigate(['/doggos'], {
+          queryParams: { doggoId: id },
+        });
+      })
+    );
+  },
+  { functional: true, dispatch: false }
+);
 
-  selectNextDoggo$ = createEffect(() =>
-    this.actions$.pipe(
+export const selectNextDoggo = createEffect(
+  (actions$ = inject(Actions), store = inject(Store)) => {
+    return actions$.pipe(
       ofType(DoggosActions.selectNextDoggo),
       concatLatestFrom(() => [
-        this.store.pipe(select(getAllDoggos)),
-        this.store.pipe(select(getNextDoggoIndex)),
+        store.pipe(select(getAllDoggos)),
+        store.pipe(select(getNextDoggoIndex)),
       ]),
       map(([action, allDoggos, nextDoggoIndex]) => {
         const newSelectedDoggo = allDoggos[nextDoggoIndex];
 
         return DoggosActions.selectDoggo({ id: newSelectedDoggo.id });
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  rateDoggo$ = createEffect(() =>
-    this.actions$.pipe(
+export const rateDoggo = createEffect(
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    doggosService = inject(DoggosService)
+  ) => {
+    return actions$.pipe(
       ofType(DoggosActions.rateDoggo),
       concatLatestFrom(() => [
-        this.store.pipe(select(getSelectedDoggo)),
-        this.store.pipe(select(getAllDoggos)),
-        this.store.pipe(select(getNextDoggoIndex)),
+        store.pipe(select(getSelectedDoggo)),
+        store.pipe(select(getAllDoggos)),
+        store.pipe(select(getNextDoggoIndex)),
       ]),
       concatMap(([{ rating }, selectedDoggo, allDoggos, nextDoggoIndex]) => {
         const { id } = selectedDoggo;
 
-        return this.doggosService.rate(id, rating).pipe(
+        return doggosService.rate(id, rating).pipe(
           concatMap(() => {
             const newSelectedDoggo = allDoggos[nextDoggoIndex];
 
@@ -71,19 +76,27 @@ export class DoggosEffects {
           })
         );
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  loadDoggos$ = createEffect(() =>
-    this.actions$.pipe(
+export const loadDoggos = createEffect(
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    doggosService = inject(DoggosService),
+    notificationService = inject(NotificationService)
+  ) => {
+    return actions$.pipe(
       ofType(DoggosActions.loadDoggos),
-      concatLatestFrom(() => this.store.select(selectQueryParams)),
+      concatLatestFrom(() => store.select(selectQueryParams)),
       concatMap(([action, { doggoId }]) => {
-        return this.doggosService.getDoggos().pipe(
+        return doggosService.getDoggos().pipe(
           concatMap((doggos) => {
             const currentDoggoId = doggoId || doggos[0]?.id || '-1';
 
-            this.notificationService.showSuccess('Doggos Loaded');
+            notificationService.showSuccess('Doggos Loaded');
 
             return [
               DoggosActions.loadDoggosFinished({ doggos }),
@@ -91,19 +104,22 @@ export class DoggosEffects {
             ];
           }),
           catchError(() => {
-            this.notificationService.showError();
+            notificationService.showError();
 
             return of(DoggosActions.loadDoggosError());
           })
         );
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  loadMyDoggosInitially$ = createEffect(() =>
-    this.actions$.pipe(
+export const loadMyDoggosInitially = createEffect(
+  (actions$ = inject(Actions), store = inject(Store)) => {
+    return actions$.pipe(
       ofType(DoggosActions.loadDoggosFinished),
-      concatLatestFrom(() => this.store.select(selectIsLoggedIn)),
+      concatLatestFrom(() => store.select(selectIsLoggedIn)),
       concatMap(([_, isLoggedIn]) => {
         if (isLoggedIn) {
           return [DoggosActions.loadMyDoggos()];
@@ -111,77 +127,104 @@ export class DoggosEffects {
 
         return EMPTY;
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  loadMyDoggos$ = createEffect(() =>
-    this.actions$.pipe(
+export const loadMyDoggos = createEffect(
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    doggosService = inject(DoggosService)
+  ) => {
+    return actions$.pipe(
       ofType(DoggosActions.loadMyDoggos, AuthActions.loginComplete),
-      concatLatestFrom(() => this.store.select(selectUserSubject)),
+      concatLatestFrom(() => store.select(selectUserSubject)),
       concatMap(([action, subject]) => {
-        return this.doggosService
+        return doggosService
           .getMyDoggos()
           .pipe(
             map((doggos) => DoggosActions.loadMyDoggosFinished({ doggos }))
           );
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  addDoggoWithPicture$ = createEffect(() =>
-    this.actions$.pipe(
+export const loadMaddDoggoWithPictureyDoggos = createEffect(
+  (
+    actions$ = inject(Actions),
+    uploadService = inject(UploadService),
+    doggosService = inject(DoggosService)
+  ) => {
+    return actions$.pipe(
       ofType(DoggosActions.addDoggoWithPicture),
       concatMap(({ name, breed, comment, formData }) => {
-        return this.uploadService.upload(formData).pipe(
+        return uploadService.upload(formData).pipe(
           map(({ path }) => {
             return { name, breed, comment, path };
           })
         );
       }),
       concatMap(({ name, breed, comment, path }) => {
-        return this.doggosService.addDoggo(name, breed, comment, path).pipe(
+        return doggosService.addDoggo(name, breed, comment, path).pipe(
           map((doggo) => {
             return DoggosActions.addDoggoFinished({ doggo });
           })
         );
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  deleteDoggo$ = createEffect(() =>
-    this.actions$.pipe(
+export const deleteDoggo = createEffect(
+  (actions$ = inject(Actions), doggosService = inject(DoggosService)) => {
+    return actions$.pipe(
       ofType(DoggosActions.deleteDoggo),
       concatMap(({ doggo }) => {
-        return this.doggosService.deleteDoggo(doggo).pipe(
+        return doggosService.deleteDoggo(doggo).pipe(
           map((doggo) => {
             return DoggosActions.deleteDoggoFinished({ id: doggo.id });
           })
         );
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  rateDoggoRealtimeFinished$ = createEffect(() =>
-    this.actions$.pipe(
+export const rateDoggoRealtimeFinished = createEffect(
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    notificationService = inject(NotificationService)
+  ) => {
+    return actions$.pipe(
       ofType(DoggosActions.rateDoggoRealtimeFinished),
-      concatLatestFrom(() => this.store.select(getAllIdsOfMyDoggos)),
+      concatLatestFrom(() => store.select(getAllIdsOfMyDoggos)),
       map(([{ doggo }, ids]) => {
         const { name, id } = doggo;
         const isMyDoggo = ids.includes(id);
 
         if (isMyDoggo) {
-          this.notificationService.showSuccess(`${name} was just rated!!!`);
+          notificationService.showSuccess(`${name} was just rated!!!`);
         }
 
         return DoggosActions.rateDoggoFinished({ doggo });
       })
-    )
-  );
+    );
+  },
+  { functional: true }
+);
 
-  addDoggoRealtimeFinished$ = createEffect(() =>
-    this.actions$.pipe(
+export const addDoggoRealtimeFinished = createEffect(
+  (actions$ = inject(Actions), store = inject(Store)) => {
+    return actions$.pipe(
       ofType(DoggosActions.addDoggoRealtimeFinished),
-      concatLatestFrom(() => this.store.select(selectUserSubject)),
+      concatLatestFrom(() => store.select(selectUserSubject)),
       concatMap(([{ doggo }, userSub]) => {
         const { userId } = doggo;
         const isMyDoggo = userId === userSub;
@@ -203,16 +246,7 @@ export class DoggosEffects {
           }),
         ];
       })
-    )
-  );
-
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private doggosService: DoggosService,
-    private uploadService: UploadService,
-    private notificationService: NotificationService
-  ) {}
-}
+    );
+  },
+  { functional: true }
+);

@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { getMyDoggosCount } from '../../doggos/store/doggos.selectors';
 import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { AuthActions } from './../../auth/store/auth.actions';
@@ -18,7 +17,6 @@ export class LayoutComponent {
   private readonly store = inject(Store);
 
   isLoggedIn = this.store.selectSignal(selectIsLoggedIn);
-  myDoggoCount = this.store.selectSignal(getMyDoggosCount);
 
   login() {
     this.store.dispatch(AuthActions.login());

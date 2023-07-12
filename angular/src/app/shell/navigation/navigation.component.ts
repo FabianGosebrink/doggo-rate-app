@@ -11,7 +11,6 @@ import { RouterLink, RouterModule } from '@angular/router';
 })
 export class NavigationComponent implements OnInit {
   @Input() loggedIn = false;
-  @Input() doggoCount = 0;
   @Output() dologin = new EventEmitter();
   @Output() doLogout = new EventEmitter();
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   HubConnection,
   HubConnectionBuilder,
@@ -8,12 +8,13 @@ import {
 import { Store } from '@ngrx/store';
 import { environment } from '../../../environments/environment';
 import { DoggosActions } from '../../doggos/store/doggos.actions';
+import { RealtimeActions } from './store/realtime.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
   private connection: HubConnection;
 
-  constructor(private store: Store) {}
+  private readonly store = inject(Store);
 
   start() {
     if (this.connection?.state === HubConnectionState.Connected) {
@@ -33,7 +34,7 @@ export class SignalRService {
       .start()
       .then(() =>
         this.store.dispatch(
-          DoggosActions.setRealTimeConnection({ connection: 'On' })
+          RealtimeActions.setRealTimeConnection({ connection: 'On' })
         )
       )
       .catch((err) => console.log(err.toString()));
@@ -43,7 +44,7 @@ export class SignalRService {
     if (this.connection) {
       this.connection.stop();
       this.store.dispatch(
-        DoggosActions.setRealTimeConnection({ connection: 'Off' })
+        RealtimeActions.setRealTimeConnection({ connection: 'Off' })
       );
     }
   }
@@ -51,19 +52,19 @@ export class SignalRService {
   private registerOnConnectionEvents() {
     this.connection.onreconnecting(() =>
       this.store.dispatch(
-        DoggosActions.setRealTimeConnection({ connection: 'Reconnecting' })
+        RealtimeActions.setRealTimeConnection({ connection: 'Reconnecting' })
       )
     );
 
     this.connection.onreconnected(() =>
       this.store.dispatch(
-        DoggosActions.setRealTimeConnection({ connection: 'On' })
+        RealtimeActions.setRealTimeConnection({ connection: 'On' })
       )
     );
 
     this.connection.onclose(() =>
       this.store.dispatch(
-        DoggosActions.setRealTimeConnection({ connection: 'Off' })
+        RealtimeActions.setRealTimeConnection({ connection: 'Off' })
       )
     );
   }

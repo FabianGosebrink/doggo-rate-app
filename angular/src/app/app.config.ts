@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
@@ -6,10 +6,10 @@ import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideStore } from '@ngrx/store';
 import {
-  AuthInterceptor,
-  AuthModule,
   StsConfigLoader,
   StsConfigStaticLoader,
+  authInterceptor,
+  provideAuth,
 } from 'angular-auth-oidc-client';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
@@ -17,6 +17,7 @@ import { APP_ROUTES } from './app-routes';
 import * as authEffects from './auth/store/auth.effects';
 import { authReducer } from './auth/store/auth.reducer';
 import { PlatformInformationService } from './common/platform-information/platform-information.service';
+import { realtimeReducer } from './common/real-time/store/realtime.reducer';
 
 const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
 const webCallbackUrl = `${window.location.origin}/callback`;
@@ -54,23 +55,23 @@ const authFactory = (
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideRouter(APP_ROUTES),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor()])),
     provideEffects(authEffects),
     provideStore({
       router: routerReducer,
       auth: authReducer,
+      realtime: realtimeReducer,
     }),
     provideRouterStore(),
+    provideAuth({
+      loader: {
+        provide: StsConfigLoader,
+        useFactory: authFactory,
+        deps: [PlatformInformationService],
+      },
+    }),
     importProvidersFrom(
-      AuthModule.forRoot({
-        loader: {
-          provide: StsConfigLoader,
-          useFactory: authFactory,
-          deps: [PlatformInformationService],
-        },
-      }),
       ToastrModule.forRoot({
         positionClass: 'toast-bottom-right',
       }),

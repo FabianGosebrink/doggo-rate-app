@@ -61,11 +61,6 @@ export const getLastAddedDoggo = createSelector(
   (state: DoggoState) => state.lastAddedDoggo
 );
 
-export const getRealTimeConnection = createSelector(
-  getDoggoState,
-  (state: DoggoState) => state?.realTimeConnection || ''
-);
-
 export const getAllDoggosButSelected = createSelector(
   getAllDoggos,
   getSelectedDoggo,

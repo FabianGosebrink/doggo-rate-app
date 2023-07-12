@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./callback.component.css'],
 })
 export class CallbackComponent implements OnInit {
-  constructor(private router: Router) {}
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     // THIS IS JUST A PLACEHOLDER TO HAVE A REDIRECT FROM THE IDP

@@ -2,9 +2,9 @@ import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PlatformInformationService } from '../../common/platform-information/platform-information.service';
+import { getRealTimeConnection } from '../../common/real-time/store/realtime.selectors';
 import { environment } from './../../../environments/environment';
 import { selectCurrentUserIdentifier } from './../../auth/store/auth.selectors';
-import { getRealTimeConnection } from './../../doggos/store/doggos.selectors';
 
 @Component({
   selector: 'app-footer',

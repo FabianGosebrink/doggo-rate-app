@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { NotificationService } from './notification.service';
 
@@ -6,7 +6,7 @@ import { NotificationService } from './notification.service';
   providedIn: 'root',
 })
 export class WebNotificationService implements NotificationService {
-  constructor(private toastr: ToastrService) {}
+  private readonly toastr = inject(ToastrService);
 
   showError(message?: string, title?: string): void {
     message = message || 'There was an error';

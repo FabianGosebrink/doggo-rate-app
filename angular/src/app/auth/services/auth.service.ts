@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { PlatformInformationService } from '../../common/platform-information/platform-information.service';
 
@@ -7,11 +7,10 @@ import { PlatformInformationService } from '../../common/platform-information/pl
 })
 export class AuthService {
   private modal: Window;
-
-  constructor(
-    private oidcSecurityService: OidcSecurityService,
-    private platformInformationService: PlatformInformationService
-  ) {}
+  private readonly oidcSecurityService = inject(OidcSecurityService);
+  private readonly platformInformationService = inject(
+    PlatformInformationService
+  );
 
   login() {
     if (this.platformInformationService.isElectron) {

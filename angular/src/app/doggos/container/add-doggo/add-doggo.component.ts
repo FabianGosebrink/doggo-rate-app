@@ -1,11 +1,9 @@
-import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { PlatformInformationService } from '../../../common/platform-information/platform-information.service';
-import { Doggo } from '../../models/doggo';
 import { MobileCameraService } from '../../services/mobile-camera.service';
 import { DoggosActions } from '../../store/doggos.actions';
 import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
@@ -15,17 +13,24 @@ import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
   standalone: true,
   templateUrl: './add-doggo.component.html',
   styleUrls: ['./add-doggo.component.css'],
-  imports: [AsyncPipe, RouterLink, NgIf, ReactiveFormsModule],
+  imports: [RouterLink, NgIf, ReactiveFormsModule],
 })
-export class AddDoggoComponent implements OnInit {
+export class AddDoggoComponent {
+  private readonly fb = inject(FormBuilder);
+  private readonly store = inject(Store);
+  private readonly mobileCameraService = inject(MobileCameraService);
+  private readonly platformInformationService = inject(
+    PlatformInformationService
+  );
+
   formGroup = this.fb.group({
     name: ['', Validators.required],
     breed: ['', Validators.required],
     comment: ['', Validators.required],
   });
 
-  lastAddedDoggo$: Observable<Doggo>;
-  loading$: Observable<boolean>;
+  lastAddedDoggo = this.store.selectSignal(getLastAddedDoggo);
+  loading = this.store.selectSignal(getLoading);
 
   filename = '';
 
@@ -33,18 +38,6 @@ export class AddDoggoComponent implements OnInit {
 
   get isMobile() {
     return this.platformInformationService.isMobile;
-  }
-
-  constructor(
-    private fb: FormBuilder,
-    private store: Store,
-    private mobileCameraService: MobileCameraService,
-    private platformInformationService: PlatformInformationService
-  ) {}
-
-  ngOnInit(): void {
-    this.lastAddedDoggo$ = this.store.pipe(select(getLastAddedDoggo));
-    this.loading$ = this.store.pipe(select(getLoading));
   }
 
   setFormData(files) {

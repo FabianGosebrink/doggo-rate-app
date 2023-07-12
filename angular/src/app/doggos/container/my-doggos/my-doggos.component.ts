@@ -1,8 +1,7 @@
-import { AsyncPipe, DatePipe, DecimalPipe, NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { DatePipe, DecimalPipe, NgFor } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { Doggo } from '../../models/doggo';
 import { DoggosActions } from '../../store/doggos.actions';
 import { getMyDoggos } from './../../store/doggos.selectors';
@@ -12,14 +11,12 @@ import { getMyDoggos } from './../../store/doggos.selectors';
   standalone: true,
   templateUrl: './my-doggos.component.html',
   styleUrls: ['./my-doggos.component.css'],
-  imports: [AsyncPipe, RouterLink, DatePipe, DecimalPipe, NgFor],
+  imports: [RouterLink, DatePipe, DecimalPipe, NgFor],
 })
 export class MyDoggosComponent implements OnInit {
-  doggos$: Observable<Doggo[]>;
+  private readonly store = inject(Store);
 
-  constructor(private store: Store) {
-    this.doggos$ = this.store.pipe(select(getMyDoggos));
-  }
+  doggos = this.store.selectSignal(getMyDoggos);
 
   ngOnInit(): void {
     this.store.dispatch(DoggosActions.loadMyDoggos());

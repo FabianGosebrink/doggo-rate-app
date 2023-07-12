@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DoggoListComponent } from '../../presentational/doggo-list/doggo-list.component';
@@ -15,7 +15,7 @@ import {
   templateUrl: './main-doggo.component.html',
   standalone: true,
   styleUrls: ['./main-doggo.component.css'],
-  imports: [AsyncPipe, DoggoListComponent, DoggoRateComponent, NgIf],
+  imports: [DoggoListComponent, DoggoRateComponent, NgIf],
 })
 export class MainDoggoComponent implements OnInit {
   private readonly store = inject(Store);

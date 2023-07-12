@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, inject } from '@angular/core';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Store } from '@ngrx/store';
 import { AuthActions } from './auth/store/auth.actions';
@@ -15,11 +15,9 @@ import { LayoutComponent } from './shell/layout/layout.component';
 export class AppComponent implements OnInit {
   title = 'ratemydoggo';
 
-  constructor(
-    private store: Store,
-    private zone: NgZone,
-    private signalRService: SignalRService
-  ) {}
+  private store = inject(Store);
+  private signalRService = inject(SignalRService);
+  private zone = inject(NgZone);
 
   ngOnInit(): void {
     this.checkAuth(null);

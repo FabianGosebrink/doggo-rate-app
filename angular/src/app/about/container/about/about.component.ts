@@ -1,36 +1,21 @@
-import {
-  AsyncPipe,
-  JsonPipe,
-  KeyValuePipe,
-  NgFor,
-  NgIf,
-} from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { JsonPipe, KeyValuePipe, NgFor, NgIf } from '@angular/common';
+import { Component, OnInit, signal } from '@angular/core';
 import { Device } from '@capacitor/device';
-import { from, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
   standalone: true,
   styleUrls: ['./about.component.css'],
-  imports: [JsonPipe, NgFor, KeyValuePipe, NgIf, AsyncPipe],
+  imports: [JsonPipe, NgFor, KeyValuePipe, NgIf],
 })
 export class AboutComponent implements OnInit {
-  deviceInfo$: Observable<{}>;
+  deviceInfo = signal<any>({});
 
   userAgent = window.navigator.userAgent;
 
-  ngOnInit(): void {
-    this.deviceInfo$ = from(Device.getInfo()).pipe(
-      map((info) => {
-        const toReturn = {};
-        Object.entries(info).forEach(([key, value]) => {
-          toReturn[key] = value;
-        });
-
-        return toReturn;
-      })
-    );
+  async ngOnInit(): Promise<void> {
+    const deviceInfo = await Device.getInfo();
+    this.deviceInfo.set(deviceInfo);
   }
 }

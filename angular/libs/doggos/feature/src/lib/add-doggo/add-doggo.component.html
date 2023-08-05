@@ -1,15 +1,11 @@
 <h2>Add new Doggo</h2>
-<div
-  *ngIf="lastAddedDoggo$ | async as lastAddedDoggo"
-  class="alert alert-success mt-3"
-  role="alert"
->
+<div *ngIf="lastAddedDoggo()" class="alert alert-success mt-3" role="alert">
   Doggo added!
   <a
     [routerLink]="['/doggos']"
-    [queryParams]="{ doggoId: lastAddedDoggo.id }"
+    [queryParams]="{ doggoId: lastAddedDoggo().id }"
     class="alert-link"
-    >to {{ lastAddedDoggo.name }}</a
+    >to {{ lastAddedDoggo().name }}</a
   >
 </div>
 
@@ -63,12 +59,12 @@
     <button
       type="submit"
       class="btn btn-primary mt-6"
-      [disabled]="!formGroup.valid || (loading$ | async) === true"
+      [disabled]="!formGroup.valid || loading() === true"
     >
       <div
         class="spinner-border spinner-border-sm"
         role="status"
-        *ngIf="(loading$ | async) === true"
+        *ngIf="loading() === true"
       >
         <span class="visually-hidden">Loading...</span>
       </div>

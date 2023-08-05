@@ -1,13 +1,12 @@
 import { AsyncPipe, DatePipe, DecimalPipe, NgFor } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
   Doggo,
   DoggosActions,
   getMyDoggos,
 } from '@ps-doggo-rating/doggos/domain';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-my-doggos',
@@ -19,11 +18,9 @@ import { Observable } from 'rxjs';
 export class MyDoggosComponent implements OnInit {
   private readonly store = inject(Store);
 
-  doggos$: Observable<Doggo[]>;
+  doggos = this.store.selectSignal(getMyDoggos);
 
   ngOnInit(): void {
-    this.doggos$ = this.store.pipe(select(getMyDoggos));
-
     this.store.dispatch(DoggosActions.loadMyDoggos());
   }
 

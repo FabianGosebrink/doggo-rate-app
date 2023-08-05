@@ -12,7 +12,8 @@ import {
   selectQueryParams,
 } from '@ps-doggo-rating/shared/util-common';
 import { EMPTY, catchError, concatMap, map, of, tap } from 'rxjs';
-import { DoggosService } from '../services/doggos.service';
+import { DoggosApiService } from '../services/doggos-api.service';
+import { SignalRService } from '../services/signalr.service';
 import { UploadService } from './../services/upload.service';
 import { DoggosActions } from './doggos.actions';
 import {
@@ -21,6 +22,26 @@ import {
   getNextDoggoIndex,
   getSelectedDoggo,
 } from './doggos.selectors';
+
+export const startListeningToRealTimeDoggoEvents = createEffect(
+  (actions$ = inject(Actions), signalRService = inject(SignalRService)) => {
+    return actions$.pipe(
+      ofType(DoggosActions.startListeningToRealtimeDoggoEvents),
+      tap(() => signalRService.start())
+    );
+  },
+  { functional: true, dispatch: false }
+);
+
+export const stopListeningToRealtimeDoggoEvents = createEffect(
+  (actions$ = inject(Actions), signalRService = inject(SignalRService)) => {
+    return actions$.pipe(
+      ofType(DoggosActions.stopListeningToRealtimeDoggoEvents),
+      tap(() => signalRService.stop())
+    );
+  },
+  { functional: true, dispatch: false }
+);
 
 export const updateRoute = createEffect(
   (actions$ = inject(Actions), router = inject(Router)) => {
@@ -58,7 +79,7 @@ export const rateDoggo = createEffect(
   (
     actions$ = inject(Actions),
     store = inject(Store),
-    doggosService = inject(DoggosService)
+    doggosService = inject(DoggosApiService)
   ) => {
     return actions$.pipe(
       ofType(DoggosActions.rateDoggo),
@@ -87,7 +108,7 @@ export const loadDoggos = createEffect(
   (
     actions$ = inject(Actions),
     store = inject(Store),
-    doggosService = inject(DoggosService),
+    doggosService = inject(DoggosApiService),
     notificationService = inject(NotificationService)
   ) => {
     return actions$.pipe(
@@ -138,7 +159,7 @@ export const loadMyDoggos = createEffect(
   (
     actions$ = inject(Actions),
     store = inject(Store),
-    doggosService = inject(DoggosService)
+    doggosService = inject(DoggosApiService)
   ) => {
     return actions$.pipe(
       ofType(DoggosActions.loadMyDoggos, AuthActions.loginComplete),
@@ -159,7 +180,7 @@ export const loadMaddDoggoWithPictureyDoggos = createEffect(
   (
     actions$ = inject(Actions),
     uploadService = inject(UploadService),
-    doggosService = inject(DoggosService)
+    doggosService = inject(DoggosApiService)
   ) => {
     return actions$.pipe(
       ofType(DoggosActions.addDoggoWithPicture),
@@ -183,7 +204,7 @@ export const loadMaddDoggoWithPictureyDoggos = createEffect(
 );
 
 export const deleteDoggo = createEffect(
-  (actions$ = inject(Actions), doggosService = inject(DoggosService)) => {
+  (actions$ = inject(Actions), doggosService = inject(DoggosApiService)) => {
     return actions$.pipe(
       ofType(DoggosActions.deleteDoggo),
       concatMap(({ doggo }) => {

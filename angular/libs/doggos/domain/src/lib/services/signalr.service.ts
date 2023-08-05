@@ -2,24 +2,20 @@ import { Injectable, inject } from '@angular/core';
 import {
   HubConnection,
   HubConnectionBuilder,
-  HubConnectionState,
   LogLevel,
 } from '@microsoft/signalr';
 import { Store } from '@ngrx/store';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
-import { RealtimeActions } from './store/realtime.actions';
+import { RealtimeActions } from '@ps-doggo-rating/shared/util-real-time';
+import { DoggosActions } from '../state/doggos.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
-  private connection: HubConnection;
+  connection: HubConnection;
 
   private readonly store = inject(Store);
 
   start() {
-    if (this.connection?.state === HubConnectionState.Connected) {
-      return;
-    }
-
     this.connection = new HubConnectionBuilder()
       .withUrl(`${environment.server}doggoHub`)
       .withAutomaticReconnect()
@@ -27,7 +23,7 @@ export class SignalRService {
       .build();
 
     this.registerOnConnectionEvents();
-    this.registerOnServerEvents();
+    this.registerOnDoggoEvents();
 
     this.connection
       .start()
@@ -68,15 +64,15 @@ export class SignalRService {
     );
   }
 
-  private registerOnServerEvents() {
-    // this.connection.on('doggoadded', (doggo) => {
-    //   this.store.dispatch(DoggosActions.addDoggoRealtimeFinished({ doggo }));
-    // });
-    // this.connection.on('doggodeleted', (id) => {
-    //   this.store.dispatch(DoggosActions.deleteDoggoRealtimeFinished({ id }));
-    // });
-    // this.connection.on('doggorated', (doggo) => {
-    //   this.store.dispatch(DoggosActions.rateDoggoRealtimeFinished({ doggo }));
-    // });
+  private registerOnDoggoEvents() {
+    this.connection.on('doggoadded', (doggo) => {
+      this.store.dispatch(DoggosActions.addDoggoRealtimeFinished({ doggo }));
+    });
+    this.connection.on('doggodeleted', (id) => {
+      this.store.dispatch(DoggosActions.deleteDoggoRealtimeFinished({ id }));
+    });
+    this.connection.on('doggorated', (doggo) => {
+      this.store.dispatch(DoggosActions.rateDoggoRealtimeFinished({ doggo }));
+    });
   }
 }

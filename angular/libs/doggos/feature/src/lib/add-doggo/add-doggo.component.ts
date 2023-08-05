@@ -1,15 +1,13 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
-  Doggo,
   DoggosActions,
   getLastAddedDoggo,
   getLoading,
 } from '@ps-doggo-rating/doggos/domain';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-doggo',
@@ -18,7 +16,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./add-doggo.component.css'],
   imports: [AsyncPipe, RouterLink, NgIf, ReactiveFormsModule],
 })
-export class AddDoggoComponent implements OnInit {
+export class AddDoggoComponent {
   private readonly fb = inject(FormBuilder);
   private readonly store = inject(Store);
 
@@ -28,17 +26,12 @@ export class AddDoggoComponent implements OnInit {
     comment: ['', Validators.required],
   });
 
-  lastAddedDoggo$: Observable<Doggo>;
-  loading$: Observable<boolean>;
+  lastAddedDoggo = this.store.selectSignal(getLastAddedDoggo);
+  loading = this.store.selectSignal(getLoading);
 
   filename = '';
 
   private formData: FormData;
-
-  ngOnInit(): void {
-    this.lastAddedDoggo$ = this.store.pipe(select(getLastAddedDoggo));
-    this.loading$ = this.store.pipe(select(getLoading));
-  }
 
   setFormData(files) {
     if (files[0]) {

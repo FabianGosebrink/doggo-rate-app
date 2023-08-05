@@ -4,6 +4,9 @@ import { Doggo } from '../models/doggo';
 export const DoggosActions = createActionGroup({
   source: 'Doggos',
   events: {
+    'Start Listening to Realtime Doggo Events': emptyProps(),
+    'Stop Listening to Realtime Doggo Events': emptyProps(),
+
     'Load Doggos': emptyProps(),
     'Load Doggos Finished': props<{ doggos: Doggo[] }>(),
     'Load Doggos Error': emptyProps(),

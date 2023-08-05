@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   DoggosActions,
@@ -21,6 +21,7 @@ import {
 })
 export class MainDoggoComponent implements OnInit {
   private readonly store = inject(Store);
+  private readonly destroyRef = inject(DestroyRef);
 
   doggos = this.store.selectSignal(getAllDoggosButSelected);
   selectedDoggo = this.store.selectSignal(getSelectedDoggo);
@@ -28,6 +29,11 @@ export class MainDoggoComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(DoggosActions.loadDoggos());
+    this.store.dispatch(DoggosActions.startListeningToRealtimeDoggoEvents());
+
+    this.destroyRef.onDestroy(() => {
+      this.store.dispatch(DoggosActions.stopListeningToRealtimeDoggoEvents());
+    });
   }
 
   rateDoggo(rating: number) {

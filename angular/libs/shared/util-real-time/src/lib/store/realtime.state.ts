@@ -1,9 +1,11 @@
+import { ConnectionStatus } from './realtime.selectors';
+
 export const featureName = 'realtime';
 
 export interface RealTimeState {
-  realTimeConnection: string;
+  realTimeConnection: ConnectionStatus;
 }
 
 export const initialState: RealTimeState = {
-  realTimeConnection: '',
+  realTimeConnection: 'Not Set',
 };

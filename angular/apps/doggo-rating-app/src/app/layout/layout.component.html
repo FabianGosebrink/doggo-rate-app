@@ -1,5 +1,5 @@
 <app-navigation
-  [loggedIn]="isLoggedIn$ | async"
+  [loggedIn]="isLoggedIn()"
   (dologin)="login()"
   (doLogout)="logout()"
 ></app-navigation>
@@ -7,6 +7,7 @@
 <router-outlet></router-outlet>
 
 <app-footer
-  [userEmail]="userEmail$ | async"
+  [userEmail]="userEmail()"
+  [realTimeConnection]="realTimeConnection()"
   [backendUrl]="backendUrl"
 ></app-footer>

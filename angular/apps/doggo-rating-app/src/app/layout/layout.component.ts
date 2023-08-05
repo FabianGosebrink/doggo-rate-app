@@ -1,18 +1,18 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
+import {
+  FooterComponent,
+  NavigationComponent,
+} from '@ps-doggo-rating/shared/ui-common';
 import {
   AuthActions,
   selectCurrentUserIdentifier,
   selectIsLoggedIn,
 } from '@ps-doggo-rating/shared/util-auth';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
-import {
-  FooterComponent,
-  NavigationComponent,
-} from '@ps-doggo-rating/shared/ui-common';
-import { Observable } from 'rxjs';
+import { getRealTimeConnection } from '@ps-doggo-rating/shared/util-real-time';
 
 @Component({
   selector: 'app-layout',
@@ -21,18 +21,14 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [FooterComponent, NavigationComponent, RouterModule, AsyncPipe],
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
   private readonly store = inject(Store);
 
-  isLoggedIn$: Observable<boolean>;
-  userEmail$: Observable<string>;
+  realTimeConnection = this.store.selectSignal(getRealTimeConnection);
+  isLoggedIn = this.store.selectSignal(selectIsLoggedIn);
+  userEmail = this.store.selectSignal(selectCurrentUserIdentifier);
 
   backendUrl = environment.server;
-
-  ngOnInit(): void {
-    this.isLoggedIn$ = this.store.pipe(select(selectIsLoggedIn));
-    this.userEmail$ = this.store.pipe(select(selectCurrentUserIdentifier));
-  }
 
   login() {
     this.store.dispatch(AuthActions.login());

@@ -1,8 +1,7 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {
-  Doggo,
   DoggosActions,
   getAllDoggosButSelected,
   getLoading,
@@ -12,7 +11,6 @@ import {
   DoggoListComponent,
   DoggoRateComponent,
 } from '@ps-doggo-rating/doggos/ui';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-main-doggo',
@@ -24,17 +22,12 @@ import { Observable } from 'rxjs';
 export class MainDoggoComponent implements OnInit {
   private readonly store = inject(Store);
 
-  doggos$: Observable<Doggo[]>;
-  selectedDoggo$: Observable<Doggo | null>;
-  loading$: Observable<boolean>;
+  doggos = this.store.selectSignal(getAllDoggosButSelected);
+  selectedDoggo = this.store.selectSignal(getSelectedDoggo);
+  loading = this.store.selectSignal(getLoading);
 
   ngOnInit(): void {
-    this.doggos$ = this.store.pipe(select(getAllDoggosButSelected));
-    this.selectedDoggo$ = this.store.pipe(select(getSelectedDoggo));
-    this.loading$ = this.store.pipe(select(getLoading));
-
     this.store.dispatch(DoggosActions.loadDoggos());
-    this.store.dispatch(DoggosActions.startRealTimeConnection());
   }
 
   rateDoggo(rating: number) {

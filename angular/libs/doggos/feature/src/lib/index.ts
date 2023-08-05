@@ -1,9 +1,8 @@
-import { importProvidersFrom } from '@angular/core';
 import { Routes } from '@angular/router';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { createFeature, provideState } from '@ngrx/store';
 import {
-  DoggosEffects,
+  doggoEffects,
   doggosReducer,
   featureName,
 } from '@ps-doggo-rating/doggos/domain';
@@ -12,16 +11,16 @@ import { AddDoggoComponent } from './add-doggo/add-doggo.component';
 import { MainDoggoComponent } from './main-doggo/main-doggo.component';
 import { MyDoggosComponent } from './my-doggos/my-doggos.component';
 
+export const doggosFeature = createFeature({
+  name: featureName,
+  reducer: doggosReducer,
+});
+
 export const DOGGOS_ROUTES: Routes = [
   {
     path: '',
     component: MainDoggoComponent,
-    providers: [
-      importProvidersFrom(
-        StoreModule.forFeature(featureName, doggosReducer),
-        EffectsModule.forFeature([DoggosEffects])
-      ),
-    ],
+    providers: [provideState(doggosFeature), provideEffects(doggoEffects)],
   },
   {
     path: 'my',

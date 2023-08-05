@@ -1,0 +1,51 @@
+<h2>Your Doggos</h2>
+
+<div class="list-group w-auto mt-5">
+  <div
+    *ngFor="let doggo of doggos$ | async"
+    class="list-group-item list-group-item-action d-flex gap-3 py-3"
+    aria-current="true"
+  >
+    <div
+      class="rounded-circle flex-shrink-0"
+      style="
+        background-image: url('{{ doggo.imageUrl }}');
+        width: 80px;
+        height: 80px;
+        background-size: 90px;
+        background-position: center;
+      "
+    ></div>
+    <div class="d-flex gap-2 w-100 justify-content-between">
+      <div>
+        <h6 class="mb-0">{{ doggo.name }} ({{ doggo.breed }})</h6>
+        <p class="mb-0 opacity-75">
+          {{ doggo.ratingSum / (doggo.ratingCount || 1) | number: "1.2-2" }}/5
+        </p>
+        <p class="mb-0 opacity-75">
+          {{ doggo.comment }}
+        </p>
+        <p class="mb-0 opacity-75">{{ doggo.created | date: "medium" }}</p>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="deleteDoggo(doggo)"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-5">
+  <button
+    type="button"
+    [routerLink]="['/doggos/my/add']"
+    class="btn btn-primary mt-6"
+  >
+    Add Doggo
+  </button>
+</div>

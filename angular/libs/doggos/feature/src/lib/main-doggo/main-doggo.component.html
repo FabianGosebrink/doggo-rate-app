@@ -1,0 +1,14 @@
+<ng-template #content>
+  <app-doggo-rate
+    [currentDoggo]="selectedDoggo$ | async"
+    (rated)="rateDoggo($event)"
+    (skipped)="skipDoggo()"
+  ></app-doggo-rate>
+
+  <app-doggo-list
+    [doggos]="doggos$ | async"
+    (doggoSelected)="selectDoggo($event)"
+  ></app-doggo-list>
+</ng-template>
+
+<div *ngIf="(loading$ | async) === true; else content">Loading...</div>

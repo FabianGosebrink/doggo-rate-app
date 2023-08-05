@@ -1,0 +1,51 @@
+<header
+  class="d-flex flex-wrap d-flex justify-content-between py-3 mb-4 border-bottom"
+>
+  <div>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li>
+        <a
+          [routerLink]="'/doggos'"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="isActiveMatchOptions"
+          class="nav-link px-2 link-dark"
+          >Home</a
+        >
+      </li>
+      <li *ngIf="loggedIn">
+        <a
+          [routerLink]="'/doggos/my'"
+          routerLinkActive="active"
+          class="nav-link px-2 link-dark"
+          >My Doggos</a
+        >
+      </li>
+      <li>
+        <a
+          [routerLink]="'about'"
+          routerLinkActive="active"
+          class="nav-link px-2 link-dark"
+          >About</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div>
+    <button
+      (click)="logout()"
+      type="button"
+      class="btn btn-outline-primary me-2"
+      *ngIf="loggedIn"
+    >
+      Logout
+    </button>
+    <button
+      (click)="login()"
+      type="button"
+      class="btn btn-outline-primary me-2"
+      *ngIf="!loggedIn"
+    >
+      Login
+    </button>
+  </div>
+</header>

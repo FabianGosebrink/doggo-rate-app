@@ -1,0 +1,44 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@ps-doggo-rating/about/feature": ["libs/about/feature/src/index.ts"],
+      "@ps-doggo-rating/auth/api": ["libs/auth/api/src/index.ts"],
+      "@ps-doggo-rating/auth/state": ["libs/auth/state/src/index.ts"],
+      "@ps-doggo-rating/auth/ui": ["libs/auth/ui/src/index.ts"],
+      "@ps-doggo-rating/auth/util": ["libs/auth/util/src/index.ts"],
+      "@ps-doggo-rating/doggos/domain": ["libs/doggos/domain/src/index.ts"],
+      "@ps-doggo-rating/doggos/feature": ["libs/doggos/feature/src/index.ts"],
+      "@ps-doggo-rating/doggos/ui": ["libs/doggos/ui/src/index.ts"],
+      "@ps-doggo-rating/shared/about/feature": [
+        "libs/shared/about/feature/src/index.ts"
+      ],
+      "@ps-doggo-rating/shared/ui-common": [
+        "libs/shared/ui-common/src/index.ts"
+      ],
+      "@ps-doggo-rating/shared/util-auth": [
+        "libs/shared/util-auth/src/index.ts"
+      ],
+      "@ps-doggo-rating/shared/util-common": [
+        "libs/shared/util-common/src/index.ts"
+      ],
+      "@ps-doggo-rating/shared/util-environments": [
+        "libs/shared/util-environments/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

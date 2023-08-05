@@ -1,0 +1,12 @@
+<app-navigation
+  [loggedIn]="isLoggedIn$ | async"
+  (dologin)="login()"
+  (doLogout)="logout()"
+></app-navigation>
+
+<router-outlet></router-outlet>
+
+<app-footer
+  [userEmail]="userEmail$ | async"
+  [backendUrl]="backendUrl"
+></app-footer>

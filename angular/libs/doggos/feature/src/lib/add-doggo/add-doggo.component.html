@@ -1,0 +1,78 @@
+<h2>Add new Doggo</h2>
+<div
+  *ngIf="lastAddedDoggo$ | async as lastAddedDoggo"
+  class="alert alert-success mt-3"
+  role="alert"
+>
+  Doggo added!
+  <a
+    [routerLink]="['/doggos']"
+    [queryParams]="{ doggoId: lastAddedDoggo.id }"
+    class="alert-link"
+    >to {{ lastAddedDoggo.name }}</a
+  >
+</div>
+
+<form [formGroup]="formGroup" (ngSubmit)="addDoggo()">
+  <div class="mb-3">
+    <label for="doggoname" class="form-label">Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="doggoname"
+      formControlName="name"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="doggobreed" class="form-label">Breed</label>
+    <input
+      type="text"
+      class="form-control"
+      id="doggobreed"
+      formControlName="breed"
+    />
+  </div>
+  <div class="mb-3">
+    <label for="doggocomment" class="form-label">Comment</label>
+    <input
+      type="text"
+      class="form-control"
+      id="doggocomment"
+      formControlName="comment"
+    />
+  </div>
+
+  <input
+    hidden
+    #fileInput
+    type="file"
+    id="file"
+    accept="image/*"
+    (change)="setFormData(fileInput.files)"
+  />
+
+  <div>
+    <button class="mb-10" type="button" (click)="fileInput.click()">
+      Choose File
+    </button>
+  </div>
+
+  <label>{{ filename }} </label>
+
+  <div class="d-flex justify-content-between mt-3">
+    <button
+      type="submit"
+      class="btn btn-primary mt-6"
+      [disabled]="!formGroup.valid || (loading$ | async) === true"
+    >
+      <div
+        class="spinner-border spinner-border-sm"
+        role="status"
+        *ngIf="(loading$ | async) === true"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      Add Doggo
+    </button>
+  </div>
+</form>

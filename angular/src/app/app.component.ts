@@ -1,5 +1,4 @@
 import { Component, NgZone, OnInit, inject } from '@angular/core';
-import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Store } from '@ngrx/store';
 import { AuthActions } from './auth/store/auth.actions';
 import { SignalRService } from './common/real-time/signalr.service';
@@ -23,21 +22,6 @@ export class AppComponent implements OnInit {
     this.checkAuth(null);
 
     this.signalRService.start();
-
-    if ((window as any).electronAPI) {
-      (window as any).electronAPI.authEvent((event, value) => {
-        console.log('Received Auth Event', value);
-        this.zone.run(() => {
-          this.checkAuth(value);
-        });
-      });
-    }
-
-    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-      this.zone.run(() => {
-        this.checkAuth(event.url);
-      });
-    });
   }
 
   private checkAuth(url: string) {

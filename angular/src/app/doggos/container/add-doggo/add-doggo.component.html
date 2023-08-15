@@ -47,7 +47,7 @@
     (change)="setFormData(fileInput.files)"
   />
 
-  <div *ngIf="!isMobile">
+  <div>
     <button class="mb-10" type="button" (click)="fileInput.click()">
       Choose File
     </button>
@@ -56,15 +56,6 @@
   <label>{{ filename }} </label>
 
   <div class="d-flex justify-content-between mt-3">
-    <button
-      type="button"
-      class="btn btn-primary mb-10"
-      *ngIf="isMobile"
-      (click)="takePhoto()"
-    >
-      <i class="fa-solid fa-camera"></i> Take picture
-    </button>
-
     <button
       type="submit"
       class="btn btn-primary mt-6"

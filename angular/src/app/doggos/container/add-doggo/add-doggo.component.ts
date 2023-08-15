@@ -3,8 +3,6 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { PlatformInformationService } from '../../../common/platform-information/platform-information.service';
-import { MobileCameraService } from '../../services/mobile-camera.service';
 import { DoggosActions } from '../../store/doggos.actions';
 import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
 
@@ -18,10 +16,6 @@ import { getLastAddedDoggo, getLoading } from './../../store/doggos.selectors';
 export class AddDoggoComponent {
   private readonly fb = inject(FormBuilder);
   private readonly store = inject(Store);
-  private readonly mobileCameraService = inject(MobileCameraService);
-  private readonly platformInformationService = inject(
-    PlatformInformationService
-  );
 
   formGroup = this.fb.group({
     name: ['', Validators.required],
@@ -36,10 +30,6 @@ export class AddDoggoComponent {
 
   private formData: FormData;
 
-  get isMobile() {
-    return this.platformInformationService.isMobile;
-  }
-
   setFormData(files) {
     if (files[0]) {
       const formData = new FormData();
@@ -47,13 +37,6 @@ export class AddDoggoComponent {
       this.filename = files[0].name;
       this.formData = formData;
     }
-  }
-
-  takePhoto() {
-    this.mobileCameraService.getPhoto().subscribe(({ formData, fileName }) => {
-      this.formData = formData;
-      this.filename = fileName;
-    });
   }
 
   addDoggo() {

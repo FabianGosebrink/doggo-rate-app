@@ -5,53 +5,13 @@ import { provideRouter } from '@angular/router';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideStore } from '@ngrx/store';
-import {
-  StsConfigLoader,
-  StsConfigStaticLoader,
-  authInterceptor,
-  provideAuth,
-} from 'angular-auth-oidc-client';
+import { authInterceptor, provideAuth } from 'angular-auth-oidc-client';
 import { ToastrModule } from 'ngx-toastr';
 import { environment } from '../environments/environment';
 import { APP_ROUTES } from './app-routes';
 import * as authEffects from './auth/store/auth.effects';
 import { authReducer } from './auth/store/auth.reducer';
-import { PlatformInformationService } from './common/platform-information/platform-information.service';
 import { realtimeReducer } from './common/real-time/store/realtime.reducer';
-
-const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
-const webCallbackUrl = `${window.location.origin}/callback`;
-const desktopCallbackUrl = `http://localhost/callback`;
-
-const authFactory = (
-  platformInformationService: PlatformInformationService
-) => {
-  let redirectUrl = webCallbackUrl;
-  let postLogoutRedirectUri = webCallbackUrl;
-  if (platformInformationService.isElectron) {
-    redirectUrl = desktopCallbackUrl;
-    postLogoutRedirectUri = desktopCallbackUrl;
-  } else if (platformInformationService.isMobile) {
-    redirectUrl = mobileCallbackUrl;
-    postLogoutRedirectUri = mobileCallbackUrl;
-  }
-
-  const config = {
-    authority: 'https://dev-2fwvrhka.us.auth0.com',
-    redirectUrl,
-    clientId: 'W6a2DDLMzlWPF6vZ5AKKNnFVonklSU0m',
-    scope: 'openid profile email offline_access access:api',
-    responseType: 'code',
-    silentRenew: true,
-    useRefreshToken: true,
-    postLogoutRedirectUri,
-    customParamsAuthRequest: {
-      audience: environment.server,
-    },
-    secureRoutes: [environment.server],
-  };
-  return new StsConfigStaticLoader(config);
-};
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -65,10 +25,19 @@ export const appConfig: ApplicationConfig = {
     }),
     provideRouterStore(),
     provideAuth({
-      loader: {
-        provide: StsConfigLoader,
-        useFactory: authFactory,
-        deps: [PlatformInformationService],
+      config: {
+        authority: 'https://dev-2fwvrhka.us.auth0.com',
+        redirectUrl: `${window.location.origin}/callback`,
+        clientId: 'W6a2DDLMzlWPF6vZ5AKKNnFVonklSU0m',
+        scope: 'openid profile email offline_access access:api',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        postLogoutRedirectUri: `${window.location.origin}/callback`,
+        customParamsAuthRequest: {
+          audience: environment.server,
+        },
+        secureRoutes: [environment.server],
       },
     }),
     importProvidersFrom(

@@ -8,9 +8,7 @@
     "build": "ng build --output-path=dist/web",
     "build-dev": "ng build --configuration development",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "build-desktop": "node build/build-desktop.js",
-    "build-mobile": "node build/build-mobile.js"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {

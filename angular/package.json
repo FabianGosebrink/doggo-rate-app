@@ -4,6 +4,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nx serve doggo-rating-app --configuration=development",
+    "lint:all": "nx run-many -t lint",
+    "lint:affected": "nx affected -t lint",
     "graph": "nx graph"
   },
   "private": true,

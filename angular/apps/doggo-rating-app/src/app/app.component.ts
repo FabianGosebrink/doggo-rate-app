@@ -16,10 +16,6 @@ export class AppComponent implements OnInit {
   title = 'ratemydoggo';
 
   ngOnInit(): void {
-    this.checkAuth();
-  }
-
-  private checkAuth() {
     this.store.dispatch(AuthActions.checkAuth());
   }
 }

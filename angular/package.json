@@ -6,7 +6,8 @@
     "start": "nx serve doggo-rating-app --configuration=development",
     "lint:all": "nx run-many -t lint",
     "lint:affected": "nx affected -t lint",
-    "graph": "nx graph"
+    "graph": "nx graph",
+    "graph:affected": "nx affected:graph"
   },
   "private": true,
   "dependencies": {

@@ -30,11 +30,11 @@ export class LayoutComponent {
 
   backendUrl = environment.server;
 
-  login() {
+  login(): void {
     this.store.dispatch(AuthActions.login());
   }
 
-  logout() {
+  logout(): void {
     this.store.dispatch(AuthActions.logout());
   }
 }

@@ -38,6 +38,12 @@
       "@ps-doggo-rating/shared/util-environments": [
         "libs/shared/util-environments/src/index.ts"
       ],
+      "@ps-doggo-rating/shared/util-notification": [
+        "libs/shared/util-notification/src/index.ts"
+      ],
+      "@ps-doggo-rating/shared/util-platform-information": [
+        "libs/shared/util-platform-information/src/index.ts"
+      ],
       "@ps-doggo-rating/shared/util-real-time": [
         "libs/shared/util-real-time/src/index.ts"
       ]

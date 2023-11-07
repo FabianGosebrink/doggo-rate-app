@@ -1,10 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export abstract class NotificationService {
+export class WebNotificationService implements NotificationService {
   private readonly toastr = inject(ToastrService);
 
   showError(message?: string, title?: string): void {

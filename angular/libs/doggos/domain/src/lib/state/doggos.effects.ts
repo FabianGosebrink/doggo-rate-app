@@ -7,10 +7,7 @@ import {
   selectIsLoggedIn,
   selectUserSubject,
 } from '@ps-doggo-rating/shared/util-auth';
-import {
-  NotificationService,
-  selectQueryParams,
-} from '@ps-doggo-rating/shared/util-common';
+import { selectQueryParams } from '@ps-doggo-rating/shared/util-common';
 import { EMPTY, catchError, concatMap, map, of, tap } from 'rxjs';
 import { DoggosApiService } from '../services/doggos-api.service';
 import { SignalRService } from '../services/signalr.service';
@@ -22,6 +19,7 @@ import {
   getNextDoggoIndex,
   getSelectedDoggo,
 } from './doggos.selectors';
+import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
 
 export const startListeningToRealTimeDoggoEvents = createEffect(
   (actions$ = inject(Actions), signalRService = inject(SignalRService)) => {

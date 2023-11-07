@@ -12,7 +12,6 @@
       }
     }
   },
-  "defaultProject": "doggo-rating-app",
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],

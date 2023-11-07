@@ -7,7 +7,12 @@
     "lint:all": "nx run-many -t lint",
     "lint:affected": "nx affected -t lint",
     "graph": "nx graph",
-    "graph:affected": "nx affected:graph"
+    "graph:affected": "nx affected:graph",
+    "build": "nx build --output-path=dist/web",
+    "build-temp": "nx build doggo-rating-app --skip-nx-cache",
+    "build-dev": "nx build --configuration development",
+    "build-desktop": "node build/build-desktop.js",
+    "build-mobile": "node build/build-mobile.js"
   },
   "private": true,
   "dependencies": {
@@ -29,7 +34,16 @@
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "0.13.1",
-    "@nx/angular": "16.6.0"
+    "@capacitor/android": "^5.1.1",
+    "@capacitor/angular": "^2.0.3",
+    "@capacitor/app": "^5.0.5",
+    "@capacitor/assets": "^2.0.4",
+    "@capacitor/camera": "^5.0.7",
+    "@capacitor/core": "5.5.1",
+    "@capacitor/device": "^5.0.6",
+    "@capacitor/toast": "^5.0.6",
+    "base64-arraybuffer": "^1.0.2",
+    "electron": "^25.9.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.1.8",
@@ -55,6 +69,8 @@
     "jest-preset-angular": "13.1.1",
     "ng-packagr": "16.1.0",
     "nx": "16.6.0",
+    "shelljs": "^0.8.5",
+    "chalk": "^5.3.0",
     "postcss": "^8.4.5",
     "postcss-import": "~14.1.0",
     "postcss-preset-env": "~7.5.0",

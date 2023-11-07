@@ -37,8 +37,8 @@ export const checkAuth = createEffect(
   (actions$ = inject(Actions), authService = inject(AuthService)) => {
     return actions$.pipe(
       ofType(AuthActions.checkAuth),
-      concatMap(() =>
-        authService.checkAuth().pipe(
+      concatMap(({ url }) =>
+        authService.checkAuth(url).pipe(
           map((response: LoginResponse) =>
             AuthActions.loginComplete({
               isLoggedIn: response.isAuthenticated,

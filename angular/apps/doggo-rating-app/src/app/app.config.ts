@@ -8,25 +8,49 @@ import { provideStore } from '@ngrx/store';
 import * as fromAuth from '@ps-doggo-rating/shared/util-auth';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
 import { realtimeReducer } from '@ps-doggo-rating/shared/util-real-time';
-import { authInterceptor, provideAuth } from 'angular-auth-oidc-client';
+import {
+  StsConfigLoader,
+  StsConfigStaticLoader,
+  authInterceptor,
+  provideAuth,
+} from 'angular-auth-oidc-client';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_ROUTES } from './app-routes';
+import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
 
-const authConfig = {
-  config: {
+const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
+const webCallbackUrl = `${window.location.origin}/callback`;
+const desktopCallbackUrl = `http://localhost/callback`;
+
+const authFactory = (
+  platformInformationService: PlatformInformationService
+) => {
+  let redirectUrl = webCallbackUrl;
+  let postLogoutRedirectUri = webCallbackUrl;
+  if (platformInformationService.isElectron) {
+    redirectUrl = desktopCallbackUrl;
+    postLogoutRedirectUri = desktopCallbackUrl;
+  } else if (platformInformationService.isMobile) {
+    redirectUrl = mobileCallbackUrl;
+    postLogoutRedirectUri = mobileCallbackUrl;
+  }
+
+  const config = {
     authority: 'https://dev-2fwvrhka.us.auth0.com',
-    redirectUrl: window.location.origin,
+    redirectUrl,
     clientId: 'W6a2DDLMzlWPF6vZ5AKKNnFVonklSU0m',
     scope: 'openid profile email offline_access access:api',
     responseType: 'code',
     silentRenew: true,
     useRefreshToken: true,
-    postLogoutRedirectUri: window.location.origin,
+    postLogoutRedirectUri,
     customParamsAuthRequest: {
       audience: environment.server,
     },
     secureRoutes: [environment.server],
-  },
+  };
+
+  return new StsConfigStaticLoader(config);
 };
 
 export const appConfig: ApplicationConfig = {
@@ -40,7 +64,13 @@ export const appConfig: ApplicationConfig = {
       realtime: realtimeReducer,
     }),
     provideRouterStore(),
-    provideAuth(authConfig),
+    provideAuth({
+      loader: {
+        provide: StsConfigLoader,
+        useFactory: authFactory,
+        deps: [PlatformInformationService],
+      },
+    }),
     importProvidersFrom(
       ToastrModule.forRoot({
         positionClass: 'toast-bottom-right',

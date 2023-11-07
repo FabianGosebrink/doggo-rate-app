@@ -12,6 +12,7 @@ import {
   selectIsLoggedIn,
 } from '@ps-doggo-rating/shared/util-auth';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
+import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
 import { getRealTimeConnection } from '@ps-doggo-rating/shared/util-real-time';
 
 @Component({
@@ -27,6 +28,8 @@ export class LayoutComponent {
   realTimeConnection = this.store.selectSignal(getRealTimeConnection);
   isLoggedIn = this.store.selectSignal(selectIsLoggedIn);
   userEmail = this.store.selectSignal(selectCurrentUserIdentifier);
+
+  platform = inject(PlatformInformationService).platform;
 
   backendUrl = environment.server;
 

@@ -14,4 +14,6 @@ export class FooterComponent {
   @Input() backendUrl = '';
 
   @Input() realTimeConnection = '';
+
+  @Input() platform = '';
 }

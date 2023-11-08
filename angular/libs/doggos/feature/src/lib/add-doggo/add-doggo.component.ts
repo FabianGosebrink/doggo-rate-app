@@ -8,6 +8,8 @@ import {
   getLastAddedDoggo,
   getLoading,
 } from '@ps-doggo-rating/doggos/domain';
+import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
+import { CameraService } from '@ps-doggo-rating/shared/util-camera';
 
 @Component({
   selector: 'app-add-doggo',
@@ -18,7 +20,14 @@ import {
 })
 export class AddDoggoComponent {
   private readonly fb = inject(FormBuilder);
+
   private readonly store = inject(Store);
+
+  private readonly cameraService = inject(CameraService);
+
+  private readonly platformInformationService = inject(
+    PlatformInformationService
+  );
 
   formGroup = this.fb.group({
     name: ['', Validators.required],
@@ -31,6 +40,10 @@ export class AddDoggoComponent {
 
   filename = '';
 
+  get isMobile() {
+    return this.platformInformationService.isMobile;
+  }
+
   private formData: FormData;
 
   setFormData(files) {
@@ -40,6 +53,13 @@ export class AddDoggoComponent {
       this.filename = files[0].name;
       this.formData = formData;
     }
+  }
+
+  takePhoto() {
+    this.cameraService.getPhoto().subscribe(({ formData, fileName }) => {
+      this.formData = formData;
+      this.filename = fileName;
+    });
   }
 
   addDoggo() {

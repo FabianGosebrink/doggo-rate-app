@@ -15,13 +15,17 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.addDoggoToAllDoggos, (state, { doggo }) => {
-    return {
-      ...state,
-      doggos: [...state.doggos, doggo],
-      loading: false,
-    };
-  }),
+  on(
+    DoggosActions.addDoggoToAllDoggos,
+    DoggosActions.addDoggoFinished,
+    (state, { doggo }) => {
+      return {
+        ...state,
+        doggos: [...state.doggos, doggo],
+        loading: false,
+      };
+    }
+  ),
 
   on(DoggosActions.loadMyDoggosFinished, (state, { doggos }) => {
     return {

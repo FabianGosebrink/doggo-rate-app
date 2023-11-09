@@ -5,7 +5,11 @@ import { decode } from 'base64-arraybuffer';
 
 @Injectable({ providedIn: 'root' })
 export class MobileCameraService {
-  getPhoto(): Observable<{ formData: FormData; fileName: string }> {
+  getPhoto(): Observable<{
+    formData: FormData;
+    fileName: string;
+    base64: string;
+  }> {
     return from(
       Camera.getPhoto({
         quality: 90,
@@ -26,7 +30,7 @@ export class MobileCameraService {
 
         formData.append(fileName, file);
 
-        return { formData, fileName };
+        return { formData, fileName, base64 };
       })
     );
   }

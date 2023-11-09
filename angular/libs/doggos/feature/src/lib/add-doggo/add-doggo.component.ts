@@ -40,6 +40,8 @@ export class AddDoggoComponent {
 
   filename = '';
 
+  base64 = '';
+
   get isMobile() {
     return this.platformInformationService.isMobile;
   }
@@ -56,10 +58,13 @@ export class AddDoggoComponent {
   }
 
   takePhoto() {
-    this.cameraService.getPhoto().subscribe(({ formData, fileName }) => {
-      this.formData = formData;
-      this.filename = fileName;
-    });
+    this.cameraService
+      .getPhoto()
+      .subscribe(({ formData, fileName, base64 }) => {
+        this.formData = formData;
+        this.filename = fileName;
+        this.base64 = base64;
+      });
   }
 
   addDoggo() {

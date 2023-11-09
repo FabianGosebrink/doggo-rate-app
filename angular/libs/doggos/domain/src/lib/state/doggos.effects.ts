@@ -201,13 +201,36 @@ export const loadMaddDoggoWithPictureyDoggos = createEffect(
   { functional: true }
 );
 
+export const addDoggoFinished = createEffect(
+  (
+    actions$ = inject(Actions),
+    router = inject(Router),
+    notificationService = inject(NotificationService)
+  ) => {
+    return actions$.pipe(
+      ofType(DoggosActions.addDoggoFinished),
+      tap(({ doggo }) => {
+        notificationService.showSuccess('Doggo added');
+
+        router.navigate(['/doggos/my']);
+      })
+    );
+  },
+  { functional: true, dispatch: false }
+);
 export const deleteDoggo = createEffect(
-  (actions$ = inject(Actions), doggosService = inject(DoggosApiService)) => {
+  (
+    actions$ = inject(Actions),
+    doggosService = inject(DoggosApiService),
+    notificationService = inject(NotificationService)
+  ) => {
     return actions$.pipe(
       ofType(DoggosActions.deleteDoggo),
       concatMap(({ doggo }) => {
         return doggosService.deleteDoggo(doggo).pipe(
           map((doggo) => {
+            notificationService.showSuccess('Doggo deleted');
+
             return DoggosActions.deleteDoggoFinished({ id: doggo.id });
           })
         );

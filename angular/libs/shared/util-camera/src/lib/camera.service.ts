@@ -23,5 +23,6 @@ export abstract class CameraService {
   abstract getPhoto(): Observable<{
     formData: FormData;
     fileName: string;
+    base64: string;
   }>;
 }

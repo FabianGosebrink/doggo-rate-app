@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { from, map, Observable } from 'rxjs';
 import { decode } from 'base64-arraybuffer';
+import { getFilename } from './utils';
 
 @Injectable({ providedIn: 'root' })
 export class MobileCameraService {
@@ -22,9 +23,7 @@ export class MobileCameraService {
         const blob = new Blob([new Uint8Array(decode(base64))], {
           type: `image/${photo.format}`,
         });
-        const fileName = `mobile-image-${Math.random()
-          .toString(36)
-          .slice(2, 7)}.jpg`;
+        const fileName = getFilename('mobile', '.jpg');
         const file = new File([blob], fileName);
         const formData = new FormData();
 

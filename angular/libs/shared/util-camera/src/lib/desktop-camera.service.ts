@@ -1,14 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { CameraService } from './camera.service';
 import { DOCUMENT } from '@angular/common';
-import { Observable, from, map, of, switchMap, throwError } from 'rxjs';
-import { decode } from 'base64-arraybuffer';
+import { Observable, from, throwError } from 'rxjs';
+import { getFilename } from './utils';
 
 @Injectable({ providedIn: 'root' })
 export class DesktopCameraService implements CameraService {
   private readonly window = inject<Document>(DOCUMENT)?.defaultView;
 
-  public getPhoto(): Observable<{
+  getPhoto(): Observable<{
     formData: FormData;
     fileName: string;
     base64: string;
@@ -72,14 +72,8 @@ export class DesktopCameraService implements CameraService {
                 track.stop();
               });
             }
-
-            const fileName = `image-${Math.random()
-              .toString(36)
-              .slice(2, 7)}.jpg`;
-            const blob = new Blob([new Uint8Array(decode(image))], {
-              type: `image/png`,
-            });
-            const file = new File([blob], fileName);
+            const fileName = getFilename('desktop-web', '.png');
+            const file = this.urlToFile(image, fileName);
             const formData = new FormData();
 
             formData.append(fileName, file);
@@ -90,5 +84,19 @@ export class DesktopCameraService implements CameraService {
       });
 
     return from(promise);
+  }
+
+  private urlToFile(url: string, filename: string): File {
+    const arr = url.split(',');
+    const bstr = atob(arr[arr.length - 1]);
+
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    return new File([u8arr], filename, { type: 'image/png' });
   }
 }

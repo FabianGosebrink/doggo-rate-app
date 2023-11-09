@@ -51,6 +51,7 @@ export class AddDoggoComponent {
   setFormData(files) {
     if (files[0]) {
       const formData = new FormData();
+      console.log(files[0]);
       formData.append(files[0].name, files[0]);
       this.filename = files[0].name;
       this.formData = formData;

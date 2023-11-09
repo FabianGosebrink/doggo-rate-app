@@ -30,7 +30,16 @@
       <div>
         <button
           type="button"
-          class="btn btn-outline-primary btn-sm"
+          class="btn btn-outline-primary btn-sm me-1"
+          [routerLink]="['/doggos']"
+          [queryParams]="{ doggoId: doggo.id }"
+        >
+          Go to
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-sm"
           (click)="deleteDoggo(doggo)"
         >
           Delete

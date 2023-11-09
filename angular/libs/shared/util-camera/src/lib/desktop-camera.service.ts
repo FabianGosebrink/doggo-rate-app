@@ -17,7 +17,7 @@ export class DesktopCameraService implements CameraService {
       return throwError(() => 'No window available');
     }
 
-    if (!this.window?.navigator?.mediaDevices?.getUserMedia) {
+    if (!this.window.navigator?.mediaDevices?.getUserMedia) {
       return throwError(() => 'No media devices available');
     }
 

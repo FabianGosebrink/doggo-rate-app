@@ -62,10 +62,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "doggo-rating-app:build:production"
+          "buildTarget": "doggo-rating-app:build:production"
         },
         "development": {
-          "browserTarget": "doggo-rating-app:build:development"
+          "buildTarget": "doggo-rating-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -73,11 +73,11 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "doggo-rating-app:build"
+        "buildTarget": "doggo-rating-app:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
@@ -90,14 +90,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/doggo-rating-app/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
+        "jestConfig": "apps/doggo-rating-app/jest.config.ts"
       }
     }
   },

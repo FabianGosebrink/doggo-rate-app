@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, DecimalPipe, NgFor } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,7 +13,7 @@ import {
   standalone: true,
   templateUrl: './my-doggos.component.html',
   styleUrls: ['./my-doggos.component.css'],
-  imports: [AsyncPipe, RouterLink, DatePipe, DecimalPipe, NgFor],
+  imports: [RouterLink, DatePipe, DecimalPipe],
 })
 export class MyDoggosComponent implements OnInit {
   private readonly store = inject(Store);

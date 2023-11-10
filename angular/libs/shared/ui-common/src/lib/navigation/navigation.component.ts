@@ -1,5 +1,4 @@
-import { NgIf } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
   IsActiveMatchOptions,
   RouterLink,
@@ -11,7 +10,7 @@ import {
   templateUrl: './navigation.component.html',
   standalone: true,
   styleUrls: ['./navigation.component.css'],
-  imports: [NgIf, RouterModule, RouterLink],
+  imports: [RouterModule, RouterLink],
 })
 export class NavigationComponent {
   @Input() loggedIn = false;

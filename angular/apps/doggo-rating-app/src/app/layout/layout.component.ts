@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -20,7 +19,7 @@ import { getRealTimeConnection } from '@ps-doggo-rating/shared/util-real-time';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
   standalone: true,
-  imports: [FooterComponent, NavigationComponent, RouterModule, AsyncPipe],
+  imports: [FooterComponent, NavigationComponent, RouterModule],
 })
 export class LayoutComponent {
   private readonly store = inject(Store);

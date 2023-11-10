@@ -1,4 +1,3 @@
-import { NgFor } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +13,6 @@ import { Doggo } from '@ps-doggo-rating/doggos/domain';
   styleUrls: ['./doggo-list.component.css'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [NgFor],
 })
 export class DoggoListComponent {
   @Input() doggos: Doggo[] | null = [];

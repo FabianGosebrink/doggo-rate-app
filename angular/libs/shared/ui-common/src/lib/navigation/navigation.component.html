@@ -12,7 +12,9 @@
           >Home</a
         >
       </li>
-      <li *ngIf="loggedIn">
+
+      @if(loggedIn) {
+      <li>
         <a
           [routerLink]="'/doggos/my'"
           routerLinkActive="active"
@@ -20,6 +22,8 @@
           >My Doggos</a
         >
       </li>
+      }
+
       <li>
         <a
           [routerLink]="'about'"
@@ -32,21 +36,22 @@
     </ul>
   </div>
   <div>
+    @if(loggedIn) {
     <button
       (click)="logout()"
       type="button"
       class="btn btn-outline-primary me-2"
-      *ngIf="loggedIn"
     >
       Logout
     </button>
+    } @else {
     <button
       (click)="login()"
       type="button"
       class="btn btn-outline-primary me-2"
-      *ngIf="!loggedIn"
     >
       Login
     </button>
+    }
   </div>
 </header>

@@ -1,8 +1,5 @@
-<div
-  class="px-4 my-5 text-center border-bottom"
-  *ngIf="currentDoggo as doggo"
-  [@fade]="status"
->
+@if(currentDoggo; as doggo) {
+<div class="px-4 my-5 text-center border-bottom" [@fade]="status">
   <h1 class="display-4 fw-bold">{{ doggo.name }}</h1>
   <div class="col-lg-6 mx-auto">
     <p class="lead mb-4">{{ doggo.breed }}. {{ doggo.comment }}</p>
@@ -32,7 +29,9 @@
     </div>
   </div>
 
-  <h3 *ngIf="averageRating > 0">{{ averageRating | number: "1.2-2" }} / 5</h3>
+  @if(averageRating > 0){
+  <h3>{{ averageRating | number : '1.2-2' }} / 5</h3>
+  }
 
   <div class="d-grid gap-2 d-sm-flex justify-content-center mb-5">
     <button
@@ -57,3 +56,4 @@
     </div>
   </div>
 </div>
+}

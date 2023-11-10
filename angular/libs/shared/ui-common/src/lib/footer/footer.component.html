@@ -13,9 +13,9 @@
       <span class="mb-3 mb-md-0 text-muted"
         >Running on platform {{ platform }}
       </span>
-      <span class="mb-3 mb-md-0 text-muted" *ngIf="userEmail"
-        >LoggedIn as {{ userEmail }}
-      </span>
+      @if(userEmail){
+      <span class="mb-3 mb-md-0 text-muted">LoggedIn as {{ userEmail }} </span>
+      }
     </div>
   </div>
 </footer>

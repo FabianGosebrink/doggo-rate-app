@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { DecimalPipe, NgClass, NgIf } from '@angular/common';
+import { DecimalPipe, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -24,7 +24,7 @@ import { timer } from 'rxjs';
       transition('* => fadeOut', [animate(1200, style({ opacity: 0 }))]),
     ]),
   ],
-  imports: [DecimalPipe, NgClass, NgIf],
+  imports: [DecimalPipe, NgClass],
 })
 export class DoggoRateComponent implements OnChanges {
   @Input() currentDoggo: Doggo | null = null;

@@ -1,8 +1,8 @@
 <h2>Your Doggos</h2>
 
 <div class="list-group w-auto mt-5">
+  @for(doggo of doggos(); track doggo.id) {
   <div
-    *ngFor="let doggo of doggos()"
     class="list-group-item list-group-item-action d-flex gap-3 py-3"
     aria-current="true"
   >
@@ -47,6 +47,7 @@
       </div>
     </div>
   </div>
+  }
 </div>
 
 <div class="mt-5">

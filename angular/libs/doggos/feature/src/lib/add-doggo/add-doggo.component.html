@@ -1,5 +1,6 @@
 <h2>Add new Doggo</h2>
-<div *ngIf="lastAddedDoggo()" class="alert alert-success mt-3" role="alert">
+@if(lastAddedDoggo()){
+<div class="alert alert-success mt-3" role="alert">
   Doggo added!
   <a
     [routerLink]="['/doggos']"
@@ -8,6 +9,7 @@
     >to {{ lastAddedDoggo().name }}</a
   >
 </div>
+}
 
 <form [formGroup]="formGroup" (ngSubmit)="addDoggo()">
   <div class="mb-3">
@@ -68,14 +70,11 @@
       class="btn btn-primary mt-6"
       [disabled]="!formGroup.valid || loading() === true"
     >
-      <div
-        class="spinner-border spinner-border-sm"
-        role="status"
-        *ngIf="loading() === true"
-      >
+      @if(loading() === true){
+      <div class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
-      Add Doggo
+      } Add Doggo
     </button>
   </div>
 </form>

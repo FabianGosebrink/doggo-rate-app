@@ -1,4 +1,5 @@
-<table class="table" *ngIf="deviceInfo()">
+@if(deviceInfo()) {
+<table class="table">
   <thead>
     <tr>
       <th scope="col">Key</th>
@@ -10,9 +11,12 @@
       <td>userAgent</td>
       <td>{{ userAgent }}</td>
     </tr>
-    <tr *ngFor="let item of deviceInfo() | keyvalue">
+    @for (item of deviceInfo() | keyvalue; track item.key) {
+    <tr>
       <td>{{ item.key }}</td>
       <td>{{ item.value | json }}</td>
     </tr>
+    }
   </tbody>
 </table>
+}

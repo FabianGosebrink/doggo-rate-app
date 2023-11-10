@@ -1,4 +1,3 @@
-import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
@@ -6,7 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: './footer.component.html',
   standalone: true,
   styleUrls: ['./footer.component.css'],
-  imports: [AsyncPipe, NgIf],
 })
 export class FooterComponent {
   @Input() userEmail = '';

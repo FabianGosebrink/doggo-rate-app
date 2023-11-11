@@ -10,7 +10,7 @@ import { Device, DeviceInfo } from '@capacitor/device';
   styleUrls: ['./about.component.scss'],
 })
 export class AboutComponent implements OnInit {
-  deviceInfo = signal<DeviceInfo | null>(null);
+  deviceInfo = signal<any>(null);
 
   userAgent = window.navigator.userAgent;
 

@@ -16,3 +16,5 @@ export const {
   selectUrl, // select the current url
   selectTitle, // Select the title if available
 } = getRouterSelectors();
+
+export const selectIdParam = selectRouteParam('id');

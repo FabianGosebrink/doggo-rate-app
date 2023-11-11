@@ -41,10 +41,30 @@ export const doggosReducer = createReducer<DoggoState>(
     };
   }),
 
-  on(DoggosActions.addDoggoWithPicture, DoggosActions.loadDoggos, (state) => {
+  on(
+    DoggosActions.addDoggoWithPicture,
+    DoggosActions.loadDoggos,
+    DoggosActions.loadSingleDoggo,
+    (state) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+  ),
+
+  on(DoggosActions.loadSingleDoggoFinished, (state, { doggo }) => {
     return {
       ...state,
-      loading: true,
+      detailDoggo: doggo,
+      loading: false,
+    };
+  }),
+
+  on(DoggosActions.clearSingleDoggo, (state) => {
+    return {
+      ...state,
+      detailDoggo: null,
     };
   }),
 

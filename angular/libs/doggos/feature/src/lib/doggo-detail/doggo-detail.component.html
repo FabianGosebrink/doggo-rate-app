@@ -1,0 +1,101 @@
+@if(doggo(); as doggo){
+<div class="d-flex justify-content-between mb-3">
+  <button
+    type="button"
+    class="btn btn-primary"
+    [routerLink]="['/doggos/my']"
+    [queryParams]="{ doggoId: doggo.id }"
+  >
+    <i class="fa-solid fa-arrow-left"></i> Back
+  </button>
+</div>
+
+<div class="row">
+  <div class="col-lg-4">
+    <div class="card mb-4">
+      <div class="card-body text-center">
+        <img
+          [src]="doggo.imageUrl"
+          alt="avatar"
+          class="img-fluid"
+          style="width: 150px"
+        />
+        <h5 class="my-3">{{ doggo.name }}</h5>
+        <p class="text-muted mb-3">
+          {{ doggo.ratingSum / (doggo.ratingCount || 1) | number : '1.2-2' }}/5
+        </p>
+        <div class="d-flex justify-content-center mb-2">
+          <button
+            type="button"
+            class="btn btn-primary"
+            [routerLink]="['/doggos']"
+            [queryParams]="{ doggoId: doggo.id }"
+          >
+            <i class="fa-solid fa-star"></i> Rate
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-danger ms-1"
+            (click)="deleteDoggo(doggo)"
+          >
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-8">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Breed</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{ doggo.breed }}</p>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Comment</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{ doggo.comment }}</p>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Created</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{ doggo.created | date : 'medium' }}</p>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Rates Received</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">{{ doggo.ratingCount }}</p>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col-sm-3">
+            <p class="mb-0">Image Url</p>
+          </div>
+          <div class="col-sm-9">
+            <p class="text-muted mb-0">
+              <a [href]="doggo.imageUrl">{{ doggo.imageUrl }}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+} @else { Loading... }

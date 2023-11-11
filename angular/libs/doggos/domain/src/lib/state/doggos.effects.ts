@@ -7,7 +7,11 @@ import {
   selectIsLoggedIn,
   selectUserSubject,
 } from '@ps-doggo-rating/shared/util-auth';
-import { selectQueryParams } from '@ps-doggo-rating/shared/util-common';
+import {
+  selectIdParam,
+  selectQueryParams,
+} from '@ps-doggo-rating/shared/util-common';
+import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
 import { EMPTY, catchError, concatMap, map, of, tap } from 'rxjs';
 import { DoggosApiService } from '../services/doggos-api.service';
 import { SignalRService } from '../services/signalr.service';
@@ -19,7 +23,6 @@ import {
   getNextDoggoIndex,
   getSelectedDoggo,
 } from './doggos.selectors';
-import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
 
 export const startListeningToRealTimeDoggoEvents = createEffect(
   (actions$ = inject(Actions), signalRService = inject(SignalRService)) => {
@@ -289,6 +292,26 @@ export const addDoggoRealtimeFinished = createEffect(
             doggo,
           }),
         ];
+      })
+    );
+  },
+  { functional: true }
+);
+
+export const loadSingleDoggo = createEffect(
+  (
+    actions$ = inject(Actions),
+    store = inject(Store),
+    doggosService = inject(DoggosApiService)
+  ) => {
+    return actions$.pipe(
+      ofType(DoggosActions.loadSingleDoggo),
+      concatLatestFrom(() => store.select(selectIdParam)),
+      concatMap(([_action, id]) => {
+        return doggosService.getSingleDoggo(id).pipe(
+          map((doggo) => DoggosActions.loadSingleDoggoFinished({ doggo })),
+          catchError(() => of(DoggosActions.loadSingleDoggoError()))
+        );
       })
     );
   },

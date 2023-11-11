@@ -35,6 +35,11 @@ export const getSelectedDoggo = createSelector(
   (state: DoggoState) => state.selectedDoggo
 );
 
+export const getDetailDoggo = createSelector(
+  getDoggoState,
+  (state: DoggoState) => state.detailDoggo
+);
+
 export const getSelectedDoggoIndex = createSelector(
   getAllDoggos,
   getSelectedDoggo,

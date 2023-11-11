@@ -11,6 +11,11 @@ export const DoggosActions = createActionGroup({
     'Load Doggos Finished': props<{ doggos: Doggo[] }>(),
     'Load Doggos Error': emptyProps(),
 
+    'Load Single Doggo': emptyProps(),
+    'Load Single Doggo Finished': props<{ doggo: Doggo }>(),
+    'Load Single Doggo Error': emptyProps(),
+    'Clear Single Doggo': emptyProps(),
+
     'Load My Doggos': emptyProps(),
     'Load My Doggos Finished': props<{ doggos: Doggo[] }>(),
     'Load My Doggos Error': emptyProps(),

@@ -1,4 +1,13 @@
-<h2>Your Doggos</h2>
+<div class="d-flex justify-content-between">
+  <h2>Your Doggos</h2>
+  <button
+    type="button"
+    [routerLink]="['/doggos/my/add']"
+    class="btn btn-primary mt-6"
+  >
+    <i class="fa-solid fa-plus"></i> Add Doggo
+  </button>
+</div>
 
 <div class="list-group w-auto mt-5">
   @for(doggo of doggos(); track doggo.id) {
@@ -23,7 +32,7 @@
           {{ doggo.ratingSum / (doggo.ratingCount || 1) | number : '1.2-2' }}/5
         </p>
         <p class="mb-0 opacity-75">
-          {{ doggo.comment }}
+          {{ doggo.comment }} | <a [href]="doggo.imageUrl">Picture</a>
         </p>
         <p class="mb-0 opacity-75">{{ doggo.created | date : 'medium' }}</p>
       </div>
@@ -34,7 +43,7 @@
           [routerLink]="['/doggos']"
           [queryParams]="{ doggoId: doggo.id }"
         >
-          Go to
+          <i class="fa-solid fa-arrow-right"></i> Go to
         </button>
 
         <button
@@ -42,20 +51,12 @@
           class="btn btn-outline-danger btn-sm"
           (click)="deleteDoggo(doggo)"
         >
-          Delete
+          <i class="fa-solid fa-trash"></i> Delete
         </button>
       </div>
     </div>
   </div>
+  }@empty {
+  <div>No 🐕 added yet. Add one!</div>
   }
-</div>
-
-<div class="mt-5">
-  <button
-    type="button"
-    [routerLink]="['/doggos/my/add']"
-    class="btn btn-primary mt-6"
-  >
-    Add Doggo
-  </button>
 </div>

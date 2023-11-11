@@ -11,11 +11,11 @@ import { DoggosActions } from '../state/doggos.actions';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
-  connection: HubConnection;
+  private connection: HubConnection;
 
   private readonly store = inject(Store);
 
-  start() {
+  start(): void {
     this.connection = new HubConnectionBuilder()
       .withUrl(`${environment.server}doggoHub`)
       .withAutomaticReconnect()
@@ -35,7 +35,7 @@ export class SignalRService {
       .catch((err) => console.log(err.toString()));
   }
 
-  stop() {
+  stop(): void {
     if (this.connection) {
       this.connection.stop();
       this.store.dispatch(
@@ -44,7 +44,7 @@ export class SignalRService {
     }
   }
 
-  private registerOnConnectionEvents() {
+  private registerOnConnectionEvents(): void {
     this.connection.onreconnecting(() =>
       this.store.dispatch(
         RealtimeActions.setRealTimeConnection({ connection: 'Reconnecting' })
@@ -64,7 +64,7 @@ export class SignalRService {
     );
   }
 
-  private registerOnDoggoEvents() {
+  private registerOnDoggoEvents(): void {
     this.connection.on('doggoadded', (doggo) => {
       this.store.dispatch(DoggosActions.addDoggoRealtimeFinished({ doggo }));
     });

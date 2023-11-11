@@ -15,7 +15,7 @@ export class WebNotificationService implements NotificationService {
     this.toastr.error(message, title);
   }
 
-  showSuccess(message?: string, title?: string) {
+  showSuccess(message?: string, title?: string): void {
     message = message || '';
     title = title || 'Success';
 

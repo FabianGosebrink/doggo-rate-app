@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { NotificationService } from './notification.service';
 
 @Injectable({
@@ -13,7 +12,7 @@ export class DesktopNotificationService implements NotificationService {
     new Notification(title, { body: message });
   }
 
-  showSuccess(message?: string, title?: string) {
+  showSuccess(message?: string, title?: string): void {
     message = message || '';
     title = title || 'Success';
 

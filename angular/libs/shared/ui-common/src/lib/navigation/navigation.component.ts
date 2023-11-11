@@ -24,11 +24,11 @@ export class NavigationComponent {
     fragment: 'exact',
   } as IsActiveMatchOptions;
 
-  login() {
+  login(): void {
     this.dologin.emit();
   }
 
-  logout() {
+  logout(): void {
     this.doLogout.emit();
   }
 }

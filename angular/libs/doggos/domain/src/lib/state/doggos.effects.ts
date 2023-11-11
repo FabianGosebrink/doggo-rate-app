@@ -63,7 +63,7 @@ export const selectNextDoggo = createEffect(
         store.pipe(select(getAllDoggos)),
         store.pipe(select(getNextDoggoIndex)),
       ]),
-      map(([action, allDoggos, nextDoggoIndex]) => {
+      map(([_action, allDoggos, nextDoggoIndex]) => {
         const newSelectedDoggo = allDoggos[nextDoggoIndex];
 
         return DoggosActions.selectDoggo({ id: newSelectedDoggo.id });
@@ -112,7 +112,7 @@ export const loadDoggos = createEffect(
     return actions$.pipe(
       ofType(DoggosActions.loadDoggos),
       concatLatestFrom(() => store.select(selectQueryParams)),
-      concatMap(([action, { doggoId }]) => {
+      concatMap(([_action, { doggoId }]) => {
         return doggosService.getDoggos().pipe(
           concatMap((doggos) => {
             const currentDoggoId = doggoId || doggos[0]?.id || '-1';
@@ -162,7 +162,7 @@ export const loadMyDoggos = createEffect(
     return actions$.pipe(
       ofType(DoggosActions.loadMyDoggos, AuthActions.loginComplete),
       concatLatestFrom(() => store.select(selectUserSubject)),
-      concatMap(([action, subject]) => {
+      concatMap(() => {
         return doggosService
           .getMyDoggos()
           .pipe(
@@ -210,7 +210,7 @@ export const addDoggoFinished = createEffect(
     return actions$.pipe(
       ofType(DoggosActions.addDoggoFinished),
       tap(({ doggo }) => {
-        notificationService.showSuccess('Doggo added');
+        notificationService.showSuccess(`Doggo ${doggo.name} added`);
 
         router.navigate(['/doggos/my']);
       })

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private checkAuth(url: string) {
+  private checkAuth(url: string): void {
     this.store.dispatch(
       AuthActions.checkAuth({
         url,

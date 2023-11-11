@@ -41,13 +41,13 @@ export class AddDoggoComponent {
 
   base64 = '';
 
-  get isMobile() {
+  get isMobile(): boolean {
     return this.platformInformationService.isMobile;
   }
 
   private formData: FormData;
 
-  setFormData(files) {
+  setFormData(files): void {
     if (files[0]) {
       const formData = new FormData();
       console.log(files[0]);
@@ -57,7 +57,7 @@ export class AddDoggoComponent {
     }
   }
 
-  takePhoto() {
+  takePhoto(): void {
     this.cameraService
       .getPhoto()
       .subscribe(({ formData, fileName, base64 }) => {
@@ -67,7 +67,7 @@ export class AddDoggoComponent {
       });
   }
 
-  addDoggo() {
+  addDoggo(): void {
     if (this.formGroup.valid) {
       const { name, comment, breed } = this.formGroup.value;
 

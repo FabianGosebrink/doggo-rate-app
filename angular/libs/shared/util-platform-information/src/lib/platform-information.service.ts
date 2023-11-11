@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Capacitor } from '@capacitor/core';
 
+export type Platform = 'Desktop' | 'Mobile' | 'Web';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -17,7 +19,7 @@ export class PlatformInformationService {
     return !this.isMobile && !this.isElectron;
   }
 
-  get platform() {
+  get platform(): Platform {
     if (this.isElectron) {
       return 'Desktop';
     } else if (this.isMobile) {

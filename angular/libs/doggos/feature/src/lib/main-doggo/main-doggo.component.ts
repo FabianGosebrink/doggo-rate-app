@@ -36,15 +36,15 @@ export class MainDoggoComponent implements OnInit {
     });
   }
 
-  rateDoggo(rating: number) {
+  rateDoggo(rating: number): void {
     this.store.dispatch(DoggosActions.rateDoggo({ rating }));
   }
 
-  skipDoggo() {
+  skipDoggo(): void {
     this.store.dispatch(DoggosActions.selectNextDoggo());
   }
 
-  selectDoggo(id: string) {
+  selectDoggo(id: string): void {
     this.store.dispatch(DoggosActions.selectDoggo({ id }));
   }
 }

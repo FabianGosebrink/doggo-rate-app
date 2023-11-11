@@ -42,7 +42,7 @@ export class DoggoRateComponent implements OnChanges {
     }
   }
 
-  rateDoggo(rating: number) {
+  rateDoggo(rating: number): void {
     this.averageRating = rating;
     this.status = 'fadeOut';
 
@@ -51,7 +51,7 @@ export class DoggoRateComponent implements OnChanges {
     });
   }
 
-  skipDoggo() {
+  skipDoggo(): void {
     this.skipped.emit();
   }
 

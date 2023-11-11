@@ -39,7 +39,7 @@ export class DesktopCameraService implements CameraService {
           }
 
           const videoElement = this.window?.document.createElement('video');
-          let canvas = this.window?.document.createElement('canvas');
+          const canvas = this.window?.document.createElement('canvas');
 
           if (!canvas || !videoElement) {
             return reject(() => 'No canvas or video element available');
@@ -56,7 +56,7 @@ export class DesktopCameraService implements CameraService {
               return reject(() => 'No canvas or video element available');
             }
 
-            let ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d');
 
             if (!ctx) {
               return throwError(() => 'No canvas context available');

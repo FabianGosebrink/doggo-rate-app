@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { LoginResponse } from 'angular-auth-oidc-client';
 import { concatMap, from, map, tap } from 'rxjs';

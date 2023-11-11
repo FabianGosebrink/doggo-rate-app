@@ -24,7 +24,7 @@ const desktopCallbackUrl = `http://localhost/callback`;
 
 const authFactory = (
   platformInformationService: PlatformInformationService
-) => {
+): StsConfigStaticLoader => {
   let redirectUrl = webCallbackUrl;
   let postLogoutRedirectUri = webCallbackUrl;
   if (platformInformationService.isElectron) {

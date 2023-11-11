@@ -19,7 +19,7 @@ export class DoggoListComponent {
 
   @Output() doggoSelected = new EventEmitter<string>();
 
-  selectDoggo(doggo: Doggo) {
+  selectDoggo(doggo: Doggo): void {
     this.doggoSelected.emit(doggo.id);
   }
 }

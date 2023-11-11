@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Device } from '@capacitor/device';
+import { Device, DeviceInfo } from '@capacitor/device';
 
 @Component({
   selector: 'ps-doggo-rating-about',
@@ -9,8 +9,8 @@ import { Device } from '@capacitor/device';
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })
-export class AboutComponent {
-  deviceInfo = signal<any>({});
+export class AboutComponent implements OnInit {
+  deviceInfo = signal<DeviceInfo | null>(null);
 
   userAgent = window.navigator.userAgent;
 

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,9 +15,9 @@ export class AuthService {
 
   private modal: Window | null = null;
 
-  login() {
+  login(): void {
     if (this.platformInformationService.isElectron) {
-      const urlHandler = (authUrl) => {
+      const urlHandler = (authUrl): void => {
         this.modal = window.open(authUrl, '_blank', 'nodeIntegration=no');
       };
 
@@ -26,7 +27,7 @@ export class AuthService {
     }
   }
 
-  checkAuth(url?: string) {
+  checkAuth(url?: string): Observable<LoginResponse> {
     if (this.modal) {
       this.modal.close();
     }
@@ -34,7 +35,7 @@ export class AuthService {
     return this.oidcSecurityService.checkAuth(url);
   }
 
-  logout() {
+  logout(): Observable<unknown> {
     return this.oidcSecurityService.logoff();
   }
 }

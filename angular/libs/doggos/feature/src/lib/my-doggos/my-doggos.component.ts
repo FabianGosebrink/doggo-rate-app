@@ -24,7 +24,7 @@ export class MyDoggosComponent implements OnInit {
     this.store.dispatch(DoggosActions.loadMyDoggos());
   }
 
-  deleteDoggo(doggo: Doggo) {
+  deleteDoggo(doggo: Doggo): void {
     this.store.dispatch(DoggosActions.deleteDoggo({ doggo }));
   }
 }

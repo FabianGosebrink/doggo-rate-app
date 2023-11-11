@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/util-camera/src",
   "prefix": "ps-doggo-rating",
-  "tags": [],
+  "tags": ["type:util", "scope:shared"],
   "projectType": "library",
   "targets": {
     "test": {

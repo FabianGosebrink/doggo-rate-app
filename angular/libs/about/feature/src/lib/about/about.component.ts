@@ -1,6 +1,6 @@
-import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Device, DeviceInfo } from '@capacitor/device';
+import { Component, OnInit, signal } from '@angular/core';
+import { Device } from '@capacitor/device';
 
 @Component({
   selector: 'ps-doggo-rating-about',

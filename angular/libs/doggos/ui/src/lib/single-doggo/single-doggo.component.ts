@@ -20,7 +20,7 @@ export class SingleDoggoComponent {
     this.doggoDeleted.emit(doggo);
   }
 
-  navigateToDoggo() {
+  navigateToDoggo(): void {
     this.router.navigate(['doggos/details', this.doggo?.id]);
   }
 }

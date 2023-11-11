@@ -27,6 +27,7 @@ export const logout = createEffect(
       concatMap(() => from(router.navigate(['/doggos']))),
       map(() => {
         authService.logout();
+
         return AuthActions.logoutComplete();
       })
     );

@@ -76,7 +76,9 @@
           "error",
           { "argsIgnorePattern": "^_", "ignoreRestSiblings": true }
         ],
-        "@typescript-eslint/no-explicit-any": "off"
+        "@typescript-eslint/no-explicit-any": "off",
+        "no-useless-constructor": "error",
+        "newline-before-return": "error"
       }
     },
     {

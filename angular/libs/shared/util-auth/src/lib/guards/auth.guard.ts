@@ -16,6 +16,7 @@ export const isAuthenticated = (): Observable<boolean> => {
 
         return false;
       }
+
       return true;
     })
   );

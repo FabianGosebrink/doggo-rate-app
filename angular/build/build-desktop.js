@@ -5,7 +5,7 @@ const OUTPUT_TEMP_PATH = '.temp/desktop';
 const OUTPUT_DIST_PATH = 'dist/desktop';
 const ICON_PATH = 'assets/desktop/icon';
 const DESKTOP_ASSETS = 'assets/desktop/*';
-const ELECTRON_VERSION = '21.0.1';
+const ELECTRON_VERSION = '27.0.4';
 
 shell.echo('Start building desktop');
 

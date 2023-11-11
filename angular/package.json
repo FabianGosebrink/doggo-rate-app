@@ -44,7 +44,7 @@
     "@capacitor/device": "^5.0.6",
     "@capacitor/toast": "^5.0.6",
     "base64-arraybuffer": "^1.0.2",
-    "electron": "^25.9.3"
+    "electron": "^27.0.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "17.0.0",

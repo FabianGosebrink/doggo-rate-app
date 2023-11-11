@@ -1,0 +1,47 @@
+@if(doggo){
+<div
+  class="list-group-item list-group-item-action d-flex gap-3 py-3"
+  aria-current="true"
+>
+  <div
+    class="rounded-circle flex-shrink-0"
+    style="
+        background-image: url('{{ doggo.imageUrl }}');
+        width: 80px;
+        height: 80px;
+        background-size: 90px;
+        background-position: center;
+      "
+  ></div>
+  <div class="d-flex gap-2 w-100 justify-content-between">
+    <div>
+      <h6 class="mb-0">{{ doggo.name }} ({{ doggo.breed }})</h6>
+      <p class="mb-0 opacity-75">
+        {{ doggo.ratingSum / (doggo.ratingCount || 1) | number : '1.2-2' }}/5
+      </p>
+      <p class="mb-0 opacity-75">
+        {{ doggo.comment }} | <a [href]="doggo.imageUrl">Picture</a>
+      </p>
+      <p class="mb-0 opacity-75">{{ doggo.created | date : 'medium' }}</p>
+    </div>
+    <div>
+      <button
+        type="button"
+        class="btn btn-outline-primary btn-sm me-1"
+        [routerLink]="['/doggos']"
+        [queryParams]="{ doggoId: doggo.id }"
+      >
+        <i class="fa-solid fa-arrow-right"></i> Go to
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-outline-danger btn-sm"
+        (click)="deleteDoggo(doggo)"
+      >
+        <i class="fa-solid fa-trash"></i> Delete
+      </button>
+    </div>
+  </div>
+</div>
+}

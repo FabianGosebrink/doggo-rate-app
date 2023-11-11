@@ -37,19 +37,11 @@
   </div>
   <div>
     @if(loggedIn) {
-    <button
-      (click)="logout()"
-      type="button"
-      class="btn btn-outline-primary me-2"
-    >
+    <button (click)="logout()" type="button" class="btn btn-outline-primary">
       <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
     } @else {
-    <button
-      (click)="login()"
-      type="button"
-      class="btn btn-outline-primary me-2"
-    >
+    <button (click)="login()" type="button" class="btn btn-outline-primary">
       <i class="fa-solid fa-right-to-bracket"></i> Login
     </button>
     }

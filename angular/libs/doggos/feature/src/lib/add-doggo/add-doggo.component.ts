@@ -2,11 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  DoggosActions,
-  getLastAddedDoggo,
-  getLoading,
-} from '@ps-doggo-rating/doggos/domain';
+import { DoggosActions, getLoading } from '@ps-doggo-rating/doggos/domain';
 import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
 import { CameraService } from '@ps-doggo-rating/shared/util-camera';
 
@@ -34,7 +30,6 @@ export class AddDoggoComponent {
     comment: ['', Validators.required],
   });
 
-  lastAddedDoggo = this.store.selectSignal(getLastAddedDoggo);
   loading = this.store.selectSignal(getLoading);
 
   filename = '';

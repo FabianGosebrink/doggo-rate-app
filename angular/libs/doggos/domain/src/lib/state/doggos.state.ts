@@ -7,7 +7,6 @@ export interface DoggoState {
   myDoggos: Doggo[];
   selectedDoggo: Doggo | null;
   loading: boolean;
-  lastAddedDoggo: Doggo | null;
   realTimeConnection: string;
 }
 
@@ -15,7 +14,6 @@ export const initialState: DoggoState = {
   doggos: [],
   myDoggos: [],
   selectedDoggo: null,
-  lastAddedDoggo: null,
   loading: false,
   realTimeConnection: '',
 };

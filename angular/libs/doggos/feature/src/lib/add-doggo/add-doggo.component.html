@@ -1,15 +1,4 @@
 <h2>Add new Doggo</h2>
-@if(lastAddedDoggo()){
-<div class="alert alert-success mt-3" role="alert">
-  Doggo added!
-  <a
-    [routerLink]="['/doggos']"
-    [queryParams]="{ doggoId: lastAddedDoggo().id }"
-    class="alert-link"
-    >to {{ lastAddedDoggo().name }}</a
-  >
-</div>
-}
 
 <form [formGroup]="formGroup" (ngSubmit)="addDoggo()">
   <div class="mb-3">

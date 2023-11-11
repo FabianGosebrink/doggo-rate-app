@@ -174,7 +174,7 @@ export const loadMyDoggos = createEffect(
   { functional: true }
 );
 
-export const loadMaddDoggoWithPictureyDoggos = createEffect(
+export const loadMaddDoggoWithPictureDoggos = createEffect(
   (
     actions$ = inject(Actions),
     uploadService = inject(UploadService),

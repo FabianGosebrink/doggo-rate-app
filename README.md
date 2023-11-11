@@ -2,6 +2,8 @@
 
 A demo application for uploading pictures of your dog and rate the Bois from zero to five paws 🐾
 
+![App Screenshot](.github/app.png)
+
 ## Features
 
 - ✅ Cross Platform with Capacitor
@@ -21,4 +23,4 @@ A demo application for uploading pictures of your dog and rate the Bois from zer
 
 ## Screenshots
 
-![App Screenshot](.github/graph.png)
+![Arch Graph](.github/graph.png)

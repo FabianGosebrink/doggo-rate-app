@@ -1,14 +1,14 @@
 import { Component, NgZone, OnInit, inject } from '@angular/core';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { Store } from '@ngrx/store';
 import { AuthActions } from '@ps-doggo-rating/shared/util-auth';
 import { LayoutComponent } from './layout/layout.component';
-import { App, URLOpenListenerEvent } from '@capacitor/app';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
   imports: [LayoutComponent],
 })
 export class AppComponent implements OnInit {

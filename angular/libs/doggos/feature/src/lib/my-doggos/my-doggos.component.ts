@@ -12,7 +12,7 @@ import { SingleDoggoComponent } from '@ps-doggo-rating/doggos/ui';
   selector: 'app-my-doggos',
   standalone: true,
   templateUrl: './my-doggos.component.html',
-  styleUrls: ['./my-doggos.component.css'],
+  styleUrls: ['./my-doggos.component.scss'],
   imports: [SingleDoggoComponent, RouterLink],
 })
 export class MyDoggosComponent implements OnInit {

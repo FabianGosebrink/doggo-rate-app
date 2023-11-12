@@ -17,7 +17,7 @@ import { getRealTimeConnection } from '@ps-doggo-rating/shared/util-real-time';
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css'],
+  styleUrls: ['./layout.component.scss'],
   standalone: true,
   imports: [FooterComponent, NavigationComponent, RouterModule],
 })

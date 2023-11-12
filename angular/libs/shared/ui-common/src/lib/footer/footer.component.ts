@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
   selector: 'app-footer',
   templateUrl: './footer.component.html',
   standalone: true,
-  styleUrls: ['./footer.component.css'],
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
   @Input() userEmail = '';

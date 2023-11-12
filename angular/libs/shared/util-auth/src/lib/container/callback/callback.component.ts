@@ -5,7 +5,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   selector: 'app-callback',
   templateUrl: './callback.component.html',
   standalone: true,
-  styleUrls: ['./callback.component.css'],
+  styleUrls: ['./callback.component.scss'],
   providers: [OidcSecurityService],
 })
 export class CallbackComponent {

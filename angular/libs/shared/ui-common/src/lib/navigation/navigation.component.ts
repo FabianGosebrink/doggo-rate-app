@@ -9,7 +9,7 @@ import {
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   standalone: true,
-  styleUrls: ['./navigation.component.css'],
+  styleUrls: ['./navigation.component.scss'],
   imports: [RouterModule, RouterLink],
 })
 export class NavigationComponent {

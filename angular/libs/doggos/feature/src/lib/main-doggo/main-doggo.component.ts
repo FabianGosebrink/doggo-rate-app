@@ -16,7 +16,7 @@ import {
   selector: 'app-main-doggo',
   templateUrl: './main-doggo.component.html',
   standalone: true,
-  styleUrls: ['./main-doggo.component.css'],
+  styleUrls: ['./main-doggo.component.scss'],
   imports: [DoggoListComponent, DoggoRateComponent, JsonPipe],
 })
 export class MainDoggoComponent implements OnInit {

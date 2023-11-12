@@ -15,7 +15,7 @@ import { timer } from 'rxjs';
 @Component({
   selector: 'app-doggo-rate',
   templateUrl: './doggo-rate.component.html',
-  styleUrls: ['./doggo-rate.component.css'],
+  styleUrls: ['./doggo-rate.component.scss'],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [

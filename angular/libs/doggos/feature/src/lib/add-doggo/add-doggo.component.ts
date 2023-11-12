@@ -3,14 +3,14 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { DoggosActions, getLoading } from '@ps-doggo-rating/doggos/domain';
-import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
 import { CameraService } from '@ps-doggo-rating/shared/util-camera';
+import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
 
 @Component({
   selector: 'app-add-doggo',
   standalone: true,
   templateUrl: './add-doggo.component.html',
-  styleUrls: ['./add-doggo.component.css'],
+  styleUrls: ['./add-doggo.component.scss'],
   imports: [RouterLink, ReactiveFormsModule],
 })
 export class AddDoggoComponent {

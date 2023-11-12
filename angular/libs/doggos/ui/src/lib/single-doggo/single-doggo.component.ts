@@ -12,6 +12,7 @@ import { Doggo } from '@ps-doggo-rating/doggos/domain';
 })
 export class SingleDoggoComponent {
   private readonly router = inject(Router);
+
   @Input() doggo: Doggo | null = null;
 
   @Output() doggoDeleted = new EventEmitter<Doggo>();

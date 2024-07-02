@@ -1,68 +1,68 @@
 <h2>Add new Doggo</h2>
 
-<form [formGroup]="formGroup" (ngSubmit)="addDoggo()">
+<form (ngSubmit)="addDoggo()" [formGroup]="formGroup">
   <div class="mb-3">
-    <label for="doggoname" class="form-label">Name</label>
+    <label class="form-label" for="doggoname">Name</label>
     <input
-      type="text"
       class="form-control"
-      id="doggoname"
       formControlName="name"
+      id="doggoname"
+      type="text"
     />
   </div>
   <div class="mb-3">
-    <label for="doggobreed" class="form-label">Breed</label>
+    <label class="form-label" for="doggobreed">Breed</label>
     <input
-      type="text"
       class="form-control"
-      id="doggobreed"
       formControlName="breed"
+      id="doggobreed"
+      type="text"
     />
   </div>
   <div class="mb-3">
-    <label for="doggocomment" class="form-label">Comment</label>
+    <label class="form-label" for="doggocomment">Comment</label>
     <input
-      type="text"
       class="form-control"
-      id="doggocomment"
       formControlName="comment"
+      id="doggocomment"
+      type="text"
     />
   </div>
 
   <input
-    hidden
     #fileInput
-    type="file"
-    id="file"
-    accept="image/*"
     (change)="setFormData(fileInput.files)"
+    accept="image/*"
+    hidden
+    id="file"
+    type="file"
   />
 
   <div>
-    <img [src]="base64" />
+    <img [src]="base64"/>
   </div>
 
   <label>{{ filename }} </label>
 
   <div class="d-flex justify-content-between mt-3">
     <div class="mb-10">
-      <button type="button" class="btn btn-primary me-2" (click)="takePhoto()">
+      <button (click)="takePhoto()" class="btn btn-primary me-2" type="button">
         <i class="fa-solid fa-camera"></i> Take picture
       </button>
-      <button class="btn btn-primary" type="button" (click)="fileInput.click()">
+      <button (click)="fileInput.click()" class="btn btn-primary" type="button">
         <i class="fa-regular fa-file"></i> Choose File
       </button>
     </div>
 
     <button
-      type="submit"
-      class="btn btn-primary mt-6"
       [disabled]="!formGroup.valid || loading() === true"
+      class="btn btn-primary mt-6"
+      type="submit"
     >
-      @if(loading() === true){
-      <div class="spinner-border spinner-border-sm" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
+      @if (loading()) {
+        <div class="spinner-border spinner-border-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
       }
       <i class="fa-solid fa-plus"></i> Add Doggo
     </button>

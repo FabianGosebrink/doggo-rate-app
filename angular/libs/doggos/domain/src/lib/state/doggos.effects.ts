@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import {
   AuthActions,
   selectIsLoggedIn,
@@ -12,10 +12,10 @@ import {
   selectQueryParams,
 } from '@ps-doggo-rating/shared/util-common';
 import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
-import { EMPTY, catchError, concatMap, map, of, tap } from 'rxjs';
+import { catchError, concatMap, EMPTY, map, of, tap } from 'rxjs';
 import { DoggosApiService } from '../services/doggos-api.service';
 import { SignalRService } from '../services/signalr.service';
-import { UploadService } from './../services/upload.service';
+import { UploadService } from '../services/upload.service';
 import { DoggosActions } from './doggos.actions';
 import {
   getAllDoggos,
@@ -177,7 +177,7 @@ export const loadMyDoggos = createEffect(
   { functional: true }
 );
 
-export const loadMaddDoggoWithPictureDoggos = createEffect(
+export const addDoggoWithPicture = createEffect(
   (
     actions$ = inject(Actions),
     uploadService = inject(UploadService),

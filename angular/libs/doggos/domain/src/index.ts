@@ -5,3 +5,4 @@ export * as doggoEffects from './lib/state/doggos.effects';
 export * from './lib/state/doggos.reducer';
 export * from './lib/state/doggos.selectors';
 export * from './lib/state/doggos.state';
+export * from './lib/state/doggos-signal.state';

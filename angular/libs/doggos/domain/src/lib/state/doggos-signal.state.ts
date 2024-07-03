@@ -55,14 +55,60 @@ export const DoggosStore = signalStore(
         .filter((doggo) => doggo.id !== store.selectedDoggo().id);
     }),
   })),
-  withMethods((store) => {
-    const signalRService = inject(SignalRService);
-    const router = inject(Router);
-    const notificationService = inject(NotificationService);
-    const doggosApiService = inject(DoggosApiService);
-    const uploadService = inject(UploadService);
+  withMethods(
+    (
+      store,
+      signalRService = inject(SignalRService),
+      router = inject(Router),
+      notificationService = inject(NotificationService),
+      doggosApiService = inject(DoggosApiService),
+      uploadService = inject(UploadService),
+      activatedRoute = inject(ActivatedRoute)
+    ) => ({
+      loadDoggos: rxMethod<void>(
+        switchMap(() => {
+          patchState(store, { loading: true });
+          const doggoId = activatedRoute.snapshot.queryParams['id'];
 
-    return {
+          return doggosApiService.getDoggos().pipe(
+            tapResponse({
+              next: (doggos) => {
+                const currentDoggoId = doggoId || doggos[0]?.id || '-1';
+
+                notificationService.showSuccess('Doggos Loaded');
+                const selectedDoggo = doggos[0] ?? null;
+
+                patchState(store, { doggos, selectedDoggo });
+
+                navigateToDoggo(router, currentDoggoId);
+              },
+              error: () => {
+                notificationService.showError();
+              },
+              finalize: () => patchState(store, { loading: false }),
+            })
+          );
+        })
+      ),
+      rateDoggo: rxMethod<number>(
+        switchMap((rating: number) => {
+          patchState(store, { loading: true });
+          const { id } = store.selectedDoggo();
+
+          return doggosApiService.rate(id, rating).pipe(
+            tapResponse({
+              next: () => {
+                //const newSelectedDoggo = allDoggos[nextDoggoIndex];
+
+                navigateToDoggo(router, id);
+              },
+              error: (err) => {
+                console.error(err);
+              },
+            })
+          );
+        })
+      ),
       startListeningToRealtimeDoggoEvents() {
         signalRService.start();
       },
@@ -70,95 +116,6 @@ export const DoggosStore = signalStore(
       stopListeningToRealtimeDoggoEvents() {
         signalRService.stop();
       },
-
-      selectDoggo(id: string) {
-        navigateToDoggo(router, id);
-      },
-
-      selectNextDoggo() {
-        const allDoggos = store.doggos();
-        const nextDoggoIndex = getNextDoggoIndex(store);
-        const newSelectedDoggo = allDoggos[nextDoggoIndex];
-
-        navigateToDoggo(router, newSelectedDoggo.id);
-      },
-
-      rateDoggo(rating: number) {
-        const nextDoggoIndex = getNextDoggoIndex(store);
-        const allDoggos = store.doggos();
-        const { id } = store.selectedDoggo();
-
-        return doggosApiService.rate(id, rating).pipe(
-          tapResponse({
-            next: () => {
-              const newSelectedDoggo = allDoggos[nextDoggoIndex];
-
-              navigateToDoggo(router, newSelectedDoggo.id);
-            },
-            error: (err) => {
-              console.error(err);
-            },
-          })
-        );
-      },
-
-      loadDoggos() {
-        const activatedRoute = inject(ActivatedRoute);
-        const doggoId = activatedRoute.snapshot.queryParams['id'];
-
-        return doggosApiService.getDoggos().pipe(
-          tapResponse({
-            next: (doggos) => {
-              const currentDoggoId = doggoId || doggos[0]?.id || '-1';
-
-              notificationService.showSuccess('Doggos Loaded');
-
-              navigateToDoggo(router, currentDoggoId);
-            },
-            error: () => {
-              notificationService.showError();
-            },
-          })
-        );
-      },
-
-      loadMyDoggos() {
-        const activatedRoute = inject(ActivatedRoute);
-        const doggoId = activatedRoute.snapshot.queryParams['id'];
-
-        return doggosApiService.getMyDoggos().pipe(
-          tapResponse({
-            next: (doggos) => {
-              const currentDoggoId = doggoId || doggos[0]?.id || '-1';
-
-              notificationService.showSuccess('Doggos Loaded');
-
-              navigateToDoggo(router, currentDoggoId);
-            },
-            error: () => {
-              notificationService.showError();
-            },
-          })
-        );
-      },
-
-      // deleteItem: rxMethod<Entity>(
-      //   switchMap((item) => {
-      //     patchState(store, { loading: true });
-      //
-      //     return service.deleteItem(item).pipe(
-      //       tapResponse({
-      //         next: () => {
-      //           patchState(store, {
-      //             items: [...store.items().filter((x) => x.id !== item.id)],
-      //           });
-      //         },
-      //         error: console.error,
-      //         finalize: () => patchState(store, { loading: false }),
-      //       })
-      //     );
-      //   })
-      // ),
 
       addDoggoWithPicture: rxMethod(
         switchMap(({ name, breed, comment, formData }) => {
@@ -180,8 +137,98 @@ export const DoggosStore = signalStore(
           );
         })
       ),
-    };
-  })
+    })
+  )
+  // withMethods((store) => {
+  //   const signalRService = inject(SignalRService);
+  //   const router = inject(Router);
+  //   const notificationService = inject(NotificationService);
+  //   const doggosApiService = inject(DoggosApiService);
+  //   const uploadService = inject(UploadService);
+  //   const activatedRoute = inject(ActivatedRoute);
+  //
+  //   return {
+  //     startListeningToRealtimeDoggoEvents() {
+  //       signalRService.start();
+  //     },
+  //
+  //     stopListeningToRealtimeDoggoEvents() {
+  //       signalRService.stop();
+  //     },
+  //
+  //     selectDoggo(id: string) {
+  //       navigateToDoggo(router, id);
+  //     },
+  //
+  //     selectNextDoggo() {
+  //       const allDoggos = store.doggos();
+  //       const nextDoggoIndex = getNextDoggoIndex(store);
+  //       const newSelectedDoggo = allDoggos[nextDoggoIndex];
+  //
+  //       navigateToDoggo(router, newSelectedDoggo.id);
+  //     },
+  //
+  //     rateDoggo(rating: number) {
+  //       const nextDoggoIndex = getNextDoggoIndex(store);
+  //       const allDoggos = store.doggos();
+  //       const { id } = store.selectedDoggo();
+  //
+  //       return doggosApiService.rate(id, rating).pipe(
+  //         tapResponse({
+  //           next: () => {
+  //             const newSelectedDoggo = allDoggos[nextDoggoIndex];
+  //
+  //             navigateToDoggo(router, newSelectedDoggo.id);
+  //           },
+  //           error: (err) => {
+  //             console.error(err);
+  //           },
+  //         })
+  //       );
+  //     },
+  //
+  //     logIntervals: rxMethod(pipe(tap(() => console.log(`Even number:`)))),
+  //
+  //     loadMyDoggos() {
+  //       const doggoId = activatedRoute.snapshot.queryParams['id'];
+  //
+  //       return doggosApiService.getMyDoggos().pipe(
+  //         tapResponse({
+  //           next: (doggos) => {
+  //             const currentDoggoId = doggoId || doggos[0]?.id || '-1';
+  //
+  //             notificationService.showSuccess('Doggos Loaded');
+  //
+  //             navigateToDoggo(router, currentDoggoId);
+  //           },
+  //           error: () => {
+  //             notificationService.showError();
+  //           },
+  //         })
+  //       );
+  //     },
+  //
+  //     // deleteItem: rxMethod<Entity>(
+  //     //   switchMap((item) => {
+  //     //     patchState(store, { loading: true });
+  //     //
+  //     //     return service.deleteItem(item).pipe(
+  //     //       tapResponse({
+  //     //         next: () => {
+  //     //           patchState(store, {
+  //     //             items: [...store.items().filter((x) => x.id !== item.id)],
+  //     //           });
+  //     //         },
+  //     //         error: console.error,
+  //     //         finalize: () => patchState(store, { loading: false }),
+  //     //       })
+  //     //     );
+  //     //   })
+  //     // ),
+  //
+
+  //   };
+  // }),
 );
 
 function getNextDoggoIndex(store: any): number {

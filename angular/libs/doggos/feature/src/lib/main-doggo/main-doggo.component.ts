@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { DoggosStore } from '@ps-doggo-rating/doggos/domain';
 import {
   DoggoListComponent,
@@ -14,8 +14,8 @@ import {
   imports: [DoggoListComponent, DoggoRateComponent, JsonPipe],
 })
 export class MainDoggoComponent implements OnInit {
-  selectedDoggo = signal(null); // this.store.getSelectedDoggo
   private readonly store = inject(DoggosStore);
+  selectedDoggo = this.store.selectedDoggo;
   doggos = this.store.getAllDoggosButSelected;
   loading = this.store.loading;
   private readonly destroyRef = inject(DestroyRef);
@@ -34,10 +34,10 @@ export class MainDoggoComponent implements OnInit {
   }
 
   skipDoggo(): void {
-    this.store.selectNextDoggo();
+    // this.store.selectNextDoggo();
   }
 
   selectDoggo(id: string): void {
-    this.store.selectDoggo(id);
+    //this.store.selectDoggo(id);
   }
 }

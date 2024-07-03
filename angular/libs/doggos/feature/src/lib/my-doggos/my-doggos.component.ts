@@ -15,7 +15,7 @@ export class MyDoggosComponent implements OnInit {
   private readonly store = inject(DoggosStore);
 
   ngOnInit(): void {
-    this.store.loadMyDoggos();
+    //this.store.loadMyDoggos();
   }
 
   deleteDoggo(doggo: Doggo): void {

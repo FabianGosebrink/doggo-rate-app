@@ -29,7 +29,7 @@ export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState<AuthRootState>(initialState),
   withComputed((store) => ({
-    userEmail: computed(() => store.userProfile().email),
+    userEmail: computed(() => store.userProfile()?.email ?? ''),
   })),
   withMethods(
     (store, authService = inject(AuthService), router = inject(Router)) => ({

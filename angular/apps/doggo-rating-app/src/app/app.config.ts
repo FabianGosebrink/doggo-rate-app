@@ -2,7 +2,6 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { provideRouterStore } from '@ngrx/router-store';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
 import {
   authInterceptor,
@@ -53,7 +52,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(APP_ROUTES),
     provideHttpClient(withInterceptors([authInterceptor()])),
-    provideRouterStore(),
     provideAuth({
       loader: {
         provide: StsConfigLoader,

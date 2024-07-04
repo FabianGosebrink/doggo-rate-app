@@ -1,21 +1,21 @@
 <div class="d-flex justify-content-between">
   <h2>Your Doggos</h2>
   <button
-    type="button"
     [routerLink]="['/doggos/my/add']"
     class="btn btn-primary mt-6"
+    type="button"
   >
     <i class="fa-solid fa-plus"></i> Add Doggo
   </button>
 </div>
 
 <div class="list-group w-auto mt-5">
-  @for(doggo of doggos(); track doggo.id) {
-  <app-single-doggo
-    [doggo]="doggo"
-    (doggoDeleted)="deleteDoggo($event)"
-  ></app-single-doggo>
-  }@empty {
-  <div>No 🐕 added yet. Add one!</div>
+  @for (doggo of store.myDoggos(); track doggo.id) {
+    <app-single-doggo
+      [doggo]="doggo"
+      (doggoDeleted)="deleteDoggo($event)"
+    ></app-single-doggo>
+  } @empty {
+    <div>No 🐕 added yet. Add one!</div>
   }
 </div>

@@ -1,10 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { DoggosActions, getLoading } from '@ps-doggo-rating/doggos/domain';
+import { DoggosStore } from '@ps-doggo-rating/doggos/domain';
 import { CameraService } from '@ps-doggo-rating/shared/util-camera';
-import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
 
 @Component({
   selector: 'app-add-doggo',
@@ -14,32 +12,17 @@ import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platfor
   imports: [RouterLink, ReactiveFormsModule],
 })
 export class AddDoggoComponent {
+  filename = '';
+  base64 = '';
   private readonly fb = inject(FormBuilder);
-
-  private readonly store = inject(Store);
-
-  private readonly cameraService = inject(CameraService);
-
-  private readonly platformInformationService = inject(
-    PlatformInformationService
-  );
-
   formGroup = this.fb.group({
     name: ['', Validators.required],
     breed: ['', Validators.required],
     comment: ['', Validators.required],
   });
-
-  loading = this.store.selectSignal(getLoading);
-
-  filename = '';
-
-  base64 = '';
-
-  get isMobile(): boolean {
-    return this.platformInformationService.isMobile;
-  }
-
+  private readonly store = inject(DoggosStore);
+  loading = this.store.loading;
+  private readonly cameraService = inject(CameraService);
   private formData: FormData;
 
   setFormData(files): void {
@@ -66,14 +49,12 @@ export class AddDoggoComponent {
     if (this.formGroup.valid) {
       const { name, comment, breed } = this.formGroup.value;
 
-      this.store.dispatch(
-        DoggosActions.addDoggoWithPicture({
-          name,
-          comment,
-          breed,
-          formData: this.formData,
-        })
-      );
+      this.store.addDoggoWithPicture({
+        name,
+        comment,
+        breed,
+        formData: this.formData,
+      });
     }
   }
 }

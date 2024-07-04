@@ -14,4 +14,6 @@ export class FooterComponent {
   @Input() realTimeConnection = '';
 
   @Input() platform = '';
+
+  currentYear = new Date().getFullYear();
 }

@@ -1,5 +1,17 @@
-import { AuthActions } from './auth.actions';
-import { createReducer, on } from '@ngrx/store';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
+import { computed, inject } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { rxMethod } from '@ngrx/signals/rxjs-interop';
+import { switchMap } from 'rxjs';
+import { LoginResponse } from 'angular-auth-oidc-client';
+import { tapResponse } from '@ngrx/operators';
 
 export const featureName = 'auth';
 
@@ -13,22 +25,38 @@ export const initialState: AuthRootState = {
   isLoggedIn: false,
 };
 
-export const authReducer = createReducer(
-  initialState,
+export const AuthStore = signalStore(
+  { providedIn: 'root' },
+  withState<AuthRootState>(initialState),
+  withComputed((store) => ({
+    userEmail: computed(() => store.userProfile().email),
+  })),
+  withMethods(
+    (store, authService = inject(AuthService), router = inject(Router)) => ({
+      login() {
+        authService.login();
+      },
 
-  on(AuthActions.loginComplete, (state, { profile, isLoggedIn }) => {
-    return {
-      ...state,
-      userProfile: profile,
-      isLoggedIn,
-    };
-  }),
+      logout() {
+        authService.logout();
+        patchState(store, initialState);
+        router.navigate(['/doggos']);
+      },
 
-  on(AuthActions.logout, (state) => {
-    return {
-      ...state,
-      userProfile: null,
-      isLoggedIn: false,
-    };
-  })
+      checkAuth: rxMethod<string | null>(
+        switchMap((url: string | null) => {
+          return authService.checkAuth(url).pipe(
+            tapResponse({
+              next: (response: LoginResponse) =>
+                patchState(store, {
+                  isLoggedIn: response.isAuthenticated,
+                  userProfile: response.userData,
+                }),
+              error: (err) => console.log(err),
+            })
+          );
+        })
+      ),
+    })
+  )
 );

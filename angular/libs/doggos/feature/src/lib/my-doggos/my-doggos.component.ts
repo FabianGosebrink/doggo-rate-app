@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Doggo, DoggosStore } from '@ps-doggo-rating/doggos/domain';
 import { SingleDoggoComponent } from '@ps-doggo-rating/doggos/ui';
@@ -11,14 +11,13 @@ import { SingleDoggoComponent } from '@ps-doggo-rating/doggos/ui';
   imports: [SingleDoggoComponent, RouterLink],
 })
 export class MyDoggosComponent implements OnInit {
-  doggos = signal([]); //this.store.getAllIdsOfMyDoggos();
-  private readonly store = inject(DoggosStore);
+  store = inject(DoggosStore);
 
   ngOnInit(): void {
-    //this.store.loadMyDoggos();
+    this.store.loadMyDoggos();
   }
 
   deleteDoggo(doggo: Doggo): void {
-    // this.store.dispatch(DoggosActions.deleteDoggo({ doggo }));
+    this.store.deleteDoggo(doggo);
   }
 }

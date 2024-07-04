@@ -15,6 +15,7 @@ import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { concatMap, map, switchMap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
+import { Doggo } from '../models/doggo';
 
 export const DoggosStore = signalStore(
   { providedIn: 'root' },
@@ -90,6 +91,40 @@ export const DoggosStore = signalStore(
           );
         })
       ),
+
+      loadSingleDoggo: rxMethod<void>(
+        switchMap(() => {
+          patchState(store, { loading: true });
+          const doggoId = activatedRoute.snapshot.queryParams['id'];
+
+          return doggosApiService.getSingleDoggo(doggoId).pipe(
+            tapResponse({
+              next: (detailDoggo) => patchState(store, { detailDoggo }),
+              error: () => notificationService.showError(),
+              finalize: () => patchState(store, { loading: false }),
+            })
+          );
+        })
+      ),
+
+      clearSingleDoggo() {
+        patchState(store, { detailDoggo: null });
+      },
+
+      loadMyDoggos: rxMethod<void>(
+        switchMap(() => {
+          patchState(store, { loading: true });
+
+          return doggosApiService.getMyDoggos().pipe(
+            tapResponse({
+              next: (myDoggos) => patchState(store, { myDoggos }),
+              error: () => notificationService.showError(),
+              finalize: () => patchState(store, { loading: false }),
+            })
+          );
+        })
+      ),
+
       rateDoggo: rxMethod<number>(
         switchMap((rating: number) => {
           patchState(store, { loading: true });
@@ -97,24 +132,51 @@ export const DoggosStore = signalStore(
 
           return doggosApiService.rate(id, rating).pipe(
             tapResponse({
-              next: () => {
-                //const newSelectedDoggo = allDoggos[nextDoggoIndex];
+              next: (updatedDoggo) => {
+                const nextDoggoIndex = store.getNextDoggoIndex();
+                const newSelectedDoggo = store.doggos()[nextDoggoIndex];
+                const newDoggos = replaceItemInArray(
+                  store.doggos(),
+                  updatedDoggo
+                );
+
+                patchState(store, {
+                  doggos: newDoggos,
+                  selectedDoggo: newSelectedDoggo,
+                });
 
                 navigateToDoggo(router, id);
               },
-              error: (err) => {
-                console.error(err);
+              error: () => {
+                notificationService.showError();
               },
+              finalize: () => patchState(store, { loading: false }),
             })
           );
         })
       ),
+
       startListeningToRealtimeDoggoEvents() {
         signalRService.start();
       },
 
       stopListeningToRealtimeDoggoEvents() {
         signalRService.stop();
+      },
+
+      selectDoggo(id: string) {
+        const selectedDoggo = store.doggos().find((doggo) => doggo.id === id);
+        navigateToDoggo(router, selectedDoggo.id);
+        patchState(store, { selectedDoggo });
+      },
+
+      selectNextDoggo() {
+        const nextDoggoId = store.getNextDoggoIndex();
+        const selectedDoggo = store.doggos()[nextDoggoId];
+
+        navigateToDoggo(router, selectedDoggo.id);
+
+        patchState(store, { selectedDoggo });
       },
 
       addDoggoWithPicture: rxMethod(
@@ -132,115 +194,58 @@ export const DoggosStore = signalStore(
 
                 router.navigate(['/doggos/my']);
               },
-              error: (err) => console.log(err),
+              error: () => {
+                notificationService.showError();
+              },
+              finalize: () => patchState(store, { loading: false }),
+            })
+          );
+        })
+      ),
+
+      deleteDoggo: rxMethod<Doggo>(
+        switchMap((doggo) => {
+          patchState(store, { loading: true });
+
+          return doggosApiService.deleteDoggo(doggo).pipe(
+            tapResponse({
+              next: (doggo) => {
+                notificationService.showSuccess(`Doggo ${doggo.name} deleted`);
+
+                const doggos = removeItemFromArray(store.doggos(), doggo.id);
+                const myDoggos = removeItemFromArray(
+                  store.myDoggos(),
+                  doggo.id
+                );
+
+                patchState(store, { doggos, myDoggos });
+
+                router.navigate(['/doggos/my']);
+              },
+              error: () => notificationService.showError(),
+              finalize: () => patchState(store, { loading: false }),
             })
           );
         })
       ),
     })
   )
-  // withMethods((store) => {
-  //   const signalRService = inject(SignalRService);
-  //   const router = inject(Router);
-  //   const notificationService = inject(NotificationService);
-  //   const doggosApiService = inject(DoggosApiService);
-  //   const uploadService = inject(UploadService);
-  //   const activatedRoute = inject(ActivatedRoute);
-  //
-  //   return {
-  //     startListeningToRealtimeDoggoEvents() {
-  //       signalRService.start();
-  //     },
-  //
-  //     stopListeningToRealtimeDoggoEvents() {
-  //       signalRService.stop();
-  //     },
-  //
-  //     selectDoggo(id: string) {
-  //       navigateToDoggo(router, id);
-  //     },
-  //
-  //     selectNextDoggo() {
-  //       const allDoggos = store.doggos();
-  //       const nextDoggoIndex = getNextDoggoIndex(store);
-  //       const newSelectedDoggo = allDoggos[nextDoggoIndex];
-  //
-  //       navigateToDoggo(router, newSelectedDoggo.id);
-  //     },
-  //
-  //     rateDoggo(rating: number) {
-  //       const nextDoggoIndex = getNextDoggoIndex(store);
-  //       const allDoggos = store.doggos();
-  //       const { id } = store.selectedDoggo();
-  //
-  //       return doggosApiService.rate(id, rating).pipe(
-  //         tapResponse({
-  //           next: () => {
-  //             const newSelectedDoggo = allDoggos[nextDoggoIndex];
-  //
-  //             navigateToDoggo(router, newSelectedDoggo.id);
-  //           },
-  //           error: (err) => {
-  //             console.error(err);
-  //           },
-  //         })
-  //       );
-  //     },
-  //
-  //     logIntervals: rxMethod(pipe(tap(() => console.log(`Even number:`)))),
-  //
-  //     loadMyDoggos() {
-  //       const doggoId = activatedRoute.snapshot.queryParams['id'];
-  //
-  //       return doggosApiService.getMyDoggos().pipe(
-  //         tapResponse({
-  //           next: (doggos) => {
-  //             const currentDoggoId = doggoId || doggos[0]?.id || '-1';
-  //
-  //             notificationService.showSuccess('Doggos Loaded');
-  //
-  //             navigateToDoggo(router, currentDoggoId);
-  //           },
-  //           error: () => {
-  //             notificationService.showError();
-  //           },
-  //         })
-  //       );
-  //     },
-  //
-  //     // deleteItem: rxMethod<Entity>(
-  //     //   switchMap((item) => {
-  //     //     patchState(store, { loading: true });
-  //     //
-  //     //     return service.deleteItem(item).pipe(
-  //     //       tapResponse({
-  //     //         next: () => {
-  //     //           patchState(store, {
-  //     //             items: [...store.items().filter((x) => x.id !== item.id)],
-  //     //           });
-  //     //         },
-  //     //         error: console.error,
-  //     //         finalize: () => patchState(store, { loading: false }),
-  //     //       })
-  //     //     );
-  //     //   })
-  //     // ),
-  //
-
-  //   };
-  // }),
 );
-
-function getNextDoggoIndex(store: any): number {
-  const currentDoggoIndex = store
-    .doggos()
-    .findIndex((doggo) => doggo.id === store.selectedDoggo().id);
-
-  return (currentDoggoIndex + 1) % store.doggos().length;
-}
 
 function navigateToDoggo(router: Router, doggoId: string): void {
   router.navigate(['/doggos'], {
     queryParams: { doggoId },
   });
+}
+
+function replaceItemInArray(array: Doggo[], newItem: Doggo): Doggo[] {
+  const currentDoggoIndex = array.findIndex((x) => x.id === newItem.id);
+  const allDoggosCopy = [...array];
+  allDoggosCopy.splice(currentDoggoIndex, 1, newItem);
+
+  return allDoggosCopy;
+}
+
+function removeItemFromArray(array: Doggo[], id: string): Doggo[] {
+  return [...array].filter((existing) => existing.id !== id);
 }

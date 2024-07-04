@@ -1,14 +1,14 @@
 <app-navigation
-  [loggedIn]="isLoggedIn()"
-  (dologin)="login()"
   (doLogout)="logout()"
+  (dologin)="login()"
+  [loggedIn]="authStore.isLoggedIn()"
 ></app-navigation>
 
 <router-outlet></router-outlet>
 
 <app-footer
-  [userEmail]="userEmail()"
-  [realTimeConnection]="realTimeConnection()"
   [backendUrl]="backendUrl"
   [platform]="platform"
+  [realTimeConnection]="realTimeStore.realTimeConnection()"
+  [userEmail]="authStore.userEmail()"
 ></app-footer>

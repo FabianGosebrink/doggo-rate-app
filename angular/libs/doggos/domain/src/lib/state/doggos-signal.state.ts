@@ -16,11 +16,12 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { concatMap, map, switchMap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
 import { Doggo } from '../models/doggo';
+import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
 
 export const DoggosStore = signalStore(
   { providedIn: 'root' },
   withState<DoggoState>(initialState),
-  withComputed((store) => ({
+  withComputed((store, authStore = inject(AuthStore)) => ({
     getAllIdsOfMyDoggos: computed(() => {
       const myDoggos = store.myDoggos();
 
@@ -55,6 +56,7 @@ export const DoggosStore = signalStore(
         .doggos()
         .filter((doggo) => doggo.id !== store.selectedDoggo().id);
     }),
+    getUserSub: computed(() => authStore.userSub()),
   })),
   withMethods(
     (
@@ -132,19 +134,7 @@ export const DoggosStore = signalStore(
 
           return doggosApiService.rate(id, rating).pipe(
             tapResponse({
-              next: (updatedDoggo) => {
-                const nextDoggoIndex = store.getNextDoggoIndex();
-                const newSelectedDoggo = store.doggos()[nextDoggoIndex];
-                const newDoggos = replaceItemInArray(
-                  store.doggos(),
-                  updatedDoggo
-                );
-
-                patchState(store, {
-                  doggos: newDoggos,
-                  selectedDoggo: newSelectedDoggo,
-                });
-
+              next: () => {
                 navigateToDoggo(router, id);
               },
               error: () => {
@@ -155,6 +145,24 @@ export const DoggosStore = signalStore(
           );
         })
       ),
+
+      rateDoggoFromRealTime(ratedDoggo: Doggo) {
+        const { name } = ratedDoggo;
+
+        const userId = store.getUserSub();
+        if (isMyDoggo(ratedDoggo, userId)) {
+          notificationService.showSuccess(`${name} was just rated!!!`);
+        }
+
+        const nextDoggoIndex = store.getNextDoggoIndex();
+        const newSelectedDoggo = store.doggos()[nextDoggoIndex];
+        const newDoggos = replaceItemInArray(store.doggos(), ratedDoggo);
+
+        patchState(store, {
+          doggos: newDoggos,
+          selectedDoggo: newSelectedDoggo,
+        });
+      },
 
       startListeningToRealtimeDoggoEvents() {
         signalRService.start();
@@ -203,6 +211,17 @@ export const DoggosStore = signalStore(
         })
       ),
 
+      addDoggoFromRealTime(doggo: Doggo) {
+        const userId = store.getUserSub();
+        if (isMyDoggo(doggo, userId)) {
+          const myDoggos = [...store.myDoggos(), doggo];
+          patchState(store, { myDoggos });
+        }
+
+        const doggos = [...store.doggos(), doggo];
+        patchState(store, { doggos });
+      },
+
       deleteDoggo: rxMethod<Doggo>(
         switchMap((doggo) => {
           patchState(store, { loading: true });
@@ -228,6 +247,13 @@ export const DoggosStore = signalStore(
           );
         })
       ),
+
+      deleteDoggoFromRealTime(id: string) {
+        const doggos = removeItemFromArray(store.doggos(), id);
+        const myDoggos = removeItemFromArray(store.myDoggos(), id);
+
+        patchState(store, { doggos, myDoggos });
+      },
     })
   )
 );
@@ -248,4 +274,8 @@ function replaceItemInArray(array: Doggo[], newItem: Doggo): Doggo[] {
 
 function removeItemFromArray(array: Doggo[], id: string): Doggo[] {
   return [...array].filter((existing) => existing.id !== id);
+}
+
+function isMyDoggo(doggo: Doggo, userSub: string): boolean {
+  return doggo.id === userSub;
 }

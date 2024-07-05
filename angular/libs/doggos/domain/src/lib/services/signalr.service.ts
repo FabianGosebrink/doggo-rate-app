@@ -6,7 +6,7 @@ import {
 } from '@microsoft/signalr';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
 import { RealTimeStore } from '@ps-doggo-rating/shared/util-real-time';
-import { DoggosStore } from '@ps-doggo-rating/doggos/domain';
+import { DoggosStore } from '../state/doggos-signal.state';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {

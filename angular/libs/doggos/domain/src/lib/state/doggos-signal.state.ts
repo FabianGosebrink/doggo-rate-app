@@ -2,6 +2,7 @@ import {
   patchState,
   signalStore,
   withComputed,
+  withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
@@ -13,14 +14,15 @@ import { tapResponse } from '@ngrx/operators';
 import { DoggosApiService } from '../services/doggos-api.service';
 import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { concatMap, map, switchMap } from 'rxjs';
+import { concatMap, filter, map, switchMap, tap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
-import { Doggo } from '../models/doggo';
+import { Doggo, DoggoAddedEvent, DoggoDeletedEvent } from '../models/doggo';
+import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
 
 export const DoggosStore = signalStore(
   { providedIn: 'root' },
   withState<DoggoState>(initialState),
-  withComputed((store) => ({
+  withComputed((store, authStore = inject(AuthStore)) => ({
     getAllIdsOfMyDoggos: computed(() => {
       const myDoggos = store.myDoggos();
 
@@ -55,8 +57,7 @@ export const DoggosStore = signalStore(
         .doggos()
         .filter((doggo) => doggo.id !== store.selectedDoggo().id);
     }),
-    // getUserSub: computed(() => authStore.userSub()),
-    getUserSub: computed(() => 'authStore.userSub()'),
+    getUserSub: computed(() => authStore.userSub()),
   })),
   withMethods(
     (
@@ -71,7 +72,7 @@ export const DoggosStore = signalStore(
       loadDoggos: rxMethod<void>(
         switchMap(() => {
           patchState(store, { loading: true });
-          const doggoId = activatedRoute.snapshot.queryParams['id'];
+          const doggoId = activatedRoute.snapshot.queryParams['doggoId'];
 
           return doggosApiService.getDoggos().pipe(
             tapResponse({
@@ -97,7 +98,7 @@ export const DoggosStore = signalStore(
       loadSingleDoggo: rxMethod<void>(
         switchMap(() => {
           patchState(store, { loading: true });
-          const doggoId = activatedRoute.snapshot.queryParams['id'];
+          const doggoId = activatedRoute.snapshot.params['id'];
 
           return doggosApiService.getSingleDoggo(doggoId).pipe(
             tapResponse({
@@ -211,16 +212,18 @@ export const DoggosStore = signalStore(
         })
       ),
 
-      addDoggoFromRealTime(doggo: Doggo) {
-        const userId = store.getUserSub();
-        if (isMyDoggo(doggo, userId)) {
-          const myDoggos = [...store.myDoggos(), doggo];
-          patchState(store, { myDoggos });
-        }
+      addDoggoFromRealTime: rxMethod<Doggo>(
+        tap((doggo: Doggo) => {
+          const userId = store.getUserSub();
+          if (isMyDoggo(doggo, userId)) {
+            const myDoggos = [...store.myDoggos(), doggo];
+            patchState(store, { myDoggos });
+          }
 
-        const doggos = [...store.doggos(), doggo];
-        patchState(store, { doggos });
-      },
+          const doggos = [...store.doggos(), doggo];
+          patchState(store, { doggos });
+        })
+      ),
 
       deleteDoggo: rxMethod<Doggo>(
         switchMap((doggo) => {
@@ -248,14 +251,35 @@ export const DoggosStore = signalStore(
         })
       ),
 
-      deleteDoggoFromRealTime(id: string) {
-        const doggos = removeItemFromArray(store.doggos(), id);
-        const myDoggos = removeItemFromArray(store.myDoggos(), id);
+      deleteDoggoFromRealTime: rxMethod<string>(
+        tap((id: string) => {
+          const doggos = removeItemFromArray(store.doggos(), id);
+          const myDoggos = removeItemFromArray(store.myDoggos(), id);
 
-        patchState(store, { doggos, myDoggos });
-      },
+          patchState(store, { doggos, myDoggos });
+        })
+      ),
     })
-  )
+  ),
+  withHooks({
+    onInit(store, signalRService = inject(SignalRService)) {
+      const addedDoggo$ = signalRService.doggoEvents.pipe(
+        filter(
+          (event): event is DoggoAddedEvent => event.type === 'doggoadded'
+        ),
+        map(({ doggo }) => doggo)
+      );
+      const deletedDoggoId$ = signalRService.doggoEvents.pipe(
+        filter(
+          (event): event is DoggoDeletedEvent => event.type === 'doggodeleted'
+        ),
+        map(({ id }) => id)
+      );
+
+      store.addDoggoFromRealTime(addedDoggo$);
+      store.deleteDoggoFromRealTime(deletedDoggoId$);
+    },
+  })
 );
 
 function navigateToDoggo(router: Router, doggoId: string): void {

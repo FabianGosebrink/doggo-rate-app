@@ -11,7 +11,7 @@ export interface Doggo {
 }
 
 export type DoggoAddedEvent = { type: 'doggoadded'; doggo: Doggo };
-export type DoggoRemovedEvent = { type: 'doggodeleted'; id: string };
+export type DoggoDeletedEvent = { type: 'doggodeleted'; id: string };
 export type DoggoRatedEvent = { type: 'doggorated'; doggo: Doggo };
 
-export type DoggoEvent = DoggoAddedEvent | DoggoRemovedEvent | DoggoRatedEvent;
+export type DoggoEvent = DoggoAddedEvent | DoggoDeletedEvent | DoggoRatedEvent;

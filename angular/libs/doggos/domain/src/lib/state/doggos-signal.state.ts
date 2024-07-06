@@ -18,18 +18,10 @@ import { concatMap, filter, map, switchMap, tap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
 import { Doggo, DoggoAddedEvent, DoggoDeletedEvent } from '../models/doggo';
 import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
-import {
-  withQueryParams,
-  withRouteParams,
-} from '@ps-doggo-rating/shared/util-router';
 
 export const DoggosStore = signalStore(
   { providedIn: 'root' },
   withState<DoggoState>(initialState),
-  withQueryParams({
-    doggoId: (param) => param ?? '',
-  }),
-  withRouteParams({ doggoId: (param) => param }),
   withComputed((store, authStore = inject(AuthStore)) => ({
     getAllIdsOfMyDoggos: computed(() => {
       const myDoggos = store.myDoggos();
@@ -76,10 +68,9 @@ export const DoggosStore = signalStore(
       doggosApiService = inject(DoggosApiService),
       uploadService = inject(UploadService)
     ) => ({
-      loadDoggos: rxMethod<void>(
-        switchMap(() => {
+      loadDoggos: rxMethod<string | null>(
+        switchMap((doggoId: string | null) => {
           patchState(store, { loading: true });
-          const doggoId = store.doggoId();
 
           return doggosApiService.getDoggos().pipe(
             tapResponse({
@@ -87,7 +78,8 @@ export const DoggosStore = signalStore(
                 const currentDoggoId = doggoId || doggos[0]?.id || '-1';
 
                 notificationService.showSuccess('Doggos Loaded');
-                const selectedDoggo = doggos[0] ?? null;
+                const selectedDoggo =
+                  doggos.find((doggo) => doggo.id === currentDoggoId) ?? null;
 
                 patchState(store, { doggos, selectedDoggo });
 
@@ -102,10 +94,9 @@ export const DoggosStore = signalStore(
         })
       ),
 
-      loadSingleDoggo: rxMethod<void>(
-        switchMap(() => {
+      loadSingleDoggo: rxMethod<string>(
+        switchMap((doggoId: string) => {
           patchState(store, { loading: true });
-          const doggoId = store.doggoId();
 
           return doggosApiService.getSingleDoggo(doggoId).pipe(
             tapResponse({

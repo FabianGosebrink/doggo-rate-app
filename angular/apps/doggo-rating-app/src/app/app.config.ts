@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
 import {
   authInterceptor,
@@ -50,7 +50,7 @@ const authFactory = (
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(APP_ROUTES),
+    provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor()])),
     provideAuth({
       loader: {

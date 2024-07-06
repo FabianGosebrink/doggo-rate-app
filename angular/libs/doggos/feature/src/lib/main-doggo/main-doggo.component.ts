@@ -4,6 +4,7 @@ import {
   DoggoListComponent,
   DoggoRateComponent,
 } from '@ps-doggo-rating/doggos/ui';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-doggo',
@@ -15,9 +16,10 @@ import {
 export class MainDoggoComponent implements OnInit {
   store = inject(DoggosStore);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.store.loadDoggos();
+    this.store.loadDoggos(this.activatedRoute.snapshot.queryParams['doggoId']);
     this.store.startListeningToRealtimeDoggoEvents();
 
     this.destroyRef.onDestroy(() => {

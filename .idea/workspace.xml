@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/signalr.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/signalr.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/state/doggos-signal.state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/state/doggos-signal.state.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/lib/state/auth.reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/lib/state/auth.reducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-router/src/lib/store/models.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-router/src/lib/store/query-params.feature.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-router/src/lib/store/route-params.feature.ts" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,6 +50,7 @@
     "node.js.selected.package.stylelint": "",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\_git\\FabianGosebrink\\doggo-rate-app\\angular\\node_modules\\prettier",
     "rearrange.code.on.save": "true",
     "settings.editor.selected.configurable": "actions.on.save",
     "ts.external.directory.path": "C:\\_git\\FabianGosebrink\\doggo-rate-app\\angular\\node_modules\\typescript\\lib",
@@ -78,6 +79,7 @@
       <workItem from="1720103415952" duration="427000" />
       <workItem from="1720103861466" duration="225000" />
       <workItem from="1720104101903" duration="5287000" />
+      <workItem from="1720190338578" duration="14067000" />
     </task>
     <task id="LOCAL-00001" summary="Adding first shot of store">
       <option name="closed" value="true" />
@@ -95,16 +97,81 @@
       <option name="project" value="LOCAL" />
       <updated>1720104154093</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updated the signalr service">
+      <option name="closed" value="true" />
+      <created>1720192626668</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1720192626668</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Removing not needed files">
+      <option name="closed" value="true" />
+      <created>1720192733601</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1720192733601</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Splitted up signalr status">
+      <option name="closed" value="true" />
+      <created>1720257728481</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1720257728481</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Running version">
+      <option name="closed" value="true" />
+      <created>1720259390285</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1720259390285</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added router store">
+      <option name="closed" value="true" />
+      <created>1720267507400</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1720267507400</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed routing issues">
+      <option name="closed" value="true" />
+      <created>1720283615889</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1720283615889</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Adding first shot of store" />
     <MESSAGE value="Adding needed files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding needed files" />
+    <MESSAGE value="Updated the signalr service" />
+    <MESSAGE value="Removing not needed files" />
+    <MESSAGE value="Splitted up signalr status" />
+    <MESSAGE value="Running version" />
+    <MESSAGE value="Added router store" />
+    <MESSAGE value="Fixed routing issues" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed routing issues" />
   </component>
 </project>

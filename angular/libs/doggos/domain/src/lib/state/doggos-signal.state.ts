@@ -9,7 +9,7 @@ import {
 import { DoggoState, initialState } from './doggos.state';
 import { computed, inject } from '@angular/core';
 import { SignalRService } from '../services/signalr.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { tapResponse } from '@ngrx/operators';
 import { DoggosApiService } from '../services/doggos-api.service';
 import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
@@ -18,10 +18,18 @@ import { concatMap, filter, map, switchMap, tap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
 import { Doggo, DoggoAddedEvent, DoggoDeletedEvent } from '../models/doggo';
 import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
+import {
+  withQueryParams,
+  withRouteParams,
+} from '@ps-doggo-rating/shared/util-router';
 
 export const DoggosStore = signalStore(
   { providedIn: 'root' },
   withState<DoggoState>(initialState),
+  withQueryParams({
+    doggoId: (param) => param ?? '',
+  }),
+  withRouteParams({ doggoId: (param) => param }),
   withComputed((store, authStore = inject(AuthStore)) => ({
     getAllIdsOfMyDoggos: computed(() => {
       const myDoggos = store.myDoggos();
@@ -66,13 +74,12 @@ export const DoggosStore = signalStore(
       router = inject(Router),
       notificationService = inject(NotificationService),
       doggosApiService = inject(DoggosApiService),
-      uploadService = inject(UploadService),
-      activatedRoute = inject(ActivatedRoute)
+      uploadService = inject(UploadService)
     ) => ({
       loadDoggos: rxMethod<void>(
         switchMap(() => {
           patchState(store, { loading: true });
-          const doggoId = activatedRoute.snapshot.queryParams['doggoId'];
+          const doggoId = store.doggoId();
 
           return doggosApiService.getDoggos().pipe(
             tapResponse({
@@ -98,7 +105,7 @@ export const DoggosStore = signalStore(
       loadSingleDoggo: rxMethod<void>(
         switchMap(() => {
           patchState(store, { loading: true });
-          const doggoId = activatedRoute.snapshot.params['id'];
+          const doggoId = store.doggoId();
 
           return doggosApiService.getSingleDoggo(doggoId).pipe(
             tapResponse({

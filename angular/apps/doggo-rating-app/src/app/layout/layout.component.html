@@ -9,6 +9,6 @@
 <app-footer
   [backendUrl]="backendUrl"
   [platform]="platform"
-  [realTimeConnection]="realTimeStore.realTimeConnection()"
+  [realTimeConnection]="realTimeStore.connectionStatus()"
   [userEmail]="authStore.userEmail()"
 ></app-footer>

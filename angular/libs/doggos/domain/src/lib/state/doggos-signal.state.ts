@@ -16,12 +16,11 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { concatMap, map, switchMap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
 import { Doggo } from '../models/doggo';
-import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
 
 export const DoggosStore = signalStore(
   { providedIn: 'root' },
   withState<DoggoState>(initialState),
-  withComputed((store, authStore = inject(AuthStore)) => ({
+  withComputed((store) => ({
     getAllIdsOfMyDoggos: computed(() => {
       const myDoggos = store.myDoggos();
 
@@ -56,7 +55,8 @@ export const DoggosStore = signalStore(
         .doggos()
         .filter((doggo) => doggo.id !== store.selectedDoggo().id);
     }),
-    getUserSub: computed(() => authStore.userSub()),
+    // getUserSub: computed(() => authStore.userSub()),
+    getUserSub: computed(() => 'authStore.userSub()'),
   })),
   withMethods(
     (

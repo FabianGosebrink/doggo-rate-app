@@ -16,7 +16,12 @@ import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { concatMap, filter, map, switchMap, tap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
-import { Doggo, DoggoAddedEvent, DoggoDeletedEvent } from '../models/doggo';
+import {
+  Doggo,
+  DoggoAddedEvent,
+  DoggoDeletedEvent,
+  DoggoRatedEvent,
+} from '../models/doggo';
 import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
 
 export const DoggosStore = signalStore(
@@ -145,23 +150,30 @@ export const DoggosStore = signalStore(
         })
       ),
 
-      rateDoggoFromRealTime(ratedDoggo: Doggo) {
-        const { name } = ratedDoggo;
+      rateDoggoFromRealTime: rxMethod<Doggo>(
+        tap((ratedDoggo: Doggo) => {
+          const { name, id } = ratedDoggo;
 
-        const userId = store.getUserSub();
-        if (isMyDoggo(ratedDoggo, userId)) {
-          notificationService.showSuccess(`${name} was just rated!!!`);
-        }
+          const userId = store.getUserSub();
+          if (isMyDoggo(ratedDoggo, userId)) {
+            notificationService.showSuccess(`${name} was just rated!!!`);
+          }
 
-        const nextDoggoIndex = store.getNextDoggoIndex();
-        const newSelectedDoggo = store.doggos()[nextDoggoIndex];
-        const newDoggos = replaceItemInArray(store.doggos(), ratedDoggo);
+          const selectedDoggoId = store.selectedDoggo().id;
 
-        patchState(store, {
-          doggos: newDoggos,
-          selectedDoggo: newSelectedDoggo,
-        });
-      },
+          if (isRatedDoggoSelected(id, selectedDoggoId)) {
+            patchState(store, {
+              selectedDoggo: ratedDoggo,
+            });
+          }
+
+          const newDoggos = replaceItemInArray(store.doggos(), ratedDoggo);
+
+          patchState(store, {
+            doggos: newDoggos,
+          });
+        })
+      ),
 
       startListeningToRealtimeDoggoEvents() {
         signalRService.start();
@@ -273,8 +285,15 @@ export const DoggosStore = signalStore(
         ),
         map(({ id }) => id)
       );
+      const ratedDoggo$ = signalRService.doggoEvents.pipe(
+        filter(
+          (event): event is DoggoRatedEvent => event.type === 'doggorated'
+        ),
+        map(({ doggo }) => doggo)
+      );
 
       store.addDoggoFromRealTime(addedDoggo$);
+      store.rateDoggoFromRealTime(ratedDoggo$);
       store.deleteDoggoFromRealTime(deletedDoggoId$);
     },
   })
@@ -300,4 +319,11 @@ function removeItemFromArray(array: Doggo[], id: string): Doggo[] {
 
 function isMyDoggo(doggo: Doggo, userSub: string): boolean {
   return doggo.id === userSub;
+}
+
+function isRatedDoggoSelected(
+  ratedDoggoId: string,
+  selectedDoggoId: string
+): boolean {
+  return ratedDoggoId === selectedDoggoId;
 }

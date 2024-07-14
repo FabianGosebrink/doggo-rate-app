@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/single-doggo/single-doggo.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/single-doggo/single-doggo.component.ts" afterDir="false" />
+    <list default="true" id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="Updated template">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +80,7 @@
       <workItem from="1720103861466" duration="225000" />
       <workItem from="1720104101903" duration="5287000" />
       <workItem from="1720190338578" duration="14067000" />
+      <workItem from="1720944991024" duration="2693000" />
     </task>
     <task id="LOCAL-00001" summary="Adding first shot of store">
       <option name="closed" value="true" />
@@ -151,7 +154,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720365354223</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Updated template">
+      <option name="closed" value="true" />
+      <created>1720945079008</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1720945079008</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +190,7 @@
     <MESSAGE value="Added router store" />
     <MESSAGE value="Fixed routing issues" />
     <MESSAGE value="Updated workspace to nx 18" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated workspace to nx 18" />
+    <MESSAGE value="Updated template" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated template" />
   </component>
 </project>

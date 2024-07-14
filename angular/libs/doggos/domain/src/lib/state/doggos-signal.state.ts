@@ -131,6 +131,29 @@ export const DoggosStore = signalStore(
         })
       ),
 
+      startListeningToRealtimeDoggoEvents() {
+        signalRService.start();
+      },
+
+      stopListeningToRealtimeDoggoEvents() {
+        signalRService.stop();
+      },
+
+      selectDoggo(id: string) {
+        const selectedDoggo = store.doggos().find((doggo) => doggo.id === id);
+        navigateToDoggo(router, selectedDoggo.id);
+        patchState(store, { selectedDoggo });
+      },
+
+      selectNextDoggo() {
+        const nextDoggoId = store.getNextDoggoIndex();
+        const selectedDoggo = store.doggos()[nextDoggoId];
+
+        navigateToDoggo(router, selectedDoggo.id);
+
+        patchState(store, { selectedDoggo });
+      },
+
       rateDoggo: rxMethod<number>(
         switchMap((rating: number) => {
           patchState(store, { loading: true });
@@ -139,7 +162,12 @@ export const DoggosStore = signalStore(
           return doggosApiService.rate(id, rating).pipe(
             tapResponse({
               next: () => {
-                navigateToDoggo(router, id);
+                const nextDoggoId = store.getNextDoggoIndex();
+                const selectedDoggo = store.doggos()[nextDoggoId];
+
+                navigateToDoggo(router, selectedDoggo.id);
+
+                patchState(store, { selectedDoggo });
               },
               error: () => {
                 notificationService.showError();
@@ -174,29 +202,6 @@ export const DoggosStore = signalStore(
           });
         })
       ),
-
-      startListeningToRealtimeDoggoEvents() {
-        signalRService.start();
-      },
-
-      stopListeningToRealtimeDoggoEvents() {
-        signalRService.stop();
-      },
-
-      selectDoggo(id: string) {
-        const selectedDoggo = store.doggos().find((doggo) => doggo.id === id);
-        navigateToDoggo(router, selectedDoggo.id);
-        patchState(store, { selectedDoggo });
-      },
-
-      selectNextDoggo() {
-        const nextDoggoId = store.getNextDoggoIndex();
-        const selectedDoggo = store.doggos()[nextDoggoId];
-
-        navigateToDoggo(router, selectedDoggo.id);
-
-        patchState(store, { selectedDoggo });
-      },
 
       addDoggoWithPicture: rxMethod(
         switchMap(({ name, breed, comment, formData }) => {

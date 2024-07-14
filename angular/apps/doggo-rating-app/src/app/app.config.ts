@@ -1,6 +1,5 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { environment } from '@ps-doggo-rating/shared/util-environments';
 import {
@@ -12,6 +11,7 @@ import {
 import { ToastrModule } from 'ngx-toastr';
 import { APP_ROUTES } from './app-routes';
 import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
 const webCallbackUrl = `${window.location.origin}/callback`;
@@ -50,6 +50,7 @@ const authFactory = (
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideAnimationsAsync(),
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor()])),
     provideAuth({
@@ -62,8 +63,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       ToastrModule.forRoot({
         positionClass: 'toast-bottom-right',
-      }),
-      BrowserAnimationsModule
+      })
     ),
   ],
 };

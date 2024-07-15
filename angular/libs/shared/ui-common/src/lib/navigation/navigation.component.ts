@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import {
   IsActiveMatchOptions,
   RouterLink,
@@ -13,7 +13,7 @@ import {
   imports: [RouterModule, RouterLink],
 })
 export class NavigationComponent {
-  @Input() loggedIn = false;
+  loggedIn = input(false);
   @Output() dologin = new EventEmitter();
   @Output() doLogout = new EventEmitter();
 

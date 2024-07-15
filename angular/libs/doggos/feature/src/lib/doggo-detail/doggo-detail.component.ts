@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Doggo, DoggosStore } from '@ps-doggo-rating/doggos/domain';
 
@@ -11,13 +11,13 @@ import { Doggo, DoggosStore } from '@ps-doggo-rating/doggos/domain';
   styleUrls: ['./doggo-detail.component.scss'],
 })
 export class DoggoDetailComponent implements OnInit {
-  @Input() doggoId = '';
+  doggoId = input('');
 
   store = inject(DoggosStore);
   private readonly destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    this.store.loadSingleDoggo(this.doggoId);
+    this.store.loadSingleDoggo(this.doggoId());
 
     this.destroyRef.onDestroy(() => {
       this.store.clearSingleDoggo();

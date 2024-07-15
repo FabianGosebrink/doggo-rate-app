@@ -1,9 +1,9 @@
 <footer class="py-3 my-4 border-top">
   <div class="d-flex flex-wrap justify-content-between">
     <div class="d-flex flex-column bd-highlight mb-3">
-      <span class="mb-3 mb-md-0 text-muted">Backend: {{ backendUrl }} </span>
+      <span class="mb-3 mb-md-0 text-muted">Backend: {{ backendUrl() }} </span>
       <span class="mb-3 mb-md-0 text-muted"
-      >RealTime: {{ realTimeConnection }}
+      >RealTime: {{ realTimeConnection() }}
       </span>
       <span class="mb-3 mb-md-0 text-muted"
       >&copy; {{ currentYear }} made with ♥️ by Fabian Gosebrink
@@ -11,10 +11,10 @@
     </div>
     <div class="d-flex flex-column bd-highlight mb-3">
       <span class="mb-3 mb-md-0 text-muted"
-      >Running on platform {{ platform }}
+      >Running on platform {{ platform() }}
       </span>
-      @if (userEmail) {
-        <span class="mb-3 mb-md-0 text-muted">LoggedIn as {{ userEmail }} </span>
+      @if (userEmail()) {
+        <span class="mb-3 mb-md-0 text-muted">LoggedIn as {{ userEmail() }} </span>
       }
     </div>
   </div>

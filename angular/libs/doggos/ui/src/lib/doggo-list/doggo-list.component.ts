@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
+  input,
   Output,
 } from '@angular/core';
 import { Doggo } from '@ps-doggo-rating/doggos/domain';
@@ -15,7 +15,7 @@ import { Doggo } from '@ps-doggo-rating/doggos/domain';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DoggoListComponent {
-  @Input() doggos: Doggo[] | null = [];
+  doggos = input([]);
 
   @Output() doggoSelected = new EventEmitter<string>();
 

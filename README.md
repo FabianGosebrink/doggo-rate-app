@@ -12,7 +12,7 @@ A demo application for uploading pictures of your dog and rate the Bois from zer
 - ✅ Control Flow Syntax
 - ✅ Angular 17
 - ✅ Standalone Components
-- ✅ Nx Workspace v17 with architecture constraints
+- ✅ Nx Workspace v18 with architecture constraints
 - ✅ State Management with NgRx Signal Store :)
 - ✅ Functional APIs
 - ✅ Authentication

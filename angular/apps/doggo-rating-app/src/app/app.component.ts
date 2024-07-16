@@ -1,8 +1,7 @@
-import { Component, NgZone, OnInit, inject } from '@angular/core';
+import { Component, inject, NgZone, OnInit } from '@angular/core';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
-import { Store } from '@ngrx/store';
-import { AuthActions } from '@ps-doggo-rating/shared/util-auth';
 import { LayoutComponent } from './layout/layout.component';
+import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +11,9 @@ import { LayoutComponent } from './layout/layout.component';
   imports: [LayoutComponent],
 })
 export class AppComponent implements OnInit {
-  private readonly store = inject(Store);
-
-  private zone = inject(NgZone);
-
   title = 'ratemydoggo';
+  private readonly authStore = inject(AuthStore);
+  private zone = inject(NgZone);
 
   ngOnInit(): void {
     this.checkAuth(null);
@@ -38,10 +35,6 @@ export class AppComponent implements OnInit {
   }
 
   private checkAuth(url: string): void {
-    this.store.dispatch(
-      AuthActions.checkAuth({
-        url,
-      })
-    );
+    this.authStore.checkAuth(url);
   }
 }

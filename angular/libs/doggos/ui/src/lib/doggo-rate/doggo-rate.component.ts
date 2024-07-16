@@ -3,11 +3,10 @@ import { DecimalPipe, NgClass } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   EventEmitter,
-  Input,
-  OnChanges,
+  input,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { Doggo } from '@ps-doggo-rating/doggos/domain';
 import { timer } from 'rxjs';
@@ -26,24 +25,20 @@ import { timer } from 'rxjs';
   ],
   imports: [DecimalPipe, NgClass],
 })
-export class DoggoRateComponent implements OnChanges {
-  @Input() currentDoggo: Doggo | null = null;
+export class DoggoRateComponent {
+  currentDoggo = input<Doggo | null>(null);
   @Output() rated = new EventEmitter<number>();
   @Output() skipped = new EventEmitter();
+  currentRating = 0;
+  averageRating = computed(() => {
+    this.currentRating = 0;
 
-  averageRating = 0;
-
+    return this.getAverageRating(this.currentDoggo());
+  });
   status: 'fadeIn' | 'fadeOut' = 'fadeIn';
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['currentDoggo'].currentValue) {
-      this.averageRating = this.getAverageRating(this.currentDoggo);
-      this.status = 'fadeIn';
-    }
-  }
-
   rateDoggo(rating: number): void {
-    this.averageRating = rating;
+    this.currentRating = rating;
     this.status = 'fadeOut';
 
     timer(1000).subscribe(() => {

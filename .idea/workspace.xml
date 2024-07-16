@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/doggo-detail/doggo-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/doggo-detail/doggo-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-rate/doggo-rate.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-rate/doggo-rate.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-rate/doggo-rate.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-rate/doggo-rate.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/footer/footer.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/footer/footer.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/footer/footer.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/footer/footer.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/navigation/navigation.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/navigation/navigation.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/navigation/navigation.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/ui-common/src/lib/navigation/navigation.component.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2hxUS2FF4Ucur7lbVg6j9kAAesb" />
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;update-features-to-signal-store&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.stylelint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.stylelint&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\_git\\FabianGosebrink\\doggo-rate-app\\angular\\node_modules\\prettier&quot;,
+    &quot;rearrange.code.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\_git\\FabianGosebrink\\doggo-rate-app\\angular\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-WS-241.15989.105" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="" />
+      <created>1718535217720</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1718535217720</updated>
+      <workItem from="1718535218792" duration="15000" />
+      <workItem from="1719132222926" duration="3062000" />
+      <workItem from="1719933075992" duration="413000" />
+      <workItem from="1719933507668" duration="1000" />
+      <workItem from="1720103415952" duration="427000" />
+      <workItem from="1720103861466" duration="225000" />
+      <workItem from="1720104101903" duration="5287000" />
+      <workItem from="1720190338578" duration="14067000" />
+      <workItem from="1720944991024" duration="5723000" />
+      <workItem from="1721052008377" duration="2421000" />
+    </task>
+    <task id="LOCAL-00001" summary="Adding first shot of store">
+      <option name="closed" value="true" />
+      <created>1719148245966</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719148245966</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Adding needed files">
+      <option name="closed" value="true" />
+      <created>1720104154093</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1720104154093</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Updated the signalr service">
+      <option name="closed" value="true" />
+      <created>1720192626668</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1720192626668</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Removing not needed files">
+      <option name="closed" value="true" />
+      <created>1720192733601</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1720192733601</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Splitted up signalr status">
+      <option name="closed" value="true" />
+      <created>1720257728481</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1720257728481</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Running version">
+      <option name="closed" value="true" />
+      <created>1720259390285</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1720259390285</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added router store">
+      <option name="closed" value="true" />
+      <created>1720267507400</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1720267507400</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Fixed routing issues">
+      <option name="closed" value="true" />
+      <created>1720283615889</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1720283615889</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Updated workspace to nx 18">
+      <option name="closed" value="true" />
+      <created>1720365354223</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1720365354223</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Updated template">
+      <option name="closed" value="true" />
+      <created>1720945079008</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1720945079008</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Removed unused packages">
+      <option name="closed" value="true" />
+      <created>1720950440578</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1720950440578</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Fixed Signal Store">
+      <option name="closed" value="true" />
+      <created>1720951025455</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1720951025455</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Adding first shot of store" />
+    <MESSAGE value="Adding needed files" />
+    <MESSAGE value="Updated the signalr service" />
+    <MESSAGE value="Removing not needed files" />
+    <MESSAGE value="Splitted up signalr status" />
+    <MESSAGE value="Running version" />
+    <MESSAGE value="Added router store" />
+    <MESSAGE value="Fixed routing issues" />
+    <MESSAGE value="Updated workspace to nx 18" />
+    <MESSAGE value="Updated template" />
+    <MESSAGE value="Removed unused packages" />
+    <MESSAGE value="Fixed Signal Store" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Signal Store" />
+  </component>
+</project>

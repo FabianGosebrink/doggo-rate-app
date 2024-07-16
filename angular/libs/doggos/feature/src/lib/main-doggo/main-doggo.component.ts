@@ -1,50 +1,41 @@
-import { JsonPipe } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
-import { Store } from '@ngrx/store';
-import {
-  DoggosActions,
-  getAllDoggosButSelected,
-  getLoading,
-  getSelectedDoggo,
-} from '@ps-doggo-rating/doggos/domain';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { DoggosStore } from '@ps-doggo-rating/doggos/domain';
 import {
   DoggoListComponent,
   DoggoRateComponent,
 } from '@ps-doggo-rating/doggos/ui';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-doggo',
   templateUrl: './main-doggo.component.html',
   standalone: true,
   styleUrls: ['./main-doggo.component.scss'],
-  imports: [DoggoListComponent, DoggoRateComponent, JsonPipe],
+  imports: [DoggoListComponent, DoggoRateComponent],
 })
 export class MainDoggoComponent implements OnInit {
-  private readonly store = inject(Store);
+  store = inject(DoggosStore);
   private readonly destroyRef = inject(DestroyRef);
-
-  doggos = this.store.selectSignal(getAllDoggosButSelected);
-  selectedDoggo = this.store.selectSignal(getSelectedDoggo);
-  loading = this.store.selectSignal(getLoading);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.store.dispatch(DoggosActions.loadDoggos());
-    this.store.dispatch(DoggosActions.startListeningToRealtimeDoggoEvents());
+    this.store.loadDoggos(this.activatedRoute.snapshot.queryParams['doggoId']);
+    this.store.startListeningToRealtimeDoggoEvents();
 
     this.destroyRef.onDestroy(() => {
-      this.store.dispatch(DoggosActions.stopListeningToRealtimeDoggoEvents());
+      this.store.stopListeningToRealtimeDoggoEvents();
     });
   }
 
   rateDoggo(rating: number): void {
-    this.store.dispatch(DoggosActions.rateDoggo({ rating }));
+    this.store.rateDoggo(rating);
   }
 
   skipDoggo(): void {
-    this.store.dispatch(DoggosActions.selectNextDoggo());
+    this.store.selectNextDoggo();
   }
 
   selectDoggo(id: string): void {
-    this.store.dispatch(DoggosActions.selectDoggo({ id }));
+    this.store.selectDoggo(id);
   }
 }

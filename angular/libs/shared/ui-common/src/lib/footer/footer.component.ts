@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
@@ -7,11 +7,10 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent {
-  @Input() userEmail = '';
+  userEmail = input('');
+  backendUrl = input('');
+  realTimeConnection = input('');
+  platform = input('');
 
-  @Input() backendUrl = '';
-
-  @Input() realTimeConnection = '';
-
-  @Input() platform = '';
+  currentYear = new Date().getFullYear();
 }

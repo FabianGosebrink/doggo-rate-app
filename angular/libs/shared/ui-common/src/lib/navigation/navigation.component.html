@@ -5,46 +5,46 @@
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
       <li>
         <a
-          [routerLink]="'/doggos'"
-          routerLinkActive="active"
           [routerLinkActiveOptions]="isActiveMatchOptions"
+          [routerLink]="'/doggos'"
           class="nav-link px-2 link-dark"
-          >Home</a
+          routerLinkActive="active"
+        >Home</a
         >
       </li>
 
-      @if(loggedIn) {
-      <li>
-        <a
-          [routerLink]="'/doggos/my'"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="isActiveMatchOptions"
-          class="nav-link px-2 link-dark"
+      @if (loggedIn()) {
+        <li>
+          <a
+            [routerLink]="'/doggos/my'"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="isActiveMatchOptions"
+            class="nav-link px-2 link-dark"
           >My Doggos</a
-        >
-      </li>
+          >
+        </li>
       }
 
       <li>
         <a
-          [routerLink]="'about'"
-          routerLinkActive="active"
           [routerLinkActiveOptions]="isActiveMatchOptions"
+          [routerLink]="'about'"
           class="nav-link px-2 link-dark"
-          >About</a
+          routerLinkActive="active"
+        >About</a
         >
       </li>
     </ul>
   </div>
   <div>
-    @if(loggedIn) {
-    <button (click)="logout()" type="button" class="btn btn-outline-primary">
-      <i class="fa-solid fa-right-from-bracket"></i> Logout
-    </button>
+    @if (loggedIn()) {
+      <button (click)="logout()" type="button" class="btn btn-outline-primary">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
     } @else {
-    <button (click)="login()" type="button" class="btn btn-outline-primary">
-      <i class="fa-solid fa-right-to-bracket"></i> Login
-    </button>
+      <button (click)="login()" type="button" class="btn btn-outline-primary">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </button>
     }
   </div>
 </header>

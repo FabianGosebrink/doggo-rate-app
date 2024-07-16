@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, input, Output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Doggo } from '@ps-doggo-rating/doggos/domain';
 
@@ -11,7 +11,7 @@ import { Doggo } from '@ps-doggo-rating/doggos/domain';
   styleUrls: ['./single-doggo.component.scss'],
 })
 export class SingleDoggoComponent {
-  @Input() doggo: Doggo | null = null;
+  doggo = input<Doggo | null>();
 
   @Output() doggoDeleted = new EventEmitter<Doggo>();
 

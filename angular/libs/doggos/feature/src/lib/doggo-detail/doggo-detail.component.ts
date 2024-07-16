@@ -1,36 +1,30 @@
-import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Store } from '@ngrx/store';
-import {
-  Doggo,
-  DoggosActions,
-  getDetailDoggo,
-} from '@ps-doggo-rating/doggos/domain';
+import { Doggo, DoggosStore } from '@ps-doggo-rating/doggos/domain';
 
 @Component({
   selector: 'app-doggo-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NgOptimizedImage],
   templateUrl: './doggo-detail.component.html',
   styleUrls: ['./doggo-detail.component.scss'],
 })
 export class DoggoDetailComponent implements OnInit {
-  private readonly store = inject(Store);
+  doggoId = input('');
 
+  store = inject(DoggosStore);
   private readonly destroyRef = inject(DestroyRef);
 
-  doggo = this.store.selectSignal(getDetailDoggo);
-
   ngOnInit(): void {
-    this.store.dispatch(DoggosActions.loadSingleDoggo());
+    this.store.loadSingleDoggo(this.doggoId());
 
     this.destroyRef.onDestroy(() => {
-      this.store.dispatch(DoggosActions.clearSingleDoggo());
+      this.store.clearSingleDoggo();
     });
   }
 
   deleteDoggo(doggo: Doggo): void {
-    this.store.dispatch(DoggosActions.deleteDoggo({ doggo }));
+    this.store.deleteDoggo(doggo);
   }
 }

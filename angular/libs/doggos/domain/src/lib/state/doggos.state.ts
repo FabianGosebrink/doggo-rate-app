@@ -1,7 +1,5 @@
 import { Doggo } from '../models/doggo';
 
-export const featureName = 'doggos';
-
 export interface DoggoState {
   doggos: Doggo[];
   myDoggos: Doggo[];

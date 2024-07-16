@@ -13,7 +13,7 @@ A demo application for uploading pictures of your dog and rate the Bois from zer
 - ✅ Angular 17
 - ✅ Standalone Components
 - ✅ Nx Workspace v17 with architecture constraints
-- ✅ State Management with NgRx
+- ✅ State Management with NgRx Signal Store :)
 - ✅ Functional APIs
 - ✅ Authentication
 

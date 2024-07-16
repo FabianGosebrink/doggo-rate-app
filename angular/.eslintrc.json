@@ -74,17 +74,25 @@
         ],
         "@typescript-eslint/no-unused-vars": [
           "error",
-          { "argsIgnorePattern": "^_", "ignoreRestSiblings": true }
+          {
+            "argsIgnorePattern": "^_",
+            "ignoreRestSiblings": true
+          }
         ],
         "@typescript-eslint/no-explicit-any": "off",
         "no-useless-constructor": "error",
-        "newline-before-return": "error"
+        "newline-before-return": "error",
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
       }
     },
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
+      }
     },
     {
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],

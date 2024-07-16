@@ -1,8 +1,5 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "affected": {
-    "defaultBase": "main"
-  },
   "targetDefaults": {
     "build": {
       "dependsOn": ["^build"],
@@ -61,5 +58,6 @@
     "@nx/angular:component": {
       "style": "scss"
     }
-  }
+  },
+  "defaultBase": "main"
 }

@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="" />
+    <list default="true" id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/lib/state/auth.reducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/lib/state/auth.state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,8 +44,9 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "ShowUsagesActions.previewPropertyKey": "true",
     "code.cleanup.on.save": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "affected-test",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
@@ -216,6 +224,6 @@
     <MESSAGE value="Removed unused packages" />
     <MESSAGE value="Fixed Signal Store" />
     <MESSAGE value="Updated to latest Angular" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated to latest Angular" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>

@@ -4,7 +4,7 @@ const path = require("path");
 let buildTrayIcon = (mainWindow) => {
   let trayIconPath = path.join(__dirname, "icon.ico");
 
-  tray = new Tray(trayIconPath);
+  let tray = new Tray(trayIconPath);
   tray.setToolTip("my-electron-app");
 
   var contextMenu = Menu.buildFromTemplate([

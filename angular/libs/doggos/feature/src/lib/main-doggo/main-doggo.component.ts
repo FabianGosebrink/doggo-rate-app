@@ -1,9 +1,9 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { DoggosStore } from '@ps-doggo-rating/doggos/domain';
+import { DoggosStore } from '@doggo-rating/doggos/domain';
 import {
   DoggoListComponent,
   DoggoRateComponent,
-} from '@ps-doggo-rating/doggos/ui';
+} from '@doggo-rating/doggos/ui';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

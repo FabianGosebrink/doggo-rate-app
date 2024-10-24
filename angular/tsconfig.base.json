@@ -10,47 +10,69 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ps-doggo-rating/about/feature": ["libs/about/feature/src/index.ts"],
-      "@ps-doggo-rating/auth/api": ["libs/auth/api/src/index.ts"],
-      "@ps-doggo-rating/auth/state": ["libs/auth/state/src/index.ts"],
-      "@ps-doggo-rating/auth/ui": ["libs/auth/ui/src/index.ts"],
-      "@ps-doggo-rating/auth/util": ["libs/auth/util/src/index.ts"],
-      "@ps-doggo-rating/doggos/domain": ["libs/doggos/domain/src/index.ts"],
-      "@ps-doggo-rating/doggos/feature": ["libs/doggos/feature/src/index.ts"],
-      "@ps-doggo-rating/doggos/ui": ["libs/doggos/ui/src/index.ts"],
-      "@ps-doggo-rating/shared/about/feature": [
+      "@doggo-rating/about/feature": [
+        "libs/about/feature/src/index.ts"
+      ],
+      "@doggo-rating/auth/api": [
+        "libs/auth/api/src/index.ts"
+      ],
+      "@doggo-rating/auth/state": [
+        "libs/auth/state/src/index.ts"
+      ],
+      "@doggo-rating/auth/ui": [
+        "libs/auth/ui/src/index.ts"
+      ],
+      "@doggo-rating/auth/util": [
+        "libs/auth/util/src/index.ts"
+      ],
+      "@doggo-rating/doggos/domain": [
+        "libs/doggos/domain/src/index.ts"
+      ],
+      "@doggo-rating/doggos/feature": [
+        "libs/doggos/feature/src/index.ts"
+      ],
+      "@doggo-rating/doggos/ui": [
+        "libs/doggos/ui/src/index.ts"
+      ],
+      "@doggo-rating/shared/about/feature": [
         "libs/shared/about/feature/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/ui-common": [
+      "@doggo-rating/shared/ui-common": [
         "libs/shared/ui-common/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/util-auth": [
+      "@doggo-rating/shared/util-auth": [
         "libs/shared/util-auth/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/util-camera": [
+      "@doggo-rating/shared/util-camera": [
         "libs/shared/util-camera/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/util-common": [
+      "@doggo-rating/shared/util-common": [
         "libs/shared/util-common/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/util-environments": [
+      "@doggo-rating/shared/util-environments": [
         "libs/shared/util-environments/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/util-notification": [
+      "@doggo-rating/shared/util-notification": [
         "libs/shared/util-notification/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/util-platform-information": [
+      "@doggo-rating/shared/util-platform-information": [
         "libs/shared/util-platform-information/src/index.ts"
       ],
-      "@ps-doggo-rating/shared/util-real-time": [
+      "@doggo-rating/shared/util-real-time": [
         "libs/shared/util-real-time/src/index.ts"
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

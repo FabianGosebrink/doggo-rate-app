@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { environment } from '@ps-doggo-rating/shared/util-environments';
-import { HttpService } from '@ps-doggo-rating/shared/util-common';
+import { inject, Injectable } from '@angular/core';
+import { environment } from '@doggo-rating/shared/util-environments';
+import { HttpService } from '@doggo-rating/shared/util-common';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

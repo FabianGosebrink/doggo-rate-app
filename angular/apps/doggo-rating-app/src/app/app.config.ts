@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { environment } from '@ps-doggo-rating/shared/util-environments';
+import { environment } from '@doggo-rating/shared/util-environments';
 import {
   authInterceptor,
   provideAuth,
@@ -10,7 +10,7 @@ import {
 } from 'angular-auth-oidc-client';
 import { ToastrModule } from 'ngx-toastr';
 import { APP_ROUTES } from './app-routes';
-import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
+import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;

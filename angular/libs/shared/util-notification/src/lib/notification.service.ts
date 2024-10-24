@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DesktopNotificationService } from './desktop-notification.service';
 import { MobileNotificationService } from './mobile-notification.service';
 import { WebNotificationService } from './web-notification.service';
-import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
+import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
 
 export function notificationFactory(
   platformInformationService: PlatformInformationService,
@@ -33,5 +33,6 @@ export function notificationFactory(
 })
 export abstract class NotificationService {
   abstract showSuccess(message?: string, title?: string): void;
+
   abstract showError(message?: string, title?: string): void;
 }

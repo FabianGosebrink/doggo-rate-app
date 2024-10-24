@@ -1,7 +1,7 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Doggo, DoggosStore } from '@ps-doggo-rating/doggos/domain';
+import { Doggo, DoggosStore } from '@doggo-rating/doggos/domain';
 
 @Component({
   selector: 'app-doggo-detail',

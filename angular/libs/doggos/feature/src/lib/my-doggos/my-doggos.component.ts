@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Doggo, DoggosStore } from '@ps-doggo-rating/doggos/domain';
-import { SingleDoggoComponent } from '@ps-doggo-rating/doggos/ui';
+import { Doggo, DoggosStore } from '@doggo-rating/doggos/domain';
+import { SingleDoggoComponent } from '@doggo-rating/doggos/ui';
 
 @Component({
   selector: 'app-my-doggos',

@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { isAuthenticated } from '@ps-doggo-rating/shared/util-auth';
+import { isAuthenticated } from '@doggo-rating/shared/util-auth';
 import { AddDoggoComponent } from './add-doggo/add-doggo.component';
 import { DoggoDetailComponent } from './doggo-detail/doggo-detail.component';
 import { MainDoggoComponent } from './main-doggo/main-doggo.component';

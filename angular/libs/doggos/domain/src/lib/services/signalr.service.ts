@@ -4,10 +4,10 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from '@microsoft/signalr';
-import { environment } from '@ps-doggo-rating/shared/util-environments';
+import { environment } from '@doggo-rating/shared/util-environments';
 import { Subject } from 'rxjs';
 import { DoggoEvent } from '../models/doggo';
-import { SignalRStatusService } from '@ps-doggo-rating/shared/util-real-time';
+import { SignalRStatusService } from '@doggo-rating/shared/util-real-time';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {

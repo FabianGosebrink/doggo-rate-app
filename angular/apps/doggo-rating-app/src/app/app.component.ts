@@ -1,7 +1,7 @@
 import { Component, inject, NgZone, OnInit } from '@angular/core';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { LayoutComponent } from './layout/layout.component';
-import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
+import { AuthStore } from '@doggo-rating/shared/util-auth';
 
 @Component({
   selector: 'app-root',

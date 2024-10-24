@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { DoggosStore } from '@ps-doggo-rating/doggos/domain';
-import { CameraService } from '@ps-doggo-rating/shared/util-camera';
+import { DoggosStore } from '@doggo-rating/doggos/domain';
+import { CameraService } from '@doggo-rating/shared/util-camera';
 
 @Component({
   selector: 'app-add-doggo',

@@ -12,7 +12,7 @@ import { SignalRService } from '../services/signalr.service';
 import { Router } from '@angular/router';
 import { tapResponse } from '@ngrx/operators';
 import { DoggosApiService } from '../services/doggos-api.service';
-import { NotificationService } from '@ps-doggo-rating/shared/util-notification';
+import { NotificationService } from '@doggo-rating/shared/util-notification';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { concatMap, filter, map, switchMap, tap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
@@ -22,7 +22,7 @@ import {
   DoggoDeletedEvent,
   DoggoRatedEvent,
 } from '../models/doggo';
-import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
+import { AuthStore } from '@doggo-rating/shared/util-auth';
 
 export const DoggosStore = signalStore(
   { providedIn: 'root' },

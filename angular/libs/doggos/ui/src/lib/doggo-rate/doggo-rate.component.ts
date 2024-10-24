@@ -8,7 +8,7 @@ import {
   input,
   Output,
 } from '@angular/core';
-import { Doggo } from '@ps-doggo-rating/doggos/domain';
+import { Doggo } from '@doggo-rating/doggos/domain';
 import { timer } from 'rxjs';
 
 @Component({

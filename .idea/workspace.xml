@@ -6,6 +6,40 @@
   <component name="ChangeListManager">
     <list default="true" id="38c48f42-6f96-4a42-8054-15a0b37df43e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/app-routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/app-routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/layout/layout.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/app/layout/layout.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/apps/doggo-rating-app/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/about/feature/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/about/feature/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/about/feature/project.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/about/feature/project.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/about/feature/src/lib/about/about.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/about/feature/src/lib/about/about.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/doggos-api.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/doggos-api.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/signalr.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/signalr.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/upload.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/services/upload.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/state/doggos-signal.state.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/domain/src/lib/state/doggos-signal.state.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/add-doggo/add-doggo.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/add-doggo/add-doggo.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/doggo-detail/doggo-detail.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/doggo-detail/doggo-detail.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/main-doggo/main-doggo.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/main-doggo/main-doggo.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/my-doggos/my-doggos.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/feature/src/lib/my-doggos/my-doggos.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-list/doggo-list.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-rate/doggo-rate.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/doggo-rate/doggo-rate.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/single-doggo/single-doggo.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/doggos/ui/src/lib/single-doggo/single-doggo.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/lib/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-auth/src/lib/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-camera/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-camera/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-camera/project.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-camera/project.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-camera/src/lib/camera.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-camera/src/lib/camera.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-notification/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-notification/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-notification/project.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-notification/project.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-notification/src/lib/notification.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-notification/src/lib/notification.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-platform-information/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-platform-information/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-platform-information/project.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-platform-information/project.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-real-time/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-real-time/.eslintrc.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/libs/shared/util-real-time/project.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/libs/shared/util-real-time/project.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/angular/tsconfig.base.json" beforeDir="false" afterPath="$PROJECT_DIR$/angular/tsconfig.base.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +118,8 @@
       <workItem from="1721141045402" duration="256000" />
       <workItem from="1729419890792" duration="615000" />
       <workItem from="1729439609292" duration="296000" />
+      <workItem from="1729783083288" duration="11000" />
+      <workItem from="1729794648715" duration="781000" />
     </task>
     <task id="LOCAL-00001" summary="Adding first shot of store">
       <option name="closed" value="true" />
@@ -189,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1721141283460</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="fix lock file">
+      <option name="closed" value="true" />
+      <created>1729443439874</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1729443439874</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,6 +265,7 @@
     <MESSAGE value="Removed unused packages" />
     <MESSAGE value="Fixed Signal Store" />
     <MESSAGE value="Updated to latest Angular" />
-    <option name="LAST_COMMIT_MESSAGE" value="" />
+    <MESSAGE value="fix lock file" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix lock file" />
   </component>
 </project>

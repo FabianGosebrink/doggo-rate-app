@@ -3,11 +3,11 @@ import { RouterModule } from '@angular/router';
 import {
   FooterComponent,
   NavigationComponent,
-} from '@ps-doggo-rating/shared/ui-common';
-import { AuthStore } from '@ps-doggo-rating/shared/util-auth';
-import { environment } from '@ps-doggo-rating/shared/util-environments';
-import { PlatformInformationService } from '@ps-doggo-rating/shared/util-platform-information';
-import { RealTimeStore } from '@ps-doggo-rating/shared/util-real-time';
+} from '@doggo-rating/shared/ui-common';
+import { AuthStore } from '@doggo-rating/shared/util-auth';
+import { environment } from '@doggo-rating/shared/util-environments';
+import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
+import { RealTimeStore } from '@doggo-rating/shared/util-real-time';
 
 @Component({
   selector: 'app-layout',

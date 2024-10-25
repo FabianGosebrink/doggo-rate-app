@@ -15,7 +15,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "psDoggoRating",
+            "prefix": "doggoRating",
             "style": "camelCase"
           }
         ],

@@ -22,7 +22,7 @@ export class NavigationComponent {
     matrixParams: 'exact',
     paths: 'exact',
     fragment: 'exact',
-  } as IsActiveMatchOptions;
+  };
 
   login(): void {
     this.dologin.emit();

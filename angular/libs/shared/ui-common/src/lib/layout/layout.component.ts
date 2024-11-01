@@ -1,13 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import {
-  FooterComponent,
-  NavigationComponent,
-} from '@doggo-rating/shared/ui-common';
 import { AuthStore } from '@doggo-rating/shared/util-auth';
 import { environment } from '@doggo-rating/shared/util-environments';
 import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
 import { RealTimeStore } from '@doggo-rating/shared/util-real-time';
+import { FooterComponent } from '../footer/footer.component';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-layout',

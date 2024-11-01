@@ -1,0 +1,16 @@
+<div class="container">
+  <app-navigation
+    (doLogout)="logout()"
+    (dologin)="login()"
+    [loggedIn]="authStore.isLoggedIn()"
+  ></app-navigation>
+
+  <router-outlet />
+
+  <app-footer
+    [backendUrl]="backendUrl"
+    [platform]="platform"
+    [realTimeConnection]="realTimeStore.connectionStatus()"
+    [userEmail]="authStore.userEmail()"
+  ></app-footer>
+</div>

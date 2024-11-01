@@ -1,17 +1,16 @@
 import { Component, inject, NgZone, OnInit } from '@angular/core';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
-import { LayoutComponent } from './layout/layout.component';
 import { AuthStore } from '@doggo-rating/shared/util-auth';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   standalone: true,
   styleUrls: ['./app.component.scss'],
-  imports: [LayoutComponent],
+  imports: [RouterOutlet],
 })
 export class AppComponent implements OnInit {
-  title = 'ratemydoggo';
   private readonly authStore = inject(AuthStore);
   private zone = inject(NgZone);
 

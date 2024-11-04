@@ -8,9 +8,8 @@ describe('DoggoRateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DoggoRateComponent ]
-    })
-    .compileComponents();
+      imports: [DoggoRateComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DoggoRateComponent);
     component = fixture.componentInstance;

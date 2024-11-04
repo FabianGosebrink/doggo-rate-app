@@ -8,9 +8,8 @@ describe('DoggoListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DoggoListComponent ]
-    })
-    .compileComponents();
+      imports: [DoggoListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DoggoListComponent);
     component = fixture.componentInstance;

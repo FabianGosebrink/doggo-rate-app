@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddDoggoComponent } from './add-doggo.component';
+import { MockProvider } from 'ng-mocks';
+import { DoggosStore } from '@doggo-rating/doggos/domain';
+import { signal } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 describe('AddDoggoComponent', () => {
   let component: AddDoggoComponent;
@@ -8,9 +12,14 @@ describe('AddDoggoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddDoggoComponent ]
-    })
-    .compileComponents();
+      imports: [AddDoggoComponent],
+      providers: [
+        MockProvider(DoggosStore, {
+          loading: signal(false),
+        }),
+        provideRouter([]),
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddDoggoComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { NavigationComponent } from './navigation.component';
+import { provideRouter } from '@angular/router';
 
 describe('NavigationComponent', () => {
   let component: NavigationComponent;
@@ -8,9 +8,9 @@ describe('NavigationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavigationComponent ]
-    })
-    .compileComponents();
+      imports: [NavigationComponent],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NavigationComponent);
     component = fixture.componentInstance;

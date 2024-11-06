@@ -13,8 +13,6 @@ import { switchMap } from 'rxjs';
 import { LoginResponse } from 'angular-auth-oidc-client';
 import { tapResponse } from '@ngrx/operators';
 
-export const featureName = 'auth';
-
 export interface AuthRootState {
   userProfile: any;
   isLoggedIn: boolean;

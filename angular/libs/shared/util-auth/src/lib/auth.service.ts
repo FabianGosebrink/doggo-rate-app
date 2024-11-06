@@ -17,22 +17,22 @@ export class AuthService {
 
   login(): void {
     if (this.platformInformationService.isElectron) {
-      const urlHandler = (authUrl): void => {
+      const urlHandler = (authUrl: any): void => {
         this.modal = window.open(authUrl, '_blank', 'nodeIntegration=no');
       };
 
-      return this.oidcSecurityService.authorize(null, { urlHandler });
+      return this.oidcSecurityService.authorize(undefined, { urlHandler });
     } else {
       this.oidcSecurityService.authorize();
     }
   }
 
-  checkAuth(url?: string): Observable<LoginResponse> {
+  checkAuth(url: string | null): Observable<LoginResponse> {
     if (this.modal) {
       this.modal.close();
     }
 
-    return this.oidcSecurityService.checkAuth(url);
+    return this.oidcSecurityService.checkAuth(url ?? undefined);
   }
 
   logout(): Observable<unknown> {

@@ -18,7 +18,7 @@ describe('AppComponent', () => {
         provideRouter([]),
       ],
     }).compileComponents();
-    
+
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
   });

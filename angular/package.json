@@ -15,7 +15,8 @@
     "build-temp": "nx build doggo-rating-app --skip-nx-cache",
     "build-dev": "nx build --configuration development",
     "build-desktop": "node build/build-desktop.js",
-    "build-mobile": "node build/build-mobile.js"
+    "build-mobile": "node build/build-mobile.js",
+    "summarize:coverage": "node tools/create-overall-coverage.js"
   },
   "private": true,
   "dependencies": {
@@ -83,6 +84,7 @@
     "ng-mocks": "^14.13.1",
     "ng-packagr": "18.2.1",
     "nx": "20.0.3",
+    "nyc": "^17.1.0",
     "postcss": "^8.4.5",
     "postcss-import": "~14.1.0",
     "postcss-preset-env": "~7.5.0",

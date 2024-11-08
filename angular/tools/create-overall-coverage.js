@@ -4,36 +4,29 @@ const { exec } = require('child_process');
 
 const TEST_RESULTS_FOLDER = 'coverage';
 const TEMP_FOLDER = 'coverage/.temp';
-const COVERAGE_FOLDER = 'coverage/complete';
-const JEST_GENERATED_FINAL_JSON_COVERAGE_FILENAME = 'coverage-final.json';
-const COVERAGE_TARGET_FILENAME = 'coverage-complete.json';
+const COVERAGE_FOLDER = 'coverage/.complete';
+const FINAL_JSON_COVERAGE_FILENAME = 'coverage-final.json';
+const MERGED_COVERAGE_FILENAME = 'coverage-complete.json';
 
 async function mergeCoverageFilesToJson() {
-  fs.emptyDirSync(TEMP_FOLDER);
+  clearTempFolder();
 
-  const allTestingJsonFiles = getFilesRecursively(TEST_RESULTS_FOLDER);
-  console.log(`Found ${allTestingJsonFiles.length} testing json files.`);
+  const jsonFiles = findCoverageFiles(TEST_RESULTS_FOLDER);
 
-  for (const testingJsonPath of allTestingJsonFiles) {
-    const filename = path.basename(testingJsonPath);
-    const folders = testingJsonPath.split('/');
-    const folderDepth = folders.length;
-    const projectNameFolderIndex = folderDepth - 2;
-    const projectName = folders[projectNameFolderIndex];
-    const fileNameWithProject = projectName
-      ? `${projectName}-${filename}`
-      : filename;
-    const targetPath = path.join(TEMP_FOLDER, fileNameWithProject);
+  console.log(`Found ${jsonFiles.length} coverage JSON files.`);
 
-    console.log(`Moving '${testingJsonPath}' to '${targetPath}'`);
-
-    await fs.copy(testingJsonPath, targetPath);
+  for (const filePath of jsonFiles) {
+    const targetPath = getTargetPath(filePath);
+    console.log(`Copying '${filePath}' to '${targetPath}'`);
+    await fs.copy(filePath, targetPath);
   }
 
-  const targetPath = path.join(COVERAGE_FOLDER, COVERAGE_TARGET_FILENAME);
-  const command = `nyc merge ${TEMP_FOLDER} ${targetPath}`;
+  const mergedCoveragePath = path.join(
+    COVERAGE_FOLDER,
+    MERGED_COVERAGE_FILENAME
+  );
 
-  executeCommand(command);
+  executeCommand(`nyc merge ${TEMP_FOLDER} ${mergedCoveragePath}`);
 }
 
 function createIstanbulReportFromJson() {
@@ -44,40 +37,52 @@ function createIstanbulReportFromJson() {
   console.log(`Executed '${command}' successfully.`);
 }
 
-function getFilesRecursively(dir, files = []) {
-  const fileList = fs.readdirSync(dir);
+function findCoverageFiles(dir, files = []) {
+  const entries = fs.readdirSync(dir);
 
-  for (const file of fileList) {
-    const name = `${dir}/${file}`;
+  for (const entry of entries) {
+    const entryPath = path.join(dir, entry);
 
-    if (fs.statSync(name).isDirectory()) {
-      getFilesRecursively(name, files);
-    } else {
-      const filename = path.basename(name);
-      const isMatchingJestFile =
-        filename === JEST_GENERATED_FINAL_JSON_COVERAGE_FILENAME;
-
-      if (isMatchingJestFile) {
-        files.push(name);
-      }
+    if (fs.statSync(entryPath).isDirectory()) {
+      findCoverageFiles(entryPath, files);
+    } else if (path.basename(entryPath) === FINAL_JSON_COVERAGE_FILENAME) {
+      files.push(entryPath);
     }
   }
 
   return files;
 }
 
+function getTargetPath(filePath) {
+  const projectName = path.dirname(filePath).split(path.sep).slice(-2, -1)[0];
+  const filename = `${projectName}-${path.basename(filePath)}`;
+
+  return path.join(TEMP_FOLDER, filename);
+}
+
+function clearTempFolder() {
+  fs.emptyDirSync(TEMP_FOLDER);
+}
+
 function executeCommand(command) {
   exec(command, (err, stdout, stderr) => {
     if (err) {
-      console.error(err);
+      console.error(`Error executing command: ${command}`, err);
+
       return;
     }
-
-    console.log(stdout);
-    console.error(stderr);
+    if (stdout) {
+      console.log(stdout);
+    }
+    if (stderr) {
+      console.error(stderr);
+    }
   });
 }
 
-await mergeCoverageFilesToJson();
+const main = async function () {
+  await mergeCoverageFilesToJson();
+  createIstanbulReportFromJson();
+};
 
-createIstanbulReportFromJson();
+main();

@@ -36,7 +36,7 @@
       "@doggo-rating/doggos/domain": [
         "libs/doggos/domain/src/index.ts"
       ],
-      "@doggo-rating/doggos/container": [
+      "@doggo-rating/doggos/feature": [
         "libs/doggos/feature/src/index.ts"
       ],
       "@doggo-rating/doggos/ui": [

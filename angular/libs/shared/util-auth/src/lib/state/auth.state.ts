@@ -12,9 +12,10 @@ import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { LoginResponse } from 'angular-auth-oidc-client';
 import { tapResponse } from '@ngrx/operators';
+import { UserProfile } from '../models/user-profile';
 
 export interface AuthRootState {
-  userProfile: any;
+  userProfile: UserProfile | null;
   isLoggedIn: boolean;
 }
 

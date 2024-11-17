@@ -8,7 +8,7 @@ const COVERAGE_FOLDER = 'coverage/.complete';
 const FINAL_JSON_COVERAGE_FILENAME = 'coverage-final.json';
 const MERGED_COVERAGE_FILENAME = 'coverage-complete.json';
 
-async function mergeCoverageFilesToJson() {
+function mergeCoverageFilesToJson() {
   clearTempFolder();
 
   const jsonFiles = findCoverageFiles(TEST_RESULTS_FOLDER);
@@ -18,7 +18,7 @@ async function mergeCoverageFilesToJson() {
   for (const filePath of jsonFiles) {
     const targetPath = getTargetPath(filePath);
     console.log(`Copying '${filePath}' to '${targetPath}'`);
-    await fs.copy(filePath, targetPath);
+    fs.copySync(filePath, targetPath);
   }
 
   const mergedCoveragePath = path.join(
@@ -54,9 +54,19 @@ function findCoverageFiles(dir, files = []) {
 }
 
 function getTargetPath(filePath) {
-  const projectName = path.dirname(filePath).split(path.sep).slice(-2, -1)[0];
+  // Separating the path and getting the last two entries of the path
+  // 'coverage\libs\about\feature\coverage-final.json' --> about-feature
+  // 'coverage\libs\shared\util-environments\coverage-final.json' --> shared-util-environments
+  const projectName = path
+    .dirname(filePath)
+    .split(path.sep)
+    .slice(-2)
+    .join('-');
+
+  // adding the `coverage-final.json` back to the end
   const filename = `${projectName}-${path.basename(filePath)}`;
 
+  // targeting the temp folder and return
   return path.join(TEMP_FOLDER, filename);
 }
 
@@ -80,8 +90,8 @@ function executeCommand(command) {
   });
 }
 
-const main = async function () {
-  await mergeCoverageFilesToJson();
+const main = function () {
+  mergeCoverageFilesToJson();
   createIstanbulReportFromJson();
 };
 

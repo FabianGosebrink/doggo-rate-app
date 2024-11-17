@@ -10,24 +10,47 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@doggo-rating/about/feature": ["libs/about/feature/src/index.ts"],
-      "@doggo-rating/auth/api": ["libs/auth/api/src/index.ts"],
-      "@doggo-rating/auth/state": ["libs/auth/state/src/index.ts"],
-      "@doggo-rating/auth/ui": ["libs/auth/ui/src/index.ts"],
-      "@doggo-rating/auth/util": ["libs/auth/util/src/index.ts"],
-      "@doggo-rating/doggos/domain": ["libs/doggos/domain/src/index.ts"],
-      "@doggo-rating/doggos/feature": ["libs/doggos/feature/src/index.ts"],
-      "@doggo-rating/doggos/ui": ["libs/doggos/ui/src/index.ts"],
+      "@doggo-rating/about/feature": [
+        "libs/about/feature/src/index.ts"
+      ],
+      "@doggo-rating/auth/api": [
+        "libs/auth/api/src/index.ts"
+      ],
+      "@doggo-rating/auth/state": [
+        "libs/auth/state/src/index.ts"
+      ],
+      "@doggo-rating/auth/ui": [
+        "libs/auth/ui/src/index.ts"
+      ],
+      "@doggo-rating/auth/util": [
+        "libs/auth/util/src/index.ts"
+      ],
+      "@doggo-rating/doggos/domain": [
+        "libs/doggos/domain/src/index.ts"
+      ],
+      "@doggo-rating/doggos/container": [
+        "libs/doggos/feature/src/index.ts"
+      ],
+      "@doggo-rating/doggos/ui": [
+        "libs/doggos/ui/src/index.ts"
+      ],
       "@doggo-rating/shared/about/feature": [
         "libs/shared/about/feature/src/index.ts"
       ],
-      "@doggo-rating/shared/ui-common": ["libs/shared/ui-common/src/index.ts"],
-      "@doggo-rating/shared/util-auth": ["libs/shared/util-auth/src/index.ts"],
+      "@doggo-rating/shared/ui-common": [
+        "libs/shared/ui-common/src/index.ts"
+      ],
+      "@doggo-rating/shared/util-auth": [
+        "libs/shared/util-auth/src/index.ts"
+      ],
       "@doggo-rating/shared/util-camera": [
         "libs/shared/util-camera/src/index.ts"
       ],
@@ -45,8 +68,14 @@
       ],
       "@doggo-rating/shared/util-real-time": [
         "libs/shared/util-real-time/src/index.ts"
+      ],
+      "container": [
+        "libs/about2/container/src/index.ts"
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

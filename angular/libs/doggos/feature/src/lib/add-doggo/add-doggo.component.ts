@@ -12,20 +12,22 @@ import { CameraService } from '@doggo-rating/shared/util-camera';
   imports: [RouterLink, ReactiveFormsModule],
 })
 export class AddDoggoComponent {
-  filename = '';
-  base64 = '';
   private readonly fb = inject(FormBuilder);
+  private readonly store = inject(DoggosStore);
+  private readonly cameraService = inject(CameraService);
+
+  private formData: FormData;
+
   formGroup = this.fb.group({
     name: ['', Validators.required],
     breed: ['', Validators.required],
     comment: ['', Validators.required],
   });
-  private readonly store = inject(DoggosStore);
+  base64 = '';
+  filename = '';
   loading = this.store.loading;
-  private readonly cameraService = inject(CameraService);
-  private formData: FormData;
 
-  setFormData(files): void {
+  setFormData(files: FileList): void {
     if (files[0]) {
       const formData = new FormData();
       console.log(files[0]);

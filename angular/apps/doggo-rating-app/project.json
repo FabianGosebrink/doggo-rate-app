@@ -45,7 +45,12 @@
               "with": "libs/shared/util-environments/src/lib/environment.prod.ts"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "optimization": {
+            "styles": {
+              "inlineCritical": false
+            }
+          }
         },
         "development": {
           "buildOptimizer": false,

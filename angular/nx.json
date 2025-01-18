@@ -59,6 +59,5 @@
       "style": "scss"
     }
   },
-  "defaultBase": "main",
-  "useLegacyCache": true
+  "defaultBase": "main"
 }

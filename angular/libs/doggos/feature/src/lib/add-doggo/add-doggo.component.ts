@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { DoggosStore } from '@doggo-rating/doggos/domain';
 import { CameraService } from '@doggo-rating/shared/util-camera';
 
@@ -9,7 +8,7 @@ import { CameraService } from '@doggo-rating/shared/util-camera';
   standalone: true,
   templateUrl: './add-doggo.component.html',
   styleUrls: ['./add-doggo.component.scss'],
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
 })
 export class AddDoggoComponent {
   private readonly fb = inject(FormBuilder);

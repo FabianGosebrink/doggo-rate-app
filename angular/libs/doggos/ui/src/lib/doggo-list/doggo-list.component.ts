@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, input, Output, } from '@angular/core';
 import { Doggo } from '@doggo-rating/doggos/domain';
 
 @Component({

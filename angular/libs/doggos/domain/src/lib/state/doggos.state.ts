@@ -1,11 +1,4 @@
-import {
-  patchState,
-  signalStore,
-  withComputed,
-  withHooks,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withHooks, withMethods, withState, } from '@ngrx/signals';
 import { computed, inject } from '@angular/core';
 import { SignalRService } from '../services/signalr.service';
 import { Router } from '@angular/router';
@@ -15,12 +8,7 @@ import { NotificationService } from '@doggo-rating/shared/util-notification';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { concatMap, filter, map, switchMap, tap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
-import {
-  Doggo,
-  DoggoAddedEvent,
-  DoggoDeletedEvent,
-  DoggoRatedEvent,
-} from '../models/doggo';
+import { Doggo, DoggoAddedEvent, DoggoDeletedEvent, DoggoRatedEvent, } from '../models/doggo';
 import { AuthStore } from '@doggo-rating/shared/util-auth';
 
 export interface DoggoState {
@@ -29,7 +17,6 @@ export interface DoggoState {
   selectedDoggo: Doggo | null;
   detailDoggo: Doggo | null;
   loading: boolean;
-  realTimeConnection: string;
 }
 
 export const initialState: DoggoState = {
@@ -38,7 +25,6 @@ export const initialState: DoggoState = {
   selectedDoggo: null,
   detailDoggo: null,
   loading: false,
-  realTimeConnection: '',
 };
 
 export const DoggosStore = signalStore(
@@ -340,7 +326,7 @@ function removeItemFromArray(array: Doggo[], id: string): Doggo[] {
 }
 
 function isMyDoggo(doggo: Doggo, userSub: string): boolean {
-  return doggo.id === userSub;
+  return doggo.userId === userSub;
 }
 
 function isRatedDoggoSelected(

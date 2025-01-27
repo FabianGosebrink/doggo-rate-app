@@ -1,4 +1,11 @@
-import { patchState, signalStore, withComputed, withHooks, withMethods, withState, } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withHooks,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { computed, inject } from '@angular/core';
 import { SignalRService } from '../services/signalr.service';
 import { Router } from '@angular/router';
@@ -8,7 +15,12 @@ import { NotificationService } from '@doggo-rating/shared/util-notification';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { concatMap, filter, map, switchMap, tap } from 'rxjs';
 import { UploadService } from '../services/upload.service';
-import { Doggo, DoggoAddedEvent, DoggoDeletedEvent, DoggoRatedEvent, } from '../models/doggo';
+import {
+  Doggo,
+  DoggoAddedEvent,
+  DoggoDeletedEvent,
+  DoggoRatedEvent,
+} from '../models/doggo';
 import { AuthStore } from '@doggo-rating/shared/util-auth';
 
 export interface DoggoState {
@@ -89,7 +101,10 @@ export const DoggosStore = signalStore(
                 const selectedDoggo =
                   doggos.find((doggo) => doggo.id === currentDoggoId) ?? null;
 
-                patchState(store, { doggos, selectedDoggo });
+                patchState(store, {
+                  doggos,
+                  selectedDoggo,
+                });
 
                 navigateToDoggo(router, currentDoggoId);
               },

@@ -16,7 +16,8 @@
     "build-dev": "nx build --configuration development",
     "build-desktop": "node build/build-desktop.js",
     "build-mobile": "node build/build-mobile.js",
-    "summarize:coverage": "node tools/create-overall-coverage.js"
+    "summarize:coverage": "node tools/create-overall-coverage.js",
+    "show:projects": "nx show projects"
   },
   "private": true,
   "dependencies": {

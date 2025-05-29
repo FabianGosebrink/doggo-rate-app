@@ -1,5 +1,5 @@
-const { contextBridge, ipcRenderer } = require("electron");
+const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld("electronAPI", {
-  authEvent: (callback) => ipcRenderer.on("authEvent", callback),
+contextBridge.exposeInMainWorld('electronAPI', {
+  authEvent: (callback) => ipcRenderer.on('authEvent', callback),
 });

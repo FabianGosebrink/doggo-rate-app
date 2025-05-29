@@ -1,28 +1,24 @@
-import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
-import { DoggosStore } from '@doggo-rating/doggos/domain';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   DoggoListComponent,
   DoggoRateComponent,
 } from '@doggo-rating/doggos/ui';
+import { MainDoggosStore } from './main-doggo.store';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-doggo',
   templateUrl: './main-doggo.component.html',
   styleUrls: ['./main-doggo.component.scss'],
+  providers: [MainDoggosStore],
   imports: [DoggoListComponent, DoggoRateComponent],
 })
 export class MainDoggoComponent implements OnInit {
-  doggoId = input('');
-  store = inject(DoggosStore);
-  private readonly destroyRef = inject(DestroyRef);
+  store = inject(MainDoggosStore);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.store.loadDoggos(this.doggoId());
-    this.store.startListeningToRealtimeDoggoEvents();
-
-    this.destroyRef.onDestroy(() => {
-      this.store.stopListeningToRealtimeDoggoEvents();
-    });
+    this.store.selectDoggo(this.activatedRoute.snapshot.queryParams['doggoId']);
   }
 
   rateDoggo(rating: number): void {

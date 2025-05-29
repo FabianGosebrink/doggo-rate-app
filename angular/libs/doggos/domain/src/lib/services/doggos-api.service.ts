@@ -26,7 +26,7 @@ export class DoggosApiService {
     name: string,
     breed: string,
     comment: string,
-    imageUrl: string
+    imageUrl: string,
   ): Observable<Doggo> {
     const toSend = { name, breed, comment, imageUrl };
 

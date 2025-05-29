@@ -7,7 +7,7 @@ import { DesktopCameraService } from './desktop-camera.service';
 export function cameraFactory(
   platformInformationService: PlatformInformationService,
   desktopCameraService: DesktopCameraService,
-  mobileCameraService: MobileCameraService
+  mobileCameraService: MobileCameraService,
 ): CameraService {
   const { isMobile } = platformInformationService;
 

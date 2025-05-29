@@ -10,7 +10,7 @@ export class AuthService {
   private readonly oidcSecurityService = inject(OidcSecurityService);
 
   private readonly platformInformationService = inject(
-    PlatformInformationService
+    PlatformInformationService,
   );
 
   private modal: Window | null = null;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import {
   IsActiveMatchOptions,
   RouterLink,
@@ -14,8 +14,8 @@ import {
 })
 export class NavigationComponent {
   loggedIn = input(false);
-  @Output() dologin = new EventEmitter();
-  @Output() doLogout = new EventEmitter();
+  login = output();
+  logout = output();
 
   isActiveMatchOptions: IsActiveMatchOptions = {
     queryParams: 'ignored',
@@ -23,12 +23,4 @@ export class NavigationComponent {
     paths: 'exact',
     fragment: 'exact',
   };
-
-  login(): void {
-    this.dologin.emit();
-  }
-
-  logout(): void {
-    this.doLogout.emit();
-  }
 }

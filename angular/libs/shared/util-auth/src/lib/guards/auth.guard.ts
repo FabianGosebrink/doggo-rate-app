@@ -18,6 +18,6 @@ export const isAuthenticated = (): Observable<boolean> => {
       }
 
       return true;
-    })
+    }),
   );
 };

@@ -1,29 +1,28 @@
 import { DatePipe, DecimalPipe, NgOptimizedImage } from '@angular/common';
-import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Doggo, DoggosStore } from '@doggo-rating/doggos/domain';
+import { Doggo, dogUserEvents } from '@doggo-rating/doggos/domain';
+import { DoggoDetailsStore } from './doggo-detail.store';
+import { Dispatcher } from '@ngrx/signals/events';
 
 @Component({
   selector: 'app-doggo-detail',
   imports: [RouterLink, NgOptimizedImage, DatePipe, DecimalPipe],
+  providers: [DoggoDetailsStore],
   templateUrl: './doggo-detail.component.html',
   styleUrls: ['./doggo-detail.component.scss'],
 })
 export class DoggoDetailComponent implements OnInit {
   doggoId = input('');
 
-  store = inject(DoggosStore);
-  private readonly destroyRef = inject(DestroyRef);
+  store = inject(DoggoDetailsStore);
+  readonly #dispatcher = inject(Dispatcher);
 
   ngOnInit(): void {
-    this.store.loadSingleDoggo(this.doggoId());
-
-    this.destroyRef.onDestroy(() => {
-      this.store.clearSingleDoggo();
-    });
+    this.store.loadSingleDoggoIfNotLoaded(this.doggoId);
   }
 
   deleteDoggo(doggo: Doggo): void {
-    this.store.deleteDoggo(doggo);
+    this.#dispatcher.dispatch(dogUserEvents.deleteDog(doggo));
   }
 }

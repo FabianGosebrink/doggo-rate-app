@@ -17,7 +17,8 @@
     "build-desktop": "node build/build-desktop.js",
     "build-mobile": "node build/build-mobile.js",
     "summarize:coverage": "node tools/create-overall-coverage.js",
-    "show:projects": "nx show projects"
+    "show:projects": "nx show projects",
+    "prettier": "prettier --write ."
   },
   "private": true,
   "dependencies": {
@@ -38,8 +39,8 @@
     "@capacitor/device": "^6.0.0",
     "@capacitor/toast": "^6.0.1",
     "@microsoft/signalr": "^8.0.7",
-    "@ngrx/operators": "19.0.0",
-    "@ngrx/signals": "19.0.0",
+    "@ngrx/operators": "~19.2.0",
+    "@ngrx/signals": "~19.2.0",
     "@nx/angular": "20.3.2",
     "angular-auth-oidc-client": "^18.0.1",
     "base64-arraybuffer": "^1.0.2",
@@ -91,7 +92,7 @@
     "postcss-import": "~14.1.0",
     "postcss-preset-env": "~7.5.0",
     "postcss-url": "~10.1.3",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.3",
     "shelljs": "^0.8.5",
     "ts-jest": "29.1.1",
     "ts-node": "10.9.1",

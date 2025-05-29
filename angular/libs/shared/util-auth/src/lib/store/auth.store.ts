@@ -9,7 +9,7 @@ import { computed, inject } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { switchMap } from 'rxjs';
+import { exhaustMap } from 'rxjs';
 import { LoginResponse } from 'angular-auth-oidc-client';
 import { tapResponse } from '@ngrx/operators';
 import { UserProfile } from '../models/user-profile';
@@ -44,7 +44,7 @@ export const AuthStore = signalStore(
       },
 
       checkAuth: rxMethod<string | null>(
-        switchMap((url: string | null) => {
+        exhaustMap((url: string | null) => {
           return authService.checkAuth(url).pipe(
             tapResponse({
               next: (response: LoginResponse) =>
@@ -53,10 +53,10 @@ export const AuthStore = signalStore(
                   userProfile: response.userData,
                 }),
               error: (err) => console.log(err),
-            })
+            }),
           );
-        })
+        }),
       ),
-    })
-  )
+    }),
+  ),
 );

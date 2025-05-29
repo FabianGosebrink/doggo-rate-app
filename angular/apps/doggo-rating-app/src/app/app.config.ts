@@ -18,7 +18,7 @@ const webCallbackUrl = `${window.location.origin}/callback`;
 const desktopCallbackUrl = `http://localhost/callback`;
 
 const authFactory = (
-  platformInformationService: PlatformInformationService
+  platformInformationService: PlatformInformationService,
 ): StsConfigStaticLoader => {
   let redirectUrl = webCallbackUrl;
   let postLogoutRedirectUri = webCallbackUrl;
@@ -63,7 +63,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       ToastrModule.forRoot({
         positionClass: 'toast-bottom-right',
-      })
+      }),
     ),
   ],
 };

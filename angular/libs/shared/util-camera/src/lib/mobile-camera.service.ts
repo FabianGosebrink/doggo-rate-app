@@ -16,7 +16,7 @@ export class MobileCameraService {
         quality: 90,
         allowEditing: false,
         resultType: CameraResultType.Base64,
-      })
+      }),
     ).pipe(
       map((photo) => {
         const base64 = photo.base64String as string;
@@ -30,7 +30,7 @@ export class MobileCameraService {
         formData.append(fileName, file);
 
         return { formData, fileName, base64 };
-      })
+      }),
     );
   }
 }

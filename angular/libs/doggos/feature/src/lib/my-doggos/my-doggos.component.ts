@@ -1,7 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Doggo, DoggosStore } from '@doggo-rating/doggos/domain';
+import { Doggo, dogUserEvents } from '@doggo-rating/doggos/domain';
 import { SingleDoggoComponent } from '@doggo-rating/doggos/ui';
+import { MyDoggosStore } from './my-doggos.store';
+import { Dispatcher } from '@ngrx/signals/events';
 
 @Component({
   selector: 'app-my-doggos',
@@ -9,15 +11,13 @@ import { SingleDoggoComponent } from '@doggo-rating/doggos/ui';
   templateUrl: './my-doggos.component.html',
   styleUrls: ['./my-doggos.component.scss'],
   imports: [SingleDoggoComponent, RouterLink],
+  providers: [MyDoggosStore],
 })
-export class MyDoggosComponent implements OnInit {
-  store = inject(DoggosStore);
-
-  ngOnInit(): void {
-    this.store.loadMyDoggos();
-  }
+export class MyDoggosComponent {
+  store = inject(MyDoggosStore);
+  readonly #dispatcher = inject(Dispatcher);
 
   deleteDoggo(doggo: Doggo): void {
-    this.store.deleteDoggo(doggo);
+    this.#dispatcher.dispatch(dogUserEvents.deleteDog(doggo));
   }
 }

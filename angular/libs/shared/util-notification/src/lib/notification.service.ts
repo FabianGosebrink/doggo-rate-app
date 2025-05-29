@@ -8,7 +8,7 @@ export function notificationFactory(
   platformInformationService: PlatformInformationService,
   webNotificationService: WebNotificationService,
   desktopNotificationService: DesktopNotificationService,
-  mobileNotificationService: MobileNotificationService
+  mobileNotificationService: MobileNotificationService,
 ): NotificationService {
   const { isElectron, isMobile } = platformInformationService;
 

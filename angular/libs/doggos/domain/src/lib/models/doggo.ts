@@ -9,9 +9,3 @@ export interface Doggo {
   created: Date;
   userId: string;
 }
-
-export type DoggoAddedEvent = { type: 'doggoadded'; doggo: Doggo };
-export type DoggoDeletedEvent = { type: 'doggodeleted'; id: string };
-export type DoggoRatedEvent = { type: 'doggorated'; doggo: Doggo };
-
-export type DoggoEvent = DoggoAddedEvent | DoggoDeletedEvent | DoggoRatedEvent;

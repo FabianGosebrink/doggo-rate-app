@@ -1,2 +1,1 @@
-export * from './lib/store/realtime.state';
-export * from './lib/services/signalr-status.service';
+export * from './lib/store/real-time.store';

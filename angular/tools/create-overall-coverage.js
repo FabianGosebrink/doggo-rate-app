@@ -23,7 +23,7 @@ function mergeCoverageFilesToJson() {
 
   const mergedCoveragePath = path.join(
     COVERAGE_FOLDER,
-    MERGED_COVERAGE_FILENAME
+    MERGED_COVERAGE_FILENAME,
   );
 
   executeCommand(`nyc merge ${TEMP_FOLDER} ${mergedCoveragePath}`);

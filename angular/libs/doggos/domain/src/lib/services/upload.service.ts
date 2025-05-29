@@ -10,7 +10,7 @@ export class UploadService {
   upload(formData: FormData): Observable<{ path: string }> {
     return this.http.post<{ path: string }>(
       `${environment.server}api/upload/image`,
-      formData
+      formData,
     );
   }
 }

@@ -6,30 +6,45 @@
     </div>
     <div class="d-grid gap-2 d-sm-flex justify-content-center mb-3">
       <div class="btn-group" role="group">
-        <div (click)="rateDoggo(1)" [ngClass]="{ checked: averageRating() > 0 }">
+        <div
+          (click)="rateDoggo(1)"
+          [ngClass]="{ checked: averageRating() > 0 }"
+        >
           <i class="fa fa-paw fa-xl"></i>
         </div>
 
-        <div (click)="rateDoggo(2)" [ngClass]="{ checked: averageRating() > 1 }">
+        <div
+          (click)="rateDoggo(2)"
+          [ngClass]="{ checked: averageRating() > 1 }"
+        >
           <i class="fa fa-paw fa-xl"></i>
         </div>
 
-        <div (click)="rateDoggo(3)" [ngClass]="{ checked: averageRating() > 2 }">
+        <div
+          (click)="rateDoggo(3)"
+          [ngClass]="{ checked: averageRating() > 2 }"
+        >
           <i class="fa fa-paw fa-xl"></i>
         </div>
 
-        <div (click)="rateDoggo(4)" [ngClass]="{ checked: averageRating() > 3 }">
+        <div
+          (click)="rateDoggo(4)"
+          [ngClass]="{ checked: averageRating() > 3 }"
+        >
           <i class="fa fa-paw fa-xl"></i>
         </div>
 
-        <div (click)="rateDoggo(5)" [ngClass]="{ checked: averageRating() > 4 }">
+        <div
+          (click)="rateDoggo(5)"
+          [ngClass]="{ checked: averageRating() > 4 }"
+        >
           <i class="fa fa-paw fa-xl"></i>
         </div>
       </div>
     </div>
 
     @if (!currentRating && averageRating() > 0) {
-      <h3>{{ averageRating() | number : '1.2-2' }} / 5</h3>
+      <h3>{{ averageRating() | number: '1.2-2' }} / 5</h3>
     } @else {
       <h3>{{ currentRating }} / 5</h3>
     }

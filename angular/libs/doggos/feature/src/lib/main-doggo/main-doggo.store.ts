@@ -8,7 +8,7 @@ import {
 } from '@ngrx/signals';
 import { computed, effect, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { exhaustMap } from 'rxjs';
+import { exhaustMap, tap } from 'rxjs';
 import { NotificationService } from '@doggo-rating/shared/util-notification';
 import { tapResponse } from '@ngrx/operators';
 import { Router } from '@angular/router';
@@ -45,9 +45,11 @@ export const MainDoggosStore = signalStore(
       doggosApiService = inject(DoggosApiService),
       doggoStore = inject(DoggosStore),
     ) => ({
-      selectDoggo(selectedDoggoId: string) {
-        patchState(store, { selectedDoggoId });
-      },
+      selectDoggo: rxMethod<string>(
+        tap((selectedDoggoId: string) =>
+          patchState(store, { selectedDoggoId }),
+        ),
+      ),
 
       selectNextDoggo() {
         const nextDoggoIndex = store.nextDoggoIndex();

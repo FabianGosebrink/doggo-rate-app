@@ -1,10 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import {
   DoggoListComponent,
   DoggoRateComponent,
 } from '@doggo-rating/doggos/ui';
 import { MainDoggosStore } from './main-doggo.store';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main-doggo',
@@ -14,11 +13,11 @@ import { ActivatedRoute } from '@angular/router';
   imports: [DoggoListComponent, DoggoRateComponent],
 })
 export class MainDoggoComponent implements OnInit {
+  doggoId = input('');
   store = inject(MainDoggosStore);
-  private readonly activatedRoute = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    this.store.selectDoggo(this.activatedRoute.snapshot.queryParams['doggoId']);
+    this.store.selectDoggo(this.doggoId);
   }
 
   rateDoggo(rating: number): void {

@@ -8,6 +8,7 @@ import { RealTimeStore } from '@doggo-rating/shared/util-real-time';
 import { AuthStore } from '@doggo-rating/shared/util-auth';
 import { DoggosStore } from './doggos.store';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function withDoggoRealtime() {
   return signalStoreFeature(
     withMethods(

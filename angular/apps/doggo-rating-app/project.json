@@ -4,15 +4,24 @@
   "projectType": "application",
   "sourceRoot": "apps/doggo-rating-app/src",
   "prefix": "app",
+  "tags": [
+    "type:app",
+    "scope:doggo-rating-app"
+  ],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@angular/build:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/apps/doggo-rating-app",
+        "outputPath": {
+          "base": "dist/apps/doggo-rating-app"
+        },
         "index": "apps/doggo-rating-app/src/index.html",
-        "main": "apps/doggo-rating-app/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/doggo-rating-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -23,7 +32,8 @@
           "apps/doggo-rating-app/src/styles.css",
           "node_modules/ngx-toastr/toastr.css"
         ],
-        "scripts": []
+        "scripts": [],
+        "browser": "apps/doggo-rating-app/src/main.ts"
       },
       "configurations": {
         "production": {
@@ -53,9 +63,7 @@
           }
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
@@ -64,7 +72,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "doggo-rating-app:build:production"
@@ -73,25 +81,29 @@
           "buildTarget": "doggo-rating-app:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "doggo-rating-app:build"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/doggo-rating-app/jest.config.ts"
       }
     }
-  },
-  "tags": ["type:app", "scope:doggo-rating-app"]
+  }
 }

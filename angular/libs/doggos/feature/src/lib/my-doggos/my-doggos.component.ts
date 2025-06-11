@@ -7,7 +7,6 @@ import { Dispatcher } from '@ngrx/signals/events';
 
 @Component({
   selector: 'app-my-doggos',
-  standalone: true,
   templateUrl: './my-doggos.component.html',
   styleUrls: ['./my-doggos.component.scss'],
   imports: [SingleDoggoComponent, RouterLink],

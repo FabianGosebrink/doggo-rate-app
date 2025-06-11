@@ -5,7 +5,6 @@ import { Doggo } from '@doggo-rating/doggos/domain';
 
 @Component({
   selector: 'app-single-doggo',
-  standalone: true,
   imports: [RouterLink, DecimalPipe, DatePipe],
   templateUrl: './single-doggo.component.html',
   styleUrls: ['./single-doggo.component.scss'],

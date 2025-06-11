@@ -4,7 +4,6 @@ import { AddDoggoStore } from './add-doggo.store';
 
 @Component({
   selector: 'app-add-doggo',
-  standalone: true,
   templateUrl: './add-doggo.component.html',
   styleUrls: ['./add-doggo.component.scss'],
   imports: [DoggoFormComponent],

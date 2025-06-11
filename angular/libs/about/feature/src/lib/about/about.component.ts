@@ -4,7 +4,6 @@ import { Device } from '@capacitor/device';
 
 @Component({
   selector: 'doggo-rating-about',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],

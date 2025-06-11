@@ -11,7 +11,6 @@ import { NavigationComponent } from '../navigation/navigation.component';
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
-  standalone: true,
   imports: [FooterComponent, NavigationComponent, RouterModule],
 })
 export class LayoutComponent {

@@ -1,89 +1,73 @@
 {
   "migrations": [
     {
-      "version": "20.3.0-beta.1",
-      "description": "Update ESLint flat config to include .cjs, .mjs, .cts, and .mts files in overrides (if needed)",
-      "implementation": "./src/migrations/update-20-3-0/add-file-extensions-to-overrides",
-      "package": "@nx/eslint",
-      "name": "add-file-extensions-to-overrides"
+      "version": "20.0.0",
+      "description": "Replaces usages of the deprecated InjectFlags enum",
+      "factory": "./bundles/inject-flags.cjs#migrate",
+      "package": "@angular/core",
+      "name": "inject-flags"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.2",
-      "description": "Update the ModuleFederationConfig import use @nx/module-federation.",
-      "factory": "./src/migrations/update-20-2-0/migrate-mf-imports-to-new-package",
-      "package": "@nx/angular",
-      "name": "update-20-2-0-update-module-federation-config-import"
+      "version": "20.0.0",
+      "description": "Replaces usages of the deprecated TestBed.get method with TestBed.inject",
+      "factory": "./bundles/test-bed-get.cjs#migrate",
+      "package": "@angular/core",
+      "name": "test-bed-get"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.2",
-      "description": "Update the withModuleFederation import use @nx/module-federation/angular.",
-      "factory": "./src/migrations/update-20-2-0/migrate-with-mf-import-to-new-package",
-      "package": "@nx/angular",
-      "name": "update-20-2-0-update-with-module-federation-import"
+      "version": "20.0.0",
+      "description": "Converts the entire application to block control flow syntax",
+      "factory": "./bundles/control-flow-migration.cjs#migrate",
+      "optional": true,
+      "package": "@angular/core",
+      "name": "control-flow-migration"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.5",
-      "requires": { "@angular/core": ">=19.0.0" },
-      "description": "Update the @angular/cli package version to ~19.0.0.",
-      "factory": "./src/migrations/update-20-2-0/update-angular-cli",
-      "package": "@nx/angular",
-      "name": "update-angular-cli-version-19-0-0"
+      "version": "20.0.0",
+      "description": "Moves imports of `DOCUMENT` from `@angular/common` to `@angular/core`",
+      "factory": "./bundles/document-core.cjs#migrate",
+      "package": "@angular/core",
+      "name": "document-core"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.5",
-      "requires": { "@angular/core": ">=19.0.0" },
-      "description": "Add the '@angular/localize/init' polyfill to the 'polyfills' option of targets using esbuild-based executors.",
-      "factory": "./src/migrations/update-20-2-0/add-localize-polyfill-to-targets",
-      "package": "@nx/angular",
-      "name": "add-localize-polyfill-to-targets"
+      "version": "20.0.0",
+      "factory": "./replace-provide-server-rendering-import/migration",
+      "description": "Migrate imports of 'provideServerRendering' from '@angular/platform-server' to '@angular/ssr'.",
+      "package": "@angular/cli",
+      "name": "replace-provide-server-rendering-import"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.5",
-      "requires": { "@angular/core": ">=19.0.0" },
-      "description": "Update '@angular/ssr' import paths to use the new '/node' entry point when 'CommonEngine' is detected.",
-      "factory": "./src/migrations/update-20-2-0/update-angular-ssr-imports-to-use-node-entry-point",
-      "package": "@nx/angular",
-      "name": "update-angular-ssr-imports-to-use-node-entry-point"
+      "version": "20.0.0",
+      "factory": "./replace-provide-server-routing/migration",
+      "description": "Migrate 'provideServerRendering' to use 'withRoutes', and remove 'provideServerRouting' and 'provideServerRoutesConfig' from '@angular/ssr'.",
+      "package": "@angular/cli",
+      "name": "replace-provide-server-routing"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.6",
-      "requires": { "@angular/core": ">=19.0.0" },
-      "description": "Disable the Angular ESLint prefer-standalone rule if not set.",
-      "factory": "./src/migrations/update-20-2-0/disable-angular-eslint-prefer-standalone",
-      "package": "@nx/angular",
-      "name": "disable-angular-eslint-prefer-standalone"
+      "version": "20.0.0",
+      "factory": "./update-module-resolution/migration",
+      "description": "Update 'moduleResolution' to 'bundler' in TypeScript configurations. You can read more about this, here: https://www.typescriptlang.org/tsconfig/#moduleResolution",
+      "package": "@angular/cli",
+      "name": "update-module-resolution"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.8",
-      "requires": { "@angular/core": ">=19.0.0" },
-      "description": "Remove Angular ESLint rules that were removed in v19.0.0.",
-      "factory": "./src/migrations/update-20-2-0/remove-angular-eslint-rules",
-      "package": "@nx/angular",
-      "name": "remove-angular-eslint-rules"
+      "version": "20.0.0",
+      "factory": "./previous-style-guide/migration",
+      "description": "Update workspace generation defaults to maintain previous style guide behavior.",
+      "package": "@angular/cli",
+      "name": "previous-style-guide"
     },
     {
-      "cli": "nx",
-      "version": "20.2.0-beta.8",
-      "requires": { "@angular/core": ">=19.0.0" },
-      "description": "Remove the deprecated 'tailwindConfig' option from ng-packagr executors. Tailwind CSS configurations located at the project or workspace root will be picked up automatically.",
-      "factory": "./src/migrations/update-20-2-0/remove-tailwind-config-from-ng-packagr-executors",
-      "package": "@nx/angular",
-      "name": "remove-tailwind-config-from-ng-packagr-executors"
-    },
-    {
-      "cli": "nx",
-      "version": "20.3.0-beta.2",
-      "description": "If workspace includes Module Federation projects, ensure the new @nx/module-federation package is installed.",
-      "factory": "./src/migrations/update-20-3-0/ensure-nx-module-federation-package",
-      "package": "@nx/angular",
-      "name": "ensure-nx-module-federation-package"
+      "version": "20.0.0",
+      "factory": "./use-application-builder/migration",
+      "description": "Migrate application projects to the new build system. Application projects that are using the '@angular-devkit/build-angular' package's 'browser' and/or 'browser-esbuild' builders will be migrated to use the new 'application' builder. You can read more about this, including known issues and limitations, here: https://angular.dev/tools/cli/build-system-migration",
+      "optional": true,
+      "recommended": true,
+      "documentation": "tools/cli/build-system-migration",
+      "package": "@angular/cli",
+      "name": "use-application-builder"
     }
   ]
 }
+
+

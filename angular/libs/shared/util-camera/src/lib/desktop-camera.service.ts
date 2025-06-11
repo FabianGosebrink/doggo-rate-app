@@ -1,7 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { DOCUMENT, inject, Injectable } from '@angular/core';
 import { CameraService } from './camera.service';
-import { DOCUMENT } from '@angular/common';
-import { Observable, from, throwError } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import { getFilename } from './utils';
 
 @Injectable({ providedIn: 'root' })

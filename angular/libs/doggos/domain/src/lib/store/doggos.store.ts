@@ -41,7 +41,7 @@ export const DoggosStore = signalStore(
                 next: (doggos) => {
                   patchState(store, setAllEntities(doggos), { loading: false });
 
-                  notificationService.showSuccess('Doggos Loaded');
+                  notificationService.showSuccess('Dogs Loaded');
                 },
                 error: () => notificationService.showError(),
               }),

@@ -36,7 +36,7 @@ export const AddDoggoStore = signalStore(
             tapResponse({
               next: (doggo) => {
                 doggosStore.addDoggo(doggo);
-                notificationService.showSuccess(`Doggo ${doggo.name} added`);
+                notificationService.showSuccess(`Dog ${doggo.name} added`);
 
                 router.navigate(['/doggos/my']);
               },

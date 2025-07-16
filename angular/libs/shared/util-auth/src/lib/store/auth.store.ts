@@ -40,7 +40,7 @@ export const AuthStore = signalStore(
       logout() {
         authService.logout();
         patchState(store, initialState);
-        router.navigate(['/doggos']);
+        router.navigate(['/dogs']);
       },
 
       checkAuth: rxMethod<string | null>(

@@ -38,7 +38,7 @@ export const AddDoggoStore = signalStore(
                 doggosStore.addDoggo(doggo);
                 notificationService.showSuccess(`Dog ${doggo.name} added`);
 
-                router.navigate(['/doggos/my']);
+                router.navigate(['/dogs/my']);
               },
               error: () => {
                 notificationService.showError();

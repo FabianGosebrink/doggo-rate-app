@@ -91,7 +91,7 @@ export const MainDoggosStore = signalStore(
 );
 
 function navigateToDog(router: Router, dogId: string): void {
-  router.navigate(['/doggos'], {
+  router.navigate(['/dogs'], {
     queryParams: { dogId },
   });
 }

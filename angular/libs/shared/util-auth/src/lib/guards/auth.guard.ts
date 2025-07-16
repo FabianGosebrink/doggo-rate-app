@@ -12,7 +12,7 @@ export const isAuthenticated = (): Observable<boolean> => {
     take(1),
     map(({ isAuthenticated }) => {
       if (!isAuthenticated) {
-        router.navigate(['/doggos']);
+        router.navigate(['/dogs']);
 
         return false;
       }

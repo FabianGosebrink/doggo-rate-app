@@ -50,7 +50,7 @@ export function withDoggoRemove() {
             doggosApiService.deleteDoggo(payload).pipe(
               mapResponse({
                 next: () => {
-                  router.navigate(['/doggos/my']);
+                  router.navigate(['/dogs/my']);
 
                   return dogAPIEvents.deleteDogSuccess(payload);
                 },

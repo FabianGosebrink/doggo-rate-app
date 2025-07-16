@@ -3,7 +3,7 @@
     <button
       type="button"
       class="btn btn-primary"
-      [routerLink]="['/doggos/my']"
+      [routerLink]="['/dogs/my']"
       [queryParams]="{ doggoId: doggo.id }"
     >
       <i class="fa-solid fa-arrow-left"></i> Back
@@ -30,8 +30,8 @@
             <button
               type="button"
               class="btn btn-primary"
-              [routerLink]="['/doggos']"
-              [queryParams]="{ doggoId: doggo.id }"
+              [routerLink]="['/dogs']"
+              [queryParams]="{ dogId: doggo.id }"
             >
               <i class="fa-solid fa-star"></i> Rate
             </button>

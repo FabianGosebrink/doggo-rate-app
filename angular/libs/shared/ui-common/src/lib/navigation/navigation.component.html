@@ -6,7 +6,7 @@
       <li>
         <a
           [routerLinkActiveOptions]="isActiveMatchOptions"
-          [routerLink]="'/doggos'"
+          [routerLink]="'/dogs'"
           queryParamsHandling="preserve"
           class="nav-link px-2 link-dark"
           routerLinkActive="active"
@@ -17,11 +17,11 @@
       @if (loggedIn()) {
         <li>
           <a
-            [routerLink]="'/doggos/my'"
+            [routerLink]="'/dogs/my'"
             routerLinkActive="active"
             [routerLinkActiveOptions]="isActiveMatchOptions"
             class="nav-link px-2 link-dark"
-          >My Doggos</a
+          >My Dogs</a
           >
         </li>
       }

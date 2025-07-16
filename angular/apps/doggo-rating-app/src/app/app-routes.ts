@@ -8,7 +8,7 @@ export const APP_ROUTES: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'doggos',
+        path: 'dogs',
         loadChildren: () =>
           import('@doggo-rating/doggos/feature').then((m) => m.DOGGOS_ROUTES),
       },
@@ -24,7 +24,7 @@ export const APP_ROUTES: Routes = [
       {
         path: '**',
         pathMatch: 'full',
-        redirectTo: 'doggos',
+        redirectTo: 'dogs',
       },
     ],
   },

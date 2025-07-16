@@ -28,8 +28,8 @@
         <button
           type="button"
           class="btn btn-outline-primary btn-sm me-1"
-          [routerLink]="['/doggos']"
-          [queryParams]="{ doggoId: doggo.id }"
+          [routerLink]="['/dogs']"
+          [queryParams]="{ dogId: doggo.id }"
         >
           <i class="fa-solid fa-star"></i> Rate
         </button>
@@ -37,7 +37,7 @@
         <button
           type="button"
           class="btn btn-outline-primary btn-sm me-1"
-          [routerLink]="['/doggos/details', doggo.id]"
+          [routerLink]="['/dogs/details', doggo.id]"
         >
           <i class="fa-solid fa-arrow-right"></i> Go to
         </button>

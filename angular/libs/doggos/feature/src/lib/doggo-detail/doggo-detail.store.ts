@@ -14,14 +14,14 @@ import { DoggosApiService, DoggosStore } from '@doggo-rating/doggos/domain';
 
 export const DoggoDetailsStore = signalStore(
   withState({
-    doggoId: null as string | null,
+    dogId: null as string | null,
   }),
   withComputed((store, doggosStore = inject(DoggosStore)) => ({
     detailDoggo: computed(() => {
-      const doggoId = store.doggoId();
+      const dogId = store.dogId();
       const entityMap = doggosStore.entityMap();
 
-      return doggoId ? entityMap[doggoId] : null;
+      return dogId ? entityMap[dogId] : null;
     }),
   })),
   withMethods(
@@ -33,7 +33,7 @@ export const DoggoDetailsStore = signalStore(
     ) => ({
       loadSingleDoggoIfNotLoaded: rxMethod<string>(
         pipe(
-          tap((id) => patchState(store, { doggoId: id })),
+          tap((id) => patchState(store, { dogId: id })),
           filter((id) => !doggosStore.entityMap()[id]),
           exhaustMap((id) =>
             doggosApiService.getSingleDoggo(id).pipe(

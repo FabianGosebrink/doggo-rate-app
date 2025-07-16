@@ -13,11 +13,11 @@ import { MainDoggosStore } from './main-doggo.store';
   imports: [DoggoListComponent, DoggoRateComponent],
 })
 export class MainDoggoComponent implements OnInit {
-  doggoId = input('');
+  dogId = input('');
   store = inject(MainDoggosStore);
 
   ngOnInit(): void {
-    this.store.selectDoggo(this.doggoId);
+    this.store.selectDoggo(this.dogId);
   }
 
   rateDoggo(rating: number): void {

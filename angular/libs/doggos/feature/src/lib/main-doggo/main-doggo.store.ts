@@ -19,18 +19,18 @@ import {
 } from '@doggo-rating/doggos/domain';
 
 export const MainDoggosStore = signalStore(
-  withState({ selectedDoggoId: null as string | null }),
+  withState({ selectedDogId: null as string | null }),
   withDoggoRealtime(),
   withComputed((store, doggoStore = inject(DoggosStore)) => ({
     nextDoggoIndex: computed(() => {
       const currentDoggoIndex = doggoStore
         .entities()
-        .findIndex((doggo) => doggo.id === store.selectedDoggoId());
+        .findIndex((doggo) => doggo.id === store.selectedDogId());
 
       return (currentDoggoIndex + 1) % doggoStore.entities().length;
     }),
     selectedDoggo: computed(() => {
-      const selectedId = store.selectedDoggoId();
+      const selectedId = store.selectedDogId();
       const allEntities = doggoStore.entityMap();
 
       return selectedId ? allEntities[selectedId] : doggoStore.entities()[0];
@@ -46,16 +46,16 @@ export const MainDoggosStore = signalStore(
       doggoStore = inject(DoggosStore),
     ) => ({
       selectDoggo: rxMethod<string>(
-        tap((selectedDoggoId: string) =>
-          patchState(store, { selectedDoggoId }),
+        tap((selectedDogId: string) =>
+          patchState(store, { selectedDogId }),
         ),
       ),
 
       selectNextDoggo() {
-        const nextDoggoIndex = store.nextDoggoIndex();
-        const selectedDoggo = doggoStore.entities()[nextDoggoIndex];
+        const nextDogIndex = store.nextDoggoIndex();
+        const selectedDog = doggoStore.entities()[nextDogIndex];
 
-        patchState(store, { selectedDoggoId: selectedDoggo.id });
+        patchState(store, { selectedDogId: selectedDog.id });
       },
 
       rateDoggo: rxMethod<number>(
@@ -65,10 +65,10 @@ export const MainDoggosStore = signalStore(
           return doggosApiService.rate(id, rating).pipe(
             tapResponse({
               next: () => {
-                const nextDoggoIndex = store.nextDoggoIndex();
-                const selectedDoggo = doggoStore.entities()[nextDoggoIndex];
+                const nextDogIndex = store.nextDoggoIndex();
+                const selectedDog = doggoStore.entities()[nextDogIndex];
 
-                patchState(store, { selectedDoggoId: selectedDoggo.id });
+                patchState(store, { selectedDogId: selectedDog.id });
               },
               error: () => notificationService.showError(),
             }),
@@ -80,18 +80,18 @@ export const MainDoggosStore = signalStore(
   withHooks({
     onInit(store, router = inject(Router)) {
       effect(() => {
-        const selectedDoggo = store.selectedDoggo();
+        const selectedDog = store.selectedDoggo();
 
-        if (selectedDoggo) {
-          navigateToDoggo(router, selectedDoggo.id);
+        if (selectedDog) {
+          navigateToDog(router, selectedDog.id);
         }
       });
     },
   }),
 );
 
-function navigateToDoggo(router: Router, doggoId: string): void {
+function navigateToDog(router: Router, dogId: string): void {
   router.navigate(['/doggos'], {
-    queryParams: { doggoId },
+    queryParams: { dogId },
   });
 }

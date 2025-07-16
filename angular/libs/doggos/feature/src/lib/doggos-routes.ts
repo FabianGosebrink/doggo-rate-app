@@ -21,7 +21,7 @@ export const DOGGOS_ROUTES: Routes = [
     canActivate: [isAuthenticated],
   },
   {
-    path: 'details/:doggoId',
+    path: 'details/:dogId',
     component: DoggoDetailComponent,
     canActivate: [isAuthenticated],
   },

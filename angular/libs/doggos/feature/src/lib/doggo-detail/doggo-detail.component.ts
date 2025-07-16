@@ -13,13 +13,13 @@ import { Dispatcher } from '@ngrx/signals/events';
   styleUrls: ['./doggo-detail.component.scss'],
 })
 export class DoggoDetailComponent implements OnInit {
-  doggoId = input('');
+  dogId = input('');
 
   store = inject(DoggoDetailsStore);
   readonly #dispatcher = inject(Dispatcher);
 
   ngOnInit(): void {
-    this.store.loadSingleDoggoIfNotLoaded(this.doggoId);
+    this.store.loadSingleDoggoIfNotLoaded(this.dogId);
   }
 
   deleteDoggo(doggo: Doggo): void {

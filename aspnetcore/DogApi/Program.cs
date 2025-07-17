@@ -82,10 +82,7 @@ app.UseSwaggerUI(c =>
 });
 app.SeedData();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
+app.UseDeveloperExceptionPage();
 
 app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();

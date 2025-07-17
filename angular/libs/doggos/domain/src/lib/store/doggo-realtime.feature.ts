@@ -47,13 +47,13 @@ export function withDoggoRealtime() {
         onInit() {
           realTimeStore
             .connection()
-            .on('doggoadded', (doggo) => store.addDoggoFromRealTime(doggo));
+            .on('dogadded', (doggo) => store.addDoggoFromRealTime(doggo));
           realTimeStore
             .connection()
-            .on('doggodeleted', (id) => store.deleteDoggoFromRealTime(id));
+            .on('dogdeleted', (id) => store.deleteDoggoFromRealTime(id));
           realTimeStore
             .connection()
-            .on('doggorated', (doggo) => store.rateDoggoFromRealTime(doggo));
+            .on('dograted', (doggo) => store.rateDoggoFromRealTime(doggo));
 
           realTimeStore.startConnection();
         },

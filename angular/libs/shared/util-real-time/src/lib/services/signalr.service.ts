@@ -12,7 +12,7 @@ export class SignalRService {
 
   build(): void {
     this.connection = new HubConnectionBuilder()
-      .withUrl(`${environment.server}doggoHub`)
+      .withUrl(`${environment.server}dogHub`)
       .withAutomaticReconnect()
       .configureLogging(LogLevel.Information)
       .build();

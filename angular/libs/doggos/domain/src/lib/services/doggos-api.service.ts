@@ -11,15 +11,15 @@ export class DoggosApiService {
   private readonly http = inject(HttpService);
 
   getDoggos(): Observable<Doggo[]> {
-    return this.http.get<Doggo[]>(`${environment.server}api/doggos`);
+    return this.http.get<Doggo[]>(`${environment.server}api/dogs`);
   }
 
   getSingleDoggo(id: string): Observable<Doggo> {
-    return this.http.get<Doggo>(`${environment.server}api/doggos/${id}`);
+    return this.http.get<Doggo>(`${environment.server}api/dogs/${id}`);
   }
 
   getMyDoggos(): Observable<Doggo[]> {
-    return this.http.get<Doggo[]>(`${environment.server}api/doggos/my`);
+    return this.http.get<Doggo[]>(`${environment.server}api/dogs/my`);
   }
 
   addDoggo(
@@ -30,17 +30,17 @@ export class DoggosApiService {
   ): Observable<Doggo> {
     const toSend = { name, breed, comment, imageUrl };
 
-    return this.http.post<Doggo>(`${environment.server}api/doggos`, toSend);
+    return this.http.post<Doggo>(`${environment.server}api/dogs`, toSend);
   }
 
   deleteDoggo(doggo: Doggo): Observable<Doggo> {
     return this.http
-      .delete(`${environment.server}api/doggos/${doggo.id}`)
+      .delete(`${environment.server}api/dogs/${doggo.id}`)
       .pipe(map(() => doggo));
   }
 
   rate(id: string, value: number): Observable<Doggo> {
-    return this.http.put<Doggo>(`${environment.server}api/doggos/rate/${id}`, {
+    return this.http.put<Doggo>(`${environment.server}api/dogs/rate/${id}`, {
       value,
     });
   }

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  server: `https://ratemydoggo.azurewebsites.net/`,
+  server: "https://localhost:7019/"
+  // server: `https://ratemydoggo.azurewebsites.net/`,
 };
 
 /*

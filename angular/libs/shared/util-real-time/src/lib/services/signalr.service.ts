@@ -8,7 +8,7 @@ import { environment } from '@doggo-rating/shared/util-environments';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
-  connection: HubConnection;
+  connection: HubConnection | null = null;
 
   build(): void {
     this.connection = new HubConnectionBuilder()
@@ -19,10 +19,10 @@ export class SignalRService {
   }
 
   start(): Promise<void> {
-    return this.connection.start();
+    return this.connection?.start();
   }
 
   stop(): Promise<void> {
-    return this.connection.stop();
+    return this.connection?.stop();
   }
 }

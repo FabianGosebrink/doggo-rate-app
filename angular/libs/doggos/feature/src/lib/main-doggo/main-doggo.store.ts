@@ -46,9 +46,7 @@ export const MainDoggosStore = signalStore(
       doggoStore = inject(DoggosStore),
     ) => ({
       selectDoggo: rxMethod<string>(
-        tap((selectedDogId: string) =>
-          patchState(store, { selectedDogId }),
-        ),
+        tap((selectedDogId: string) => patchState(store, { selectedDogId })),
       ),
 
       selectNextDoggo() {

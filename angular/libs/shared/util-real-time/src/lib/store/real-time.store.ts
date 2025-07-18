@@ -37,7 +37,7 @@ export const RealTimeStore = signalStore(
       patchState(store, { connectionStatus: 'Off' });
     },
     async startConnection() {
-      if (signalRService.connection.state !== HubConnectionState.Connected) {
+      if (signalRService.connection?.state !== HubConnectionState.Connected) {
         await signalRService.start();
       }
       patchState(store, { connectionStatus: 'On' });
@@ -54,9 +54,9 @@ export const RealTimeStore = signalStore(
     ) {
       signalRService.build();
 
-      signalRService.connection.onreconnected(() => _onReconnected());
-      signalRService.connection.onreconnecting(() => _onReconnecting());
-      signalRService.connection.onclose(() => _onClose());
+      signalRService.connection?.onreconnected(() => _onReconnected());
+      signalRService.connection?.onreconnecting(() => _onReconnecting());
+      signalRService.connection?.onclose(() => _onClose());
     },
   }),
 );

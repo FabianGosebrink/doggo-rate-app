@@ -11,7 +11,7 @@
         "{workspaceRoot}/coverage/{projectRoot}"
       ],
       "options": {
-        "jestConfig": "libs/doggos/feature/jest.config.ts"
+        "jestConfig": "libs/dogs/feature/jest.config.ts"
       }
     },
     "lint": {

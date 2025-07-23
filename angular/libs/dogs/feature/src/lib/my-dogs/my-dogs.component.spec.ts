@@ -1,22 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MyDogsComponent } from './my-dogs.component';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
 import { MyDogsStore } from './my-dogs.store';
-import { SingleDoggoComponent } from '@dog-rating/doggos/ui';
+import { SingleDogComponent } from '@dog-rating/dogs/ui';
 
-describe('MyDoggosComponent', () => {
+describe('MyDogsComponent', () => {
   let component: MyDogsComponent;
   let fixture: ComponentFixture<MyDogsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MyDogsComponent, MockComponent(SingleDoggoComponent)],
+      imports: [MyDogsComponent, MockComponent(SingleDogComponent)],
       providers: [
         MockProvider(MyDogsStore, {
-          myDoggos: signal([]),
+          myDogs: signal([]),
         }),
         provideRouter([]),
       ],
@@ -25,7 +24,7 @@ describe('MyDoggosComponent', () => {
         set: {
           providers: [
             MockProvider(MyDogsStore, {
-              myDoggos: signal([]),
+              myDogs: signal([]),
             }),
           ],
         },

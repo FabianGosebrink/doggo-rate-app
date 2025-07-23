@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DogFormComponent } from './dog-form.component';
 
-describe('DoggoFormComponent', () => {
+describe('DogFormComponent', () => {
   let component: DogFormComponent;
   let fixture: ComponentFixture<DogFormComponent>;
 

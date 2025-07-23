@@ -29,14 +29,14 @@ export const DogDetailsStore = signalStore(
       store,
       dogsStore = inject(DogsStore),
       notificationService = inject(NotificationService),
-      doggosApiService = inject(DogsApiService),
+      dogsApiService = inject(DogsApiService),
     ) => ({
       loadSingleDogIfNotLoaded: rxMethod<string>(
         pipe(
           tap((id) => patchState(store, { dogId: id })),
           filter((id) => !dogsStore.entityMap()[id]),
           exhaustMap((id) =>
-            doggosApiService.getSingleDog(id).pipe(
+            dogsApiService.getSingleDog(id).pipe(
               tapResponse({
                 next: (dog) => dogsStore.addDog(dog),
                 error: () => notificationService.showError(),

@@ -30,7 +30,7 @@ export const dogAPIEvents = eventGroup({
 });
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export function withDoggoRemove() {
+export function withDogRemove() {
   return signalStoreFeature(
     withReducer(
       on(dogAPIEvents.deleteDogSuccess, ({ payload }) =>
@@ -41,13 +41,13 @@ export function withDoggoRemove() {
       (
         _,
         events = inject(Events),
-        doggosApiService = inject(DogsApiService),
+        dogsApiService = inject(DogsApiService),
         router = inject(Router),
         notificationService = inject(NotificationService),
       ) => ({
         deleteDog: events.on(dogUserEvents.deleteDog).pipe(
           exhaustMap(({ payload }) =>
-            doggosApiService.deleteDog(payload).pipe(
+            dogsApiService.deleteDog(payload).pipe(
               mapResponse({
                 next: () => {
                   router.navigate(['/dogs/my']);

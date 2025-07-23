@@ -19,24 +19,24 @@ import { tapResponse } from '@ngrx/operators';
 import { Dog } from '../models/dog';
 import { DogsApiService } from '../services/dogs-api.service';
 import { NotificationService } from '@dog-rating/shared/util-notification';
-import { withDoggoRemove } from './dog-remove.feature';
+import { withDogRemove } from './dog-remove.feature';
 
 export const DogsStore = signalStore(
   { providedIn: 'root' },
   withEntities<Dog>(),
-  withDoggoRemove(),
+  withDogRemove(),
   withState({ loading: false }),
   withMethods(
     (
       store,
       notificationService = inject(NotificationService),
-      doggosApiService = inject(DogsApiService),
+      dogsApiService = inject(DogsApiService),
     ) => ({
       loadDogs: rxMethod<void>(
         pipe(
           tap(() => patchState(store, { loading: true })),
           exhaustMap(() =>
-            doggosApiService.getDogs().pipe(
+            dogsApiService.getDogs().pipe(
               tapResponse({
                 next: (dogs) => {
                   patchState(store, setAllEntities(dogs), { loading: false });

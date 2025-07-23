@@ -7,7 +7,7 @@ import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
 import { MainDogsStore } from './main-dog.store';
 
-describe('MainDoggoComponent', () => {
+describe('MainDogComponent', () => {
   let component: MainDogComponent;
   let fixture: ComponentFixture<MainDogComponent>;
 
@@ -25,12 +25,12 @@ describe('MainDoggoComponent', () => {
           providers: [
             MockProvider(MainDogsStore, {
               loading: signal(false),
-              selectedDoggo: signal(null),
-              doggos: signal(new Array<Dog>()),
-              loadDoggos: jest.fn(),
-              selectDoggo: jest.fn(),
-              startListeningToRealtimeDoggoEvents: jest.fn(),
-              stopListeningToRealtimeDoggoEvents: jest.fn(),
+              selectedDog: signal(null),
+              dogs: signal(new Array<Dog>()),
+              loadDogs: jest.fn(),
+              selectDog: jest.fn(),
+              startListeningToRealtimeDogEvents: jest.fn(),
+              stopListeningToRealtimeDogEvents: jest.fn(),
             }),
           ],
         },

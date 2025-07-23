@@ -1,6 +1,6 @@
 {
   "extends": [
-    "../../../.eslintrc.json"
+    "../../.eslintrc.json"
   ],
   "ignorePatterns": [
     "!**/*"
@@ -26,7 +26,8 @@
             "prefix": "app",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "@angular-eslint/prefer-standalone": "off"
       },
       "extends": [
         "plugin:@nx/angular",

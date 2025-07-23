@@ -12,7 +12,7 @@ import { AddDogStore } from './add-dog.store';
 export class AddDogComponent {
   store = inject(AddDogStore);
 
-  addDoggo({ name, comment, breed, formData }): void {
+  addDog({ name, comment, breed, formData }): void {
     this.store.addDogWithPicture({
       name,
       comment,

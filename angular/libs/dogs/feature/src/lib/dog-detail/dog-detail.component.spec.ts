@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DogDetailComponent } from './dog-detail.component';
 import { MockProvider } from 'ng-mocks';
 import { signal } from '@angular/core';
-import { DoggoDetailsStore } from './dog-detail.store';
+import { DogDetailsStore } from './dog-detail.store';
 
-describe('DoggoDetailComponent', () => {
+describe('DogDetailComponent', () => {
   let component: DogDetailComponent;
   let fixture: ComponentFixture<DogDetailComponent>;
 
@@ -12,18 +12,18 @@ describe('DoggoDetailComponent', () => {
     await TestBed.configureTestingModule({
       imports: [DogDetailComponent],
       providers: [
-        MockProvider(DoggoDetailsStore, {
-          loadSingleDoggoIfNotLoaded: jest.fn(),
-          detailDoggo: signal(null),
+        MockProvider(DogDetailsStore, {
+          loadSingleDogIfNotLoaded: jest.fn(),
+          detailDog: signal(null),
         }),
       ],
     })
       .overrideComponent(DogDetailComponent, {
         set: {
           providers: [
-            MockProvider(DoggoDetailsStore, {
-              loadSingleDoggoIfNotLoaded: jest.fn(),
-              detailDoggo: signal(null),
+            MockProvider(DogDetailsStore, {
+              loadSingleDogIfNotLoaded: jest.fn(),
+              detailDog: signal(null),
             }),
           ],
         },

@@ -5,7 +5,7 @@ import { Dog } from '@dog-rating/dogs/domain';
 import { DogListComponent, DogRateComponent } from '@dog-rating/dogs/ui';
 import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
-import { MainDogsStore } from './main-dog.store';
+import { MainDogStore } from './main-dog.store';
 
 describe('MainDogComponent', () => {
   let component: MainDogComponent;
@@ -23,7 +23,7 @@ describe('MainDogComponent', () => {
       .overrideComponent(MainDogComponent, {
         set: {
           providers: [
-            MockProvider(MainDogsStore, {
+            MockProvider(MainDogStore, {
               loading: signal(false),
               selectedDog: signal(null),
               dogs: signal(new Array<Dog>()),

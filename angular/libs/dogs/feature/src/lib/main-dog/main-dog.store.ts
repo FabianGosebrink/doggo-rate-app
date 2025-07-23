@@ -18,7 +18,7 @@ import {
   withDogRealtime,
 } from '@dog-rating/dogs/domain';
 
-export const MainDogsStore = signalStore(
+export const MainDogStore = signalStore(
   withState({ selectedDogId: null as string | null }),
   withDogRealtime(),
   withComputed((store, dogsStore = inject(DogsStore)) => ({

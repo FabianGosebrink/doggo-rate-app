@@ -1,17 +1,17 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { DogListComponent, DogRateComponent } from '@dog-rating/dogs/ui';
-import { MainDogsStore } from './main-dog.store';
+import { MainDogStore } from './main-dog.store';
 
 @Component({
   selector: 'app-main-dog',
   templateUrl: './main-dog.component.html',
   styleUrls: ['./main-dog.component.scss'],
-  providers: [MainDogsStore],
+  providers: [MainDogStore],
   imports: [DogListComponent, DogRateComponent],
 })
 export class MainDogComponent implements OnInit {
   dogId = input('');
-  store = inject(MainDogsStore);
+  store = inject(MainDogStore);
 
   ngOnInit(): void {
     this.store.selectDog(this.dogId);

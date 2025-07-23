@@ -2,8 +2,8 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.example.app',
-  appName: 'ratemydoggo',
-  webDir: 'dist/apps/doggo-rating-app',
+  appName: 'ratemydog',
+  webDir: 'dist/apps/dog-rating-app',
   bundledWebRuntime: false,
 };
 

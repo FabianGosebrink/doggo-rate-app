@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'doggos-domain',
+  displayName: 'dogs-domain',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../coverage/libs/doggos/domain',
+  coverageDirectory: '../../../coverage/libs/dogs/domain',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

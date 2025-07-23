@@ -1,1 +1,1 @@
-export * from './lib/doggos-routes';
+export * from './lib/dogs-routes';

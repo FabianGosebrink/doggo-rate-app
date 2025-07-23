@@ -5,8 +5,8 @@ import { MockComponent, MockProvider } from 'ng-mocks';
 import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { provideRouter } from '@angular/router';
-import { RealTimeStore } from '@doggo-rating/shared/util-real-time';
-import { AuthStore } from '@doggo-rating/shared/util-auth';
+import { RealTimeStore } from '@dog-rating/shared/util-real-time';
+import { AuthStore } from '@dog-rating/shared/util-auth';
 import { signal } from '@angular/core';
 
 describe('LayoutComponent', () => {

@@ -1,0 +1,55 @@
+@if (dog(); as dog) {
+  <div
+    class="list-group-item list-group-item-action d-flex gap-3 py-3"
+    aria-current="true"
+  >
+    <div
+      class="rounded-circle flex-shrink-0"
+      style="
+        background-image: url('{{ dog.imageUrl }}');
+        width: 80px;
+        height: 80px;
+        background-size: 90px;
+        background-position: center;
+      "
+    ></div>
+    <div class="d-flex gap-2 w-100 justify-content-between">
+      <div>
+        <h6 class="mb-0">{{ dog.name }} ({{ dog.breed }})</h6>
+        <p class="mb-0 opacity-75">
+          {{ dog.ratingSum / (dog.ratingCount || 1) | number: '1.2-2' }}/5
+        </p>
+        <p class="mb-0 opacity-75">
+          {{ dog.comment }}
+        </p>
+        <p class="mb-0 opacity-75">{{ dog.created | date: 'medium' }}</p>
+      </div>
+      <div>
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm me-1"
+          [routerLink]="['/dogs']"
+          [queryParams]="{ dogId: dog.id }"
+        >
+          <i class="fa-solid fa-star"></i> Rate
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-primary btn-sm me-1"
+          [routerLink]="['/dogs/details', dog.id]"
+        >
+          <i class="fa-solid fa-arrow-right"></i> Go to
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-outline-danger btn-sm"
+          (click)="deleteDog(dog)"
+        >
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
-import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
+import { PlatformInformationService } from '@dog-rating/shared/util-platform-information';
 import { Observable } from 'rxjs';
 
 @Injectable({

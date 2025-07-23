@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
+import { PlatformInformationService } from '@dog-rating/shared/util-platform-information';
 import { Observable } from 'rxjs';
 import { MobileCameraService } from './mobile-camera.service';
 import { DesktopCameraService } from './desktop-camera.service';

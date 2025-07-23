@@ -3,7 +3,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { Device } from '@capacitor/device';
 
 @Component({
-  selector: 'doggo-rating-about',
+  selector: 'dog-rating-about',
   imports: [CommonModule],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],

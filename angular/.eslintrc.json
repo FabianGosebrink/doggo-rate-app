@@ -13,9 +13,9 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "scope:doggo-rating-app",
+                "sourceTag": "scope:dog-rating-app",
                 "onlyDependOnLibsWithTags": [
-                  "scope:doggos",
+                  "scope:dogs",
                   "scope:about",
                   "scope:shared"
                 ]
@@ -25,8 +25,8 @@
                 "onlyDependOnLibsWithTags": ["scope:about", "scope:shared"]
               },
               {
-                "sourceTag": "scope:doggos",
-                "onlyDependOnLibsWithTags": ["scope:doggos", "scope:shared"]
+                "sourceTag": "scope:dogs",
+                "onlyDependOnLibsWithTags": ["scope:dogs", "scope:shared"]
               },
               {
                 "sourceTag": "scope:shared",

@@ -1,21 +1,28 @@
 {
-  "name": "doggos-ui",
+  "name": "dogs-ui",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/doggos/ui/src",
+  "sourceRoot": "libs/dogs/ui/src",
   "prefix": "app",
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
-        "jestConfig": "libs/doggos/ui/jest.config.ts"
+        "jestConfig": "libs/dogs/ui/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     }
   },
-  "tags": ["type:ui", "scope:doggos"]
+  "tags": [
+    "type:ui",
+    "scope:dogs"
+  ]
 }

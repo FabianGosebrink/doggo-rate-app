@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthStore } from '@doggo-rating/shared/util-auth';
-import { environment } from '@doggo-rating/shared/util-environments';
-import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
-import { RealTimeStore } from '@doggo-rating/shared/util-real-time';
+import { AuthStore } from '@dog-rating/shared/util-auth';
+import { environment } from '@dog-rating/shared/util-environments';
+import { PlatformInformationService } from '@dog-rating/shared/util-platform-information';
+import { RealTimeStore } from '@dog-rating/shared/util-real-time';
 import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 

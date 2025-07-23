@@ -4,7 +4,7 @@ import {
   HubConnectionBuilder,
   LogLevel,
 } from '@microsoft/signalr';
-import { environment } from '@doggo-rating/shared/util-environments';
+import { environment } from '@dog-rating/shared/util-environments';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {

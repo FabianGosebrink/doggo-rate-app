@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DesktopNotificationService } from './desktop-notification.service';
 import { MobileNotificationService } from './mobile-notification.service';
 import { WebNotificationService } from './web-notification.service';
-import { PlatformInformationService } from '@doggo-rating/shared/util-platform-information';
+import { PlatformInformationService } from '@dog-rating/shared/util-platform-information';
 
 export function notificationFactory(
   platformInformationService: PlatformInformationService,

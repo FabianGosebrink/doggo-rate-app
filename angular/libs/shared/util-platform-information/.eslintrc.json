@@ -17,7 +17,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "doggo-rating",
+            "prefix": "dog-rating",
             "style": "kebab-case"
           }
         ],

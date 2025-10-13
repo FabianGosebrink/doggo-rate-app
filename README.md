@@ -10,7 +10,6 @@ A demo application for uploading pictures of your dog and rate the Bois from zer
 - ✅ Signals
 - ✅ Real Time Communication w/ SignalR (WebSockets)
 - ✅ Control Flow Syntax
-- ✅ Angular 19
 - ✅ Standalone Components
 - ✅ Nx Workspace (latest) with architecture constraints
 - ✅ State Management with NgRx Signal Store :)

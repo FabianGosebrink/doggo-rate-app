@@ -4,9 +4,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  EventEmitter,
   input,
-  Output,
+  output,
 } from '@angular/core';
 import { timer } from 'rxjs';
 import { Dog } from '@dog-rating/dogs/domain';
@@ -26,8 +25,8 @@ import { Dog } from '@dog-rating/dogs/domain';
 })
 export class DogRateComponent {
   currentDog = input<Dog | null>(null);
-  @Output() rated = new EventEmitter<number>();
-  @Output() skipped = new EventEmitter();
+  rated = output<number>();
+  skipped = output();
   currentRating = 0;
   averageRating = computed(() => {
     this.currentRating = 0;

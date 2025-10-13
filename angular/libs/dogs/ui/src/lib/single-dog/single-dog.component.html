@@ -45,7 +45,7 @@
         <button
           type="button"
           class="btn btn-outline-danger btn-sm"
-          (click)="deleteDog(dog)"
+          (click)="dogDeleted.emit(dog)"
         >
           <i class="fa-solid fa-trash"></i> Delete
         </button>

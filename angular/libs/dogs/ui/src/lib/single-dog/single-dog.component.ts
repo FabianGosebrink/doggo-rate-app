@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
-import { Component, EventEmitter, input, Output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Dog } from '@dog-rating/dogs/domain';
 
@@ -12,9 +12,5 @@ import { Dog } from '@dog-rating/dogs/domain';
 export class SingleDogComponent {
   dog = input<Dog | null>();
 
-  @Output() dogDeleted = new EventEmitter<Dog>();
-
-  deleteDog(dog: Dog): void {
-    this.dogDeleted.emit(dog);
-  }
+  dogDeleted = output<Dog>();
 }

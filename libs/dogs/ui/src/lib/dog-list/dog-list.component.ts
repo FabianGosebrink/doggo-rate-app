@@ -16,8 +16,4 @@ export class DogListComponent {
   dogs = input([]);
 
   dogSelected = output<string>();
-
-  selectDog(dog: Dog): void {
-    this.dogSelected.emit(dog.id);
-  }
 }

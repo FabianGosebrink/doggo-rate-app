@@ -44,10 +44,6 @@ export class DogRateComponent {
     });
   }
 
-  skipDog(): void {
-    this.skipped.emit();
-  }
-
   private getAverageRating(currentDog: Dog | null): number {
     if (!currentDog) {
       return 0;

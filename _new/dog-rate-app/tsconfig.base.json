@@ -10,7 +10,7 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -19,9 +19,6 @@
       "@dog-rating/dogs/domain": ["libs/dogs/domain/src/index.ts"],
       "@dog-rating/dogs/feature": ["libs/dogs/feature/src/index.ts"],
       "@dog-rating/dogs/ui": ["libs/dogs/ui/src/index.ts"],
-      "@dog-rating/shared/about/feature": [
-        "libs/shared/about/feature/src/index.ts"
-      ],
       "@dog-rating/shared/ui-common": ["libs/shared/ui-common/src/index.ts"],
       "@dog-rating/shared/util-auth": ["libs/shared/util-auth/src/index.ts"],
       "@dog-rating/shared/util-camera": [

@@ -53,4 +53,4 @@ const createWindow = () => {
   }
 };
 
-app.isReady() ? createWindow() : app.on('ready', createWindow);
+app.whenReady().then(createWindow);

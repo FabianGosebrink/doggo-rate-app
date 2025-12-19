@@ -17,7 +17,7 @@ export class AuthService {
 
   login(): void {
     if (this.platformInformationService.isElectron) {
-      const urlHandler = (authUrl: any): void => {
+      const urlHandler = (authUrl: string): void => {
         this.modal = window.open(authUrl, '_blank', 'nodeIntegration=no');
       };
 

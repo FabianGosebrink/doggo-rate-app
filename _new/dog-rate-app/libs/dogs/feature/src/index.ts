@@ -1,1 +1,1 @@
-export * from './lib/dogs-feature/dogs-feature';
+export * from './lib/dogs-routes';

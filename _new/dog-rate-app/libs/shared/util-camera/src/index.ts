@@ -1,1 +1,1 @@
-export * from './lib/shared-util-camera/shared-util-camera';
+export * from './lib/camera.service';

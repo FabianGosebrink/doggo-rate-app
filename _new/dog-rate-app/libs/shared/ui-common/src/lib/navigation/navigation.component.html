@@ -1,0 +1,53 @@
+<header
+  class="d-flex flex-wrap d-flex justify-content-between py-3 mb-4 border-bottom"
+>
+  <div>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+      <li>
+        <a
+          [routerLinkActiveOptions]="isActiveMatchOptions"
+          [routerLink]="'/dogs'"
+          queryParamsHandling="preserve"
+          class="nav-link px-2 link-dark"
+          routerLinkActive="active"
+        >Home</a
+        >
+      </li>
+
+      @if (loggedIn()) {
+        <li>
+          <a
+            [routerLink]="'/dogs/my'"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="isActiveMatchOptions"
+            class="nav-link px-2 link-dark"
+          >My Dogs</a
+          >
+        </li>
+      }
+
+      <li>
+        <a
+          [routerLinkActiveOptions]="isActiveMatchOptions"
+          [routerLink]="'about'"
+          class="nav-link px-2 link-dark"
+          routerLinkActive="active"
+        >About</a
+        >
+      </li>
+    </ul>
+  </div>
+  <div>
+    @if (loggedIn()) {
+      <button
+        (click)="logout.emit()" type="button" class="btn btn-outline-primary">
+        <i class="fa-solid fa-right-from-bracket"></i> Logout
+      </button>
+    } @else {
+      <button
+        (click)="login.emit()" type="button" class="btn btn-outline-primary">
+        <i class="fa-solid fa-right-to-bracket"></i> Login
+      </button>
+    }
+  </div>
+</header>

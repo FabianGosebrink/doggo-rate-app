@@ -1,1 +1,1 @@
-export * from './lib/about-feature/about-feature';
+export * from './lib/about-routes';

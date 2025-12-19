@@ -1,1 +1,1 @@
-export * from './lib/shared-util-notification/shared-util-notification';
+export * from './lib/notification.service';

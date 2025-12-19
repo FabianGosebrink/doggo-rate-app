@@ -1,1 +1,1 @@
-export * from './lib/shared-util-platform-information/shared-util-platform-information';
+export * from './lib/platform-information.service';

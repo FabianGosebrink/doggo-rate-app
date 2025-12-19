@@ -1,1 +1,1 @@
-export * from './lib/shared-util-real-time/shared-util-real-time';
+export * from './lib/store/real-time.store';

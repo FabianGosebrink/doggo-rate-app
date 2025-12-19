@@ -1,1 +1,1 @@
-export * from './lib/shared-util-common/shared-util-common';
+export * from './lib/http/http.service';

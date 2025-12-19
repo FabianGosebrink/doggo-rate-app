@@ -20,7 +20,10 @@
             "input": "apps/dog-rate-app/public"
           }
         ],
-        "styles": ["apps/dog-rate-app/src/styles.scss"]
+        "styles": [
+          "apps/dog-rate-app/src/styles.scss",
+          "node_modules/ngx-toastr/toastr.css"
+        ]
       },
       "configurations": {
         "production": {
@@ -34,6 +37,12 @@
               "type": "anyComponentStyle",
               "maximumWarning": "4kb",
               "maximumError": "8kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/util-environments/src/lib/environment.ts",
+              "with": "libs/shared/util-environments/src/lib/environment.prod.ts"
             }
           ],
           "outputHashing": "all"

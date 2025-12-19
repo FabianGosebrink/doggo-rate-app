@@ -6,7 +6,6 @@ A demo application for uploading pictures of your dog and rate the Bois from zer
 
 ## Features
 
-- ✅ Cross Platform with Capacitor
 - ✅ Signals
 - ✅ Real Time Communication w/ SignalR (WebSockets)
 - ✅ Control Flow Syntax
@@ -15,6 +14,8 @@ A demo application for uploading pictures of your dog and rate the Bois from zer
 - ✅ State Management with NgRx Signal Store :)
 - ✅ Functional APIs
 - ✅ Authentication with Auth0
+- ✅ Cross Platform with Capacitor
+- ✅ Zoneless
 
 ## Authors
 

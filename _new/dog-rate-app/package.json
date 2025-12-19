@@ -19,7 +19,8 @@
     "summarize:coverage": "node tools/create-overall-coverage.js",
     "show:projects": "nx show projects",
     "prettier": "prettier --write .",
-    "run:be": "nx run dotnet-dog-api",
+    "run:be": "nx run dotnet-dog-api --launchProfile=http",
+    "run:be:https": "nx run dotnet-dog-api --launchProfile=https",
     "start:all": "nx run-many --targets=serve,watch --projects=dog-rate-app,dotnet-dog-api --parallel=true"
   },
   "private": true,
@@ -32,6 +33,7 @@
     "@angular/platform-browser": "~21.0.0",
     "@angular/router": "~21.0.0",
     "@capacitor/android": "^8.0.0",
+    "@capacitor/app": "^8.0.0",
     "@capacitor/camera": "^8.0.0",
     "@capacitor/device": "^8.0.0",
     "@capacitor/ios": "^8.0.0",

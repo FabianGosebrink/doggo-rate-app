@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { DogListComponent, DogRateComponent } from '@dog-rating/dogs/ui';
 import { MainDogStore } from './main-dog.store';
 
@@ -9,11 +9,11 @@ import { MainDogStore } from './main-dog.store';
   providers: [MainDogStore],
   imports: [DogListComponent, DogRateComponent],
 })
-export class MainDogComponent implements OnInit {
+export class MainDogComponent {
   dogId = input('');
   store = inject(MainDogStore);
 
-  ngOnInit(): void {
+  constructor() {
     this.store.selectDog(this.dogId);
   }
 

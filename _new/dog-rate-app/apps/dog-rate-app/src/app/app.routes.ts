@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { CallbackComponent } from '@dog-rating/shared/util-auth';
 import { LayoutComponent } from '@dog-rating/shared/ui-common';
 
 export const APP_ROUTES: Routes = [
@@ -16,10 +15,6 @@ export const APP_ROUTES: Routes = [
         path: 'about',
         loadChildren: () =>
           import('@dog-rating/about/feature').then((m) => m.ABOUT_ROUTES),
-      },
-      {
-        path: 'callback',
-        component: CallbackComponent,
       },
       {
         path: '**',

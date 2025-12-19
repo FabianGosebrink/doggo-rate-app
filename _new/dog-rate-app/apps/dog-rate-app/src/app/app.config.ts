@@ -12,8 +12,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 
 const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
-const webCallbackUrl = `${window.location.origin}/callback`;
-const desktopCallbackUrl = `http://localhost/callback`;
+const webCallbackUrl = `${window.location.origin}`;
+const desktopCallbackUrl = `http://localhost/`;
 
 const authFactory = (
   platformInformationService: PlatformInformationService,
@@ -27,6 +27,8 @@ const authFactory = (
     redirectUrl = mobileCallbackUrl;
     postLogoutRedirectUri = mobileCallbackUrl;
   }
+
+  console.log('redirectUrl', redirectUrl);
 
   const config = {
     authority: 'https://dev-2fwvrhka.us.auth0.com',
@@ -47,7 +49,10 @@ const authFactory = (
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideBrowserGlobalErrorListeners(), provideRouter(APP_ROUTES), provideAnimationsAsync(),
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(APP_ROUTES),
+    provideAnimationsAsync(),
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor()])),
     provideAuth({

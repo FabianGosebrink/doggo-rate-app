@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DogsFeature } from './dogs-feature';
 
-describe('DogsFeature', () => {
-  let component: DogsFeature;
-  let fixture: ComponentFixture<DogsFeature>;
+import { FooterComponent } from './footer.component';
+
+describe('FooterComponent', () => {
+  let component: FooterComponent;
+  let fixture: ComponentFixture<FooterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DogsFeature],
+      imports: [FooterComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DogsFeature);
+    fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
-    await fixture.whenStable();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

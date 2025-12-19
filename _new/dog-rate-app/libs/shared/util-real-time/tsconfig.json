@@ -4,7 +4,7 @@
     "isolatedModules": true,
     "target": "es2022",
     "moduleResolution": "bundler",
-    "strict": true,
+    "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,

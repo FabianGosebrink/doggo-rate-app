@@ -4,7 +4,6 @@ import {
   input,
   output,
 } from '@angular/core';
-import { Dog } from '@dog-rating/dogs/domain';
 
 @Component({
   selector: 'lib-dog-list',

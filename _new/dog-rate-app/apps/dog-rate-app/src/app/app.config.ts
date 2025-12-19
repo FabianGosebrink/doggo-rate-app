@@ -13,7 +13,7 @@ import { provideToastr } from 'ngx-toastr';
 
 const mobileCallbackUrl = `com.example.app://dev-2fwvrhka.us.auth0.com/capacitor/com.example.app/callback`;
 const webCallbackUrl = `${window.location.origin}`;
-const desktopCallbackUrl = `http://localhost/`;
+const desktopCallbackUrl = `http://localhost/callback`;
 
 const authFactory = (
   platformInformationService: PlatformInformationService,

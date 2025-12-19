@@ -1,0 +1,7 @@
+{
+  "name": "rate-my-dog",
+  "version": "0.0.1",
+  "author": "Fabian Gosebrink",
+  "description": "Rate My Dog App",
+  "main": "main.js"
+}

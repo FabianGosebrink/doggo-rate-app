@@ -14,8 +14,8 @@
     "build": "nx build dog-rate-app",
     "build-temp": "nx build dog-rate-app --skip-nx-cache",
     "build-dev": "nx build --configuration development",
-    "build-desktop": "node build/build-desktop.js",
-    "build-mobile": "node build/build-mobile.js",
+    "build-desktop": "node tools/build-desktop.js",
+    "build-mobile": "node tools/build-mobile.js",
     "summarize:coverage": "node tools/create-overall-coverage.js",
     "show:projects": "nx show projects",
     "prettier": "prettier --write .",
@@ -44,7 +44,8 @@
     "angular-auth-oidc-client": "^21.0.1",
     "base64-arraybuffer": "^1.0.2",
     "ngx-toastr": "^19.1.0",
-    "rxjs": "~7.8.0"
+    "rxjs": "~7.8.0",
+    "shelljs": "^0.10.0"
   },
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "~2.1.2",

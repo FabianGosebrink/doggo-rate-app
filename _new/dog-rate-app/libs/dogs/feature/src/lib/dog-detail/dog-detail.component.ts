@@ -6,7 +6,7 @@ import { DogDetailsStore } from './dog-detail.store';
 import { Dispatcher } from '@ngrx/signals/events';
 
 @Component({
-  selector: 'app-dog-detail',
+  selector: 'lib-dog-detail',
   imports: [RouterLink, NgOptimizedImage, DatePipe, DecimalPipe],
   providers: [DogDetailsStore],
   templateUrl: './dog-detail.component.html',

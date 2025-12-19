@@ -11,7 +11,7 @@ import { timer } from 'rxjs';
 import { Dog } from '@dog-rating/dogs/domain';
 
 @Component({
-  selector: 'app-dog-rate',
+  selector: 'lib-dog-rate',
   templateUrl: './dog-rate.component.html',
   styleUrls: ['./dog-rate.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

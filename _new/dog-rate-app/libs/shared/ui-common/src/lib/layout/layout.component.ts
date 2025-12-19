@@ -8,7 +8,7 @@ import { FooterComponent } from '../footer/footer.component';
 import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'lib-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   imports: [FooterComponent, NavigationComponent, RouterModule],

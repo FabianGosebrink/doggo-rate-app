@@ -3,7 +3,7 @@ import { DogFormComponent } from '@dog-rating/dogs/ui';
 import { AddDogStore } from './add-dog.store';
 
 @Component({
-  selector: 'app-add-dog',
+  selector: 'lib-add-dog',
   templateUrl: './add-dog.component.html',
   styleUrls: ['./add-dog.component.scss'],
   imports: [DogFormComponent],

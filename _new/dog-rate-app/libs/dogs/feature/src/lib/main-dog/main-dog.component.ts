@@ -3,7 +3,7 @@ import { DogListComponent, DogRateComponent } from '@dog-rating/dogs/ui';
 import { MainDogStore } from './main-dog.store';
 
 @Component({
-  selector: 'app-main-dog',
+  selector: 'lib-main-dog',
   templateUrl: './main-dog.component.html',
   styleUrls: ['./main-dog.component.scss'],
   providers: [MainDogStore],

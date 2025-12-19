@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CameraService } from '@dog-rating/shared/util-camera';
 
 @Component({
-  selector: 'app-dog-form',
+  selector: 'lib-dog-form',
   imports: [ReactiveFormsModule],
   templateUrl: './dog-form.component.html',
   styleUrl: './dog-form.component.scss',

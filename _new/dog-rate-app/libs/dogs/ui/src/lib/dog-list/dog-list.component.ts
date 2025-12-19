@@ -7,7 +7,7 @@ import {
 import { Dog } from '@dog-rating/dogs/domain';
 
 @Component({
-  selector: 'app-dog-list',
+  selector: 'lib-dog-list',
   templateUrl: './dog-list.component.html',
   styleUrls: ['./dog-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

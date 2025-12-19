@@ -1,9 +1,9 @@
 <div class="container">
-  <app-navigation
+  <lib-navigation
     (logout)="logout()"
     (login)="login()"
     [loggedIn]="authStore.isLoggedIn()"
-  ></app-navigation>
+  ></lib-navigation>
 
   <router-outlet />
 

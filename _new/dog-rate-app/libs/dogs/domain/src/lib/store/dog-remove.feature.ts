@@ -10,7 +10,7 @@ import {
   eventGroup,
   Events,
   on,
-  withEffects,
+  withEventHandlers,
   withReducer,
 } from '@ngrx/signals/events';
 import { removeEntity } from '@ngrx/signals/entities';
@@ -29,7 +29,6 @@ export const dogAPIEvents = eventGroup({
   },
 });
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export function withDogRemove() {
   return signalStoreFeature(
     withReducer(
@@ -37,7 +36,7 @@ export function withDogRemove() {
         removeEntity(payload.id),
       ),
     ),
-    withEffects(
+    withEventHandlers(
       (
         _,
         events = inject(Events),

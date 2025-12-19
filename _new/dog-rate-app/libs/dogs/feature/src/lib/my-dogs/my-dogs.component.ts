@@ -6,7 +6,7 @@ import { MyDogsStore } from './my-dogs.store';
 import { Dispatcher } from '@ngrx/signals/events';
 
 @Component({
-  selector: 'app-my-dogs',
+  selector: 'lib-my-dogs',
   templateUrl: './my-dogs.component.html',
   styleUrls: ['./my-dogs.component.scss'],
   imports: [SingleDogComponent, RouterLink],

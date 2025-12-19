@@ -1,0 +1,85 @@
+{
+  "name": "dog-rate-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "apps/dog-rate-app/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/dog-rate-app",
+        "browser": "apps/dog-rate-app/src/main.ts",
+        "tsConfig": "apps/dog-rate-app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/dog-rate-app/public"
+          }
+        ],
+        "styles": [
+          "apps/dog-rate-app/src/styles.scss",
+          "node_modules/ngx-toastr/toastr.css"
+        ]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/util-environments/src/lib/environment.ts",
+              "with": "libs/shared/util-environments/src/lib/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": true,
+      "executor": "@angular/build:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "dog-rate-app:build:production"
+        },
+        "development": {
+          "buildTarget": "dog-rate-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "dog-rate-app:build",
+        "port": 4200,
+        "staticFilePath": "dist/apps/dog-rate-app/browser",
+        "spa": true
+      }
+    }
+  }
+}

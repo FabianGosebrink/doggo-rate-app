@@ -1,0 +1,14 @@
+@if (store.loading()) {
+  <div>Loading...</div>
+} @else {
+  <lib-dog-rate
+    [currentDog]="store.selectedDog()"
+    (rated)="rateDog($event)"
+    (skipped)="skipDog()"
+  ></lib-dog-rate>
+
+  <lib-dog-list
+    [dogs]="store.dogs()"
+    (dogSelected)="selectDog($event)"
+  ></lib-dog-list>
+}

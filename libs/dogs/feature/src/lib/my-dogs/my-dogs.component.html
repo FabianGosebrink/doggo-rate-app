@@ -1,0 +1,18 @@
+<div class="d-flex justify-content-between">
+  <h2>Your Dogs</h2>
+  <button
+    [routerLink]="['/dogs/my/add']"
+    class="btn btn-primary mt-6"
+    type="button"
+  >
+    <i class="fa-solid fa-plus"></i> Add Dog
+  </button>
+</div>
+
+<div class="list-group w-auto mt-5">
+  @for (dog of store.myDogs(); track dog.id) {
+    <lib-single-dog [dog]="dog" (dogDeleted)="deleteDog($event)" />
+  } @empty {
+    <div>No 🐕 added yet. Add one!</div>
+  }
+</div>

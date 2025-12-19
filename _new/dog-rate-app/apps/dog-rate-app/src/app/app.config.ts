@@ -51,7 +51,6 @@ const authFactory = (
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(APP_ROUTES),
     provideAnimationsAsync(),
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor()])),

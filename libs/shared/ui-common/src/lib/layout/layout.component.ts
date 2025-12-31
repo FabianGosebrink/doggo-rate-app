@@ -20,12 +20,4 @@ export class LayoutComponent {
   platform = inject(PlatformInformationService).platform;
 
   backendUrl = environment.server;
-
-  login(): void {
-    this.authStore.login();
-  }
-
-  logout(): void {
-    this.authStore.logout();
-  }
 }

@@ -13,7 +13,7 @@ describe('DogDetailComponent', () => {
       imports: [DogDetailComponent],
       providers: [
         MockProvider(DogDetailsStore, {
-          loadSingleDogIfNotLoaded: jest.fn(),
+          loadSingleDogIfNotLoaded: vi.fn(),
           detailDog: signal(null),
         }),
       ],
@@ -22,7 +22,7 @@ describe('DogDetailComponent', () => {
         set: {
           providers: [
             MockProvider(DogDetailsStore, {
-              loadSingleDogIfNotLoaded: jest.fn(),
+              loadSingleDogIfNotLoaded: vi.fn(),
               detailDog: signal(null),
             }),
           ],

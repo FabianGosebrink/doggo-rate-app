@@ -8,6 +8,7 @@ import { provideRouter } from '@angular/router';
 import { RealTimeStore } from '@dog-rating/shared/util-real-time';
 import { AuthStore } from '@dog-rating/shared/util-auth';
 import { signal } from '@angular/core';
+import { PlatformInformationService } from '@dog-rating/shared/util-platform-information';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -29,6 +30,9 @@ describe('LayoutComponent', () => {
           isLoggedIn: signal(false),
           userEmail: signal(''),
         }),
+        MockProvider(PlatformInformationService, {
+          platform: "Web",
+        })
       ],
     }).compileComponents();
 

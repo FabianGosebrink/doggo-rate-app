@@ -3,18 +3,21 @@ import { DogDetailComponent } from './dog-detail.component';
 import { MockProvider } from 'ng-mocks';
 import { signal } from '@angular/core';
 import { DogDetailsStore } from './dog-detail.store';
+import { Dispatcher } from '@ngrx/signals/events';
+import { dogUserEvents } from '@dog-rating/dogs/domain';
 
 describe('DogDetailComponent', () => {
   let component: DogDetailComponent;
   let fixture: ComponentFixture<DogDetailComponent>;
+  let store: InstanceType<typeof DogDetailsStore>;
+  let dispatcher: Dispatcher;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DogDetailComponent],
       providers: [
-        MockProvider(DogDetailsStore, {
-          loadSingleDogIfNotLoaded: vi.fn(),
-          detailDog: signal(null),
+        MockProvider(Dispatcher, {
+          dispatch: vi.fn(),
         }),
       ],
     })
@@ -32,10 +35,32 @@ describe('DogDetailComponent', () => {
 
     fixture = TestBed.createComponent(DogDetailComponent);
     component = fixture.componentInstance;
+    store = fixture.debugElement.injector.get(DogDetailsStore);
+    dispatcher = TestBed.inject(Dispatcher);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load dog details on init', () => {
+    fixture.componentRef.setInput('dogId', '123');
+    fixture.detectChanges();
+
+    expect(store.loadSingleDogIfNotLoaded).toHaveBeenCalledWith(
+      component.dogId,
+    );
+  });
+
+  it('should dispatch deleteDog event when deleteDog is called', () => {
+    const mockDog = { id: '123', name: 'Buddy' } as any;
+    fixture.detectChanges();
+
+    component.deleteDog(mockDog);
+
+    expect(dispatcher.dispatch).toHaveBeenCalledWith(
+      dogUserEvents.deleteDog(mockDog),
+    );
   });
 });

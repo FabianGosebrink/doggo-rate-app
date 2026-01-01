@@ -1,101 +1,69 @@
-import { DOCUMENT, inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { from, Observable, throwError, timer } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { CameraService } from './camera.service';
-import { from, Observable, throwError } from 'rxjs';
-import { getFilename } from './utils';
+import { getFilename, urlToFile } from './utils';
 
 @Injectable({ providedIn: 'root' })
 export class DesktopCameraService implements CameraService {
-  readonly #window = inject<Document>(DOCUMENT)?.defaultView;
+  readonly #window = inject(DOCUMENT).defaultView;
 
   getPhoto(): Observable<{
     formData: FormData;
     fileName: string;
     base64: string;
   }> {
-    if (!this.#window) {
-      return throwError(() => 'No window available');
+    if (!this.#window?.navigator?.mediaDevices?.getUserMedia) {
+      return throwError(() => 'Camera API not available');
     }
 
-    if (!this.#window.navigator?.mediaDevices?.getUserMedia) {
-      return throwError(() => 'No media devices available');
-    }
-
-    const promise = this.#window.navigator.mediaDevices
-      .getUserMedia({
+    return from(
+      this.#window.navigator.mediaDevices.getUserMedia({
         video: true,
         audio: false,
-      })
-      .then((stream) => {
-        return new Promise<{
-          formData: FormData;
-          fileName: string;
-          base64: string;
-        }>((resolve, reject) => {
-          const hasMedia = stream.getVideoTracks().length > 0;
+      }),
+    ).pipe(
+      switchMap((stream) => {
+        const tracks = stream.getVideoTracks();
+        if (tracks.length === 0) {
+          return throwError(() => 'No video tracks found');
+        }
 
-          if (!hasMedia) {
-            return reject(() => 'No media devices available');
-          }
-
-          const videoElement = this.#window?.document.createElement('video');
-          const canvas = this.#window?.document.createElement('canvas');
-
-          if (!canvas || !videoElement) {
-            return reject(() => 'No canvas or video element available');
-          }
-          const streamSettings = stream.getVideoTracks()[0].getSettings();
-          videoElement.srcObject = stream;
-          videoElement.play();
-
-          canvas.width = streamSettings.width || 1280;
-          canvas.height = streamSettings.height || 720;
-
-          setTimeout(() => {
-            if (!canvas || !videoElement) {
-              return reject(() => 'No canvas or video element available');
-            }
-
-            const ctx = canvas.getContext('2d');
-
-            if (!ctx) {
-              return throwError(() => 'No canvas context available');
-            }
-
-            ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-            const image = canvas.toDataURL('image/png');
-            console.log(image);
-
-            if (stream.getVideoTracks) {
-              stream.getVideoTracks().forEach((track) => {
-                track.stop();
-              });
-            }
-            const fileName = getFilename('desktop-web', '.png');
-            const file = this.urlToFile(image, fileName);
-            const formData = new FormData();
-
-            formData.append(fileName, file);
-
-            resolve({ formData, fileName, base64: image });
-          }, 300);
-        });
-      });
-
-    return from(promise);
+        // Wait a bit for the camera to auto-focus/adjust exposure
+        return timer(300).pipe(
+          map(() => this.captureFrame(stream)),
+          tap(() => tracks.forEach((track) => track.stop())),
+        );
+      }),
+    );
   }
 
-  private urlToFile(url: string, filename: string): File {
-    const arr = url.split(',');
-    const bstr = atob(arr[arr.length - 1]);
+  private captureFrame(stream: MediaStream) {
+    const video = this.#window!.document.createElement('video');
+    const canvas = this.#window!.document.createElement('canvas');
+    const settings = stream.getVideoTracks()[0].getSettings();
 
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
+    video.srcObject = stream;
+    video.play();
 
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
+    canvas.width = settings.width || 1280;
+    canvas.height = settings.height || 720;
 
-    return new File([u8arr], filename, { type: 'image/png' });
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Could not get canvas context');
+
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const base64 = canvas.toDataURL('image/png');
+    const fileName = getFilename('desktop-web', '.png');
+    const file = urlToFile(base64, fileName);
+
+    const formData = new FormData();
+    formData.append(fileName, file);
+
+    // Cleanup video element reference
+    video.srcObject = null;
+
+    return { formData, fileName, base64 };
   }
 }

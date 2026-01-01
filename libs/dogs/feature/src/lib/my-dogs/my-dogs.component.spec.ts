@@ -37,16 +37,15 @@ describe('MyDogsComponent', () => {
     fixture = TestBed.createComponent(MyDogsComponent);
     component = fixture.componentInstance;
     dispatcher = TestBed.inject(Dispatcher);
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should dispatch deleteDog event when deleteDog is called', () => {
+  it('should dispatch deleteDog event when deleteDog is called', async () => {
     const mockDog = { id: '123', name: 'Buddy' } as Dog;
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     component.deleteDog(mockDog);
 

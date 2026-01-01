@@ -2,28 +2,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddDogComponent } from './add-dog.component';
 import { MockProvider } from 'ng-mocks';
 import { signal } from '@angular/core';
-import { provideRouter } from '@angular/router';
 import { AddDogStore } from './add-dog.store';
 
 describe('AddDogComponent', () => {
   let component: AddDogComponent;
   let fixture: ComponentFixture<AddDogComponent>;
+  let store: AddDogStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AddDogComponent],
-      providers: [
-        MockProvider(AddDogStore, {
-          loading: signal(false),
-        }),
-        provideRouter([]),
-      ],
     })
       .overrideComponent(AddDogComponent, {
         set: {
           providers: [
             MockProvider(AddDogStore, {
               loading: signal(false),
+              addDogWithPicture: vi.fn(),
             }),
           ],
         },
@@ -32,10 +27,25 @@ describe('AddDogComponent', () => {
 
     fixture = TestBed.createComponent(AddDogComponent);
     component = fixture.componentInstance;
+    store = fixture.debugElement.injector.get(AddDogStore);
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should call addDogWithPicture on the store when addDog is called', () => {
+    const spy = vi.spyOn(store, 'addDogWithPicture');
+    const dogData = {
+      name: 'Buddy',
+      comment: 'Good boy',
+      breed: 'Golden Retriever',
+      formData: new FormData(),
+    };
+
+    component.addDog(dogData);
+
+    expect(spy).toHaveBeenCalledWith(dogData);
   });
 });

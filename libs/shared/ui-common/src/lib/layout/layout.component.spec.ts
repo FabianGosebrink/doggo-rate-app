@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { LayoutComponent } from './layout.component';
 import { MockComponent, MockProvider } from 'ng-mocks';
 import { FooterComponent } from '../footer/footer.component';

@@ -3,12 +3,12 @@
 } @else {
   <lib-dog-rate
     [currentDog]="store.selectedDog()"
-    (rated)="rateDog($event)"
-    (skipped)="skipDog()"
+    (rated)="store.rateDog($event)"
+    (skipped)="store.selectNextDog()"
   ></lib-dog-rate>
 
   <lib-dog-list
     [dogs]="store.dogs()"
-    (dogSelected)="selectDog($event)"
+    (dogSelected)="store.selectDog($event)"
   ></lib-dog-list>
 }

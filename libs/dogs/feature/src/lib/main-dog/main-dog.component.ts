@@ -16,16 +16,4 @@ export class MainDogComponent {
   constructor() {
     this.store.selectDog(this.dogId);
   }
-
-  rateDog(rating: number): void {
-    this.store.rateDog(rating);
-  }
-
-  skipDog(): void {
-    this.store.selectNextDog();
-  }
-
-  selectDog(id: string): void {
-    this.store.selectDog(id);
-  }
 }

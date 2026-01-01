@@ -5,22 +5,22 @@ import { getFilename } from './utils';
 
 @Injectable({ providedIn: 'root' })
 export class DesktopCameraService implements CameraService {
-  private readonly window = inject<Document>(DOCUMENT)?.defaultView;
+  readonly #window = inject<Document>(DOCUMENT)?.defaultView;
 
   getPhoto(): Observable<{
     formData: FormData;
     fileName: string;
     base64: string;
   }> {
-    if (!this.window) {
+    if (!this.#window) {
       return throwError(() => 'No window available');
     }
 
-    if (!this.window.navigator?.mediaDevices?.getUserMedia) {
+    if (!this.#window.navigator?.mediaDevices?.getUserMedia) {
       return throwError(() => 'No media devices available');
     }
 
-    const promise = this.window.navigator.mediaDevices
+    const promise = this.#window.navigator.mediaDevices
       .getUserMedia({
         video: true,
         audio: false,
@@ -37,8 +37,8 @@ export class DesktopCameraService implements CameraService {
             return reject(() => 'No media devices available');
           }
 
-          const videoElement = this.window?.document.createElement('video');
-          const canvas = this.window?.document.createElement('canvas');
+          const videoElement = this.#window?.document.createElement('video');
+          const canvas = this.#window?.document.createElement('canvas');
 
           if (!canvas || !videoElement) {
             return reject(() => 'No canvas or video element available');

@@ -9,8 +9,8 @@ import { CameraService } from '@dog-rating/shared/util-camera';
   styleUrl: './dog-form.component.scss',
 })
 export class DogFormComponent {
-  private readonly fb = inject(FormBuilder);
-  private readonly cameraService = inject(CameraService);
+  readonly #fb = inject(FormBuilder);
+  readonly #cameraService = inject(CameraService);
 
   loading = input<boolean>(false);
 
@@ -23,7 +23,7 @@ export class DogFormComponent {
 
   private formData: FormData;
 
-  formGroup = this.fb.group({
+  formGroup = this.#fb.group({
     name: ['', Validators.required],
     breed: ['', Validators.required],
     comment: ['', Validators.required],
@@ -42,7 +42,7 @@ export class DogFormComponent {
   }
 
   takePhoto(): void {
-    this.cameraService
+    this.#cameraService
       .getPhoto()
       .subscribe(({ formData, fileName, base64 }) => {
         this.formData = formData;

@@ -10,29 +10,25 @@ import { App as CapApp, URLOpenListenerEvent } from '@capacitor/app';
   styleUrl: './app.scss',
 })
 export class App implements OnInit {
-  private readonly authStore = inject(AuthStore);
-  private zone = inject(NgZone);
+  readonly #authStore = inject(AuthStore);
+  readonly #zone = inject(NgZone);
 
   ngOnInit(): void {
     this.checkAuth(null);
 
     if ((window as any).electronAPI) {
-      (window as any).electronAPI.authEvent((event, value) => {
+      (window as any).electronAPI.authEvent((_event, value) => {
         console.log('Received Auth Event', value);
-        this.zone.run(() => {
-          this.checkAuth(value);
-        });
+        this.#zone.run(() => this.checkAuth(value));
       });
     }
 
     CapApp.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-      this.zone.run(() => {
-        this.checkAuth(event.url);
-      });
+      this.#zone.run(() => this.checkAuth(event.url));
     });
   }
 
   private checkAuth(url: string): void {
-    this.authStore.checkAuth(url);
+    this.#authStore.checkAuth(url);
   }
 }

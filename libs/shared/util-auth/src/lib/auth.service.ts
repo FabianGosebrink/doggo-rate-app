@@ -7,35 +7,33 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly oidcSecurityService = inject(OidcSecurityService);
+  readonly #oidcSecurityService = inject(OidcSecurityService);
 
-  private readonly platformInformationService = inject(
-    PlatformInformationService,
-  );
+  readonly #platformInformationService = inject(PlatformInformationService);
 
-  private modal: Window | null = null;
+  #modal: Window | null = null;
 
   login(): void {
-    if (this.platformInformationService.isElectron) {
+    if (this.#platformInformationService.isElectron) {
       const urlHandler = (authUrl: string): void => {
-        this.modal = window.open(authUrl, '_blank', 'nodeIntegration=no');
+        this.#modal = window.open(authUrl, '_blank', 'nodeIntegration=no');
       };
 
-      return this.oidcSecurityService.authorize(undefined, { urlHandler });
+      return this.#oidcSecurityService.authorize(undefined, { urlHandler });
     } else {
-      this.oidcSecurityService.authorize();
+      this.#oidcSecurityService.authorize();
     }
   }
 
   checkAuth(url: string | null): Observable<LoginResponse> {
-    if (this.modal) {
-      this.modal.close();
+    if (this.#modal) {
+      this.#modal.close();
     }
 
-    return this.oidcSecurityService.checkAuth(url ?? undefined);
+    return this.#oidcSecurityService.checkAuth(url ?? undefined);
   }
 
   logout(): Observable<unknown> {
-    return this.oidcSecurityService.logoff();
+    return this.#oidcSecurityService.logoff();
   }
 }

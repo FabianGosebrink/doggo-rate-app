@@ -13,12 +13,7 @@ describe('MyDogsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MyDogsComponent, MockComponent(SingleDogComponent)],
-      providers: [
-        MockProvider(MyDogsStore, {
-          myDogs: signal([]),
-        }),
-        provideRouter([]),
-      ],
+      providers: [provideRouter([])],
     })
       .overrideComponent(MyDogsComponent, {
         set: {

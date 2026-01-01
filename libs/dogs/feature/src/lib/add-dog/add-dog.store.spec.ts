@@ -62,7 +62,6 @@ describe('AddDogStore', () => {
 
     vi.spyOn(uploadService, 'upload').mockReturnValue(of(uploadedFile));
     vi.spyOn(dogsApiService, 'addDog').mockReturnValue(of(newDog));
-    const spy = vi.spyOn(notificationService, 'showSuccess');
     const routerSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
 
     store.addDogWithPicture(dogData);
@@ -75,7 +74,9 @@ describe('AddDogStore', () => {
       'path/to/img.png',
     );
     expect(dogsStore.addDog).toHaveBeenCalledWith(newDog);
-    expect(spy).toHaveBeenCalledWith('Dog Buddy added');
+    expect(notificationService.showSuccess).toHaveBeenCalledWith(
+      'Dog Buddy added',
+    );
     expect(routerSpy).toHaveBeenCalledWith(['/dogs/my']);
     expect(store.loading()).toBe(false);
   });

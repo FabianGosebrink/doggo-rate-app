@@ -43,19 +43,20 @@ if (!fs.existsSync(outputDir)) {
 
 try {
   // Merge and generate report
-  execSync(
-    `npx nyc merge "${tempDir}" "${outputDir}/coverage-final.json"`,
-    { stdio: 'inherit' }
-  );
+  execSync(`npx nyc merge "${tempDir}" "${outputDir}/coverage-final.json"`, {
+    stdio: 'inherit',
+  });
 
   execSync(
     `npx nyc report --temp-dir="${outputDir}" --reporter=html --reporter=text --report-dir="${outputDir}"`,
-    { stdio: 'inherit' }
+    { stdio: 'inherit' },
   );
 
-  console.log(`\n✅ Combined report generated at: coverage/combined/index.html`);
+  console.log(
+    `\n✅  Combined report generated at: coverage/combined/index.html`,
+  );
 } catch (error) {
-  console.error('❌ Failed to generate combined coverage:', error.message);
+  console.error('❌  Failed to generate combined coverage:', error.message);
   process.exit(1);
 } finally {
   // Cleanup temp directory

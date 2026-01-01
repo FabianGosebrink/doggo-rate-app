@@ -1,5 +1,4 @@
-import { animate, style, transition, trigger } from '@angular/animations';
-import { DecimalPipe, NgClass } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -15,13 +14,7 @@ import { Dog } from '@dog-rating/dogs/domain';
   templateUrl: './dog-rate.component.html',
   styleUrls: ['./dog-rate.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    trigger('fade', [
-      transition('* => fadeIn', [animate(1000, style({ opacity: 1 }))]),
-      transition('* => fadeOut', [animate(1200, style({ opacity: 0 }))]),
-    ]),
-  ],
-  imports: [DecimalPipe, NgClass],
+  imports: [DecimalPipe],
 })
 export class DogRateComponent {
   currentDog = input<Dog | null>(null);

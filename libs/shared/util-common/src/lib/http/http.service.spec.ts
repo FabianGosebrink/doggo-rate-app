@@ -12,10 +12,6 @@ describe('HttpService', () => {
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    console.log(
-      '@@@@@@@@@@@@@@@@@@@@@@@@@@@ Is Zone present?',
-      !!(window as any).Zone,
-    );
     TestBed.configureTestingModule({
       providers: [provideHttpClient(), provideHttpClientTesting()],
     });

@@ -44,15 +44,15 @@ export function withDogRealtime() {
 
       return {
         onInit() {
-          realTimeStore
-            .connection()
-            .on('dogadded', (dog) => store.addDogFromRealTime(dog));
-          realTimeStore
-            .connection()
-            .on('dogdeleted', (id) => store.deleteDogFromRealTime(id));
-          realTimeStore
-            .connection()
-            .on('dograted', (dog) => store.rateDogFromRealTime(dog));
+          realTimeStore.connection.on('dogadded', (dog) =>
+            store.addDogFromRealTime(dog),
+          );
+          realTimeStore.connection.on('dogdeleted', (id) =>
+            store.deleteDogFromRealTime(id),
+          );
+          realTimeStore.connection.on('dograted', (dog) =>
+            store.rateDogFromRealTime(dog),
+          );
 
           realTimeStore.startConnection();
         },

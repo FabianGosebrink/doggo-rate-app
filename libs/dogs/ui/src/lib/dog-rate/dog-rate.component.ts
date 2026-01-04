@@ -30,11 +30,7 @@ export class DogRateComponent {
   );
 
   skipped = output();
-  averageRating = computed(() => {
-    this.currentRating.set(0);
-
-    return this.getAverageRating(this.currentDog());
-  });
+  averageRating = computed(() => this.getAverageRating(this.currentDog()));
   status = signal<'fadeIn' | 'fadeOut'>('fadeIn');
 
   rateDog(rating: number): void {

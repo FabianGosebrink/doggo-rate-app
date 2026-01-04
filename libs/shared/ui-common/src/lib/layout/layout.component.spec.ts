@@ -30,14 +30,13 @@ describe('LayoutComponent', () => {
           userEmail: signal(''),
         }),
         MockProvider(PlatformInformationService, {
-          platform: "Web",
-        })
+          platform: 'Web',
+        }),
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(LayoutComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

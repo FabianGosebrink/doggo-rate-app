@@ -39,7 +39,6 @@ describe('MainDogComponent', () => {
 
     fixture = TestBed.createComponent(MainDogComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create ', () => {

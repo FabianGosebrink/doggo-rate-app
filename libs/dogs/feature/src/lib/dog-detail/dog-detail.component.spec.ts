@@ -37,25 +37,24 @@ describe('DogDetailComponent', () => {
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(DogDetailsStore);
     dispatcher = TestBed.inject(Dispatcher);
-    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load dog details on init', () => {
+  it('should load dog details on init', async () => {
     fixture.componentRef.setInput('dogId', '123');
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     expect(store.loadSingleDogIfNotLoaded).toHaveBeenCalledWith(
       component.dogId,
     );
   });
 
-  it('should dispatch deleteDog event when deleteDog is called', () => {
+  it('should dispatch deleteDog event when deleteDog is called', async () => {
     const mockDog = { id: '123', name: 'Buddy' } as any;
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     component.deleteDog(mockDog);
 

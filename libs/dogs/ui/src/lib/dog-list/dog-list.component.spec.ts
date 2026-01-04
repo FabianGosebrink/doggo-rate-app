@@ -12,7 +12,6 @@ describe('DogListComponent', () => {
 
     fixture = TestBed.createComponent(DogListComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

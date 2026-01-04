@@ -1,12 +1,12 @@
 import {
   patchState,
   signalStore,
+  withComputed,
   withHooks,
   withMethods,
-  withProps,
   withState,
 } from '@ngrx/signals';
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import { SignalRService } from '../services/signalr.service';
 import { HubConnectionState } from '@microsoft/signalr';
 
@@ -23,8 +23,8 @@ export const initialState: RealTimeState = {
 export const RealTimeStore = signalStore(
   { providedIn: 'root' },
   withState<RealTimeState>(initialState),
-  withProps((_, signalRService = inject(SignalRService)) => ({
-    connection: signalRService.connection,
+  withComputed((_, signalRService = inject(SignalRService)) => ({
+    connection: computed(() => signalRService.connection),
   })),
   withMethods((store, signalRService = inject(SignalRService)) => ({
     _onReconnected() {

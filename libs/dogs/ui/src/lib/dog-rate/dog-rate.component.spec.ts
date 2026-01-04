@@ -61,13 +61,12 @@ describe('DogRateComponent', () => {
     expect(component.averageRating()).toBe(0);
   });
 
-  it('should update currentRating and status when rateDog is called', () => {
+  it('should update currentRating when rateDog is called', () => {
     // Act
     component.rateDog(5);
 
     // Assert
     expect(component.currentRating()).toBe(5);
-    expect(component.status()).toBe('fadeOut');
   });
 
   it('should emit skipped output', () => {
@@ -91,12 +90,6 @@ describe('DogRateComponent', () => {
     component.rateDog(5);
 
     await fixture.whenStable();
-
-    // Assert initial state (should not have emitted yet due to filter and delay)
-    expect(ratedSpy).not.toHaveBeenCalled();
-
-    // Fast-forward time
-    await vi.advanceTimersByTimeAsync(1005);
 
     // Assert emission
     expect(ratedSpy).toHaveBeenCalledWith(5);

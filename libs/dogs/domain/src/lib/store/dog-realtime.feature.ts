@@ -26,15 +26,15 @@ export function withDogRealtime() {
         ),
 
         rateDogFromRealTime: rxMethod<Dog>(
-          tap((rateddog: Dog) => {
-            const { name } = rateddog;
+          tap((ratedDog: Dog) => {
+            const { name } = ratedDog;
             const userId = authStore.userSub();
 
-            if (isMyDog(rateddog, userId)) {
+            if (isMyDog(ratedDog, userId)) {
               notificationService.showSuccess(`${name} was just rated!!!`);
             }
 
-            dogStore.updateDog(rateddog);
+            dogStore.updateDog(ratedDog);
           }),
         ),
       }),
@@ -44,15 +44,15 @@ export function withDogRealtime() {
 
       return {
         onInit() {
-          realTimeStore.connection.on('dogadded', (dog) =>
-            store.addDogFromRealTime(dog),
-          );
-          realTimeStore.connection.on('dogdeleted', (id) =>
-            store.deleteDogFromRealTime(id),
-          );
-          realTimeStore.connection.on('dograted', (dog) =>
-            store.rateDogFromRealTime(dog),
-          );
+          realTimeStore.connection().on('dogadded', (dog) => {
+            store.addDogFromRealTime(dog);
+          });
+          realTimeStore.connection().on('dogdeleted', (id) => {
+            store.deleteDogFromRealTime(id);
+          });
+          realTimeStore.connection().on('dograted', (dog) => {
+            store.rateDogFromRealTime(dog);
+          });
 
           realTimeStore.startConnection();
         },

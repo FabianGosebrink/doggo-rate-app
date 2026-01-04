@@ -1,5 +1,5 @@
 @if (currentDog(); as dog) {
-  <div [class]="status" class="px-4 my-5 text-center border-bottom">
+  <div [class]="status()" class="px-4 my-5 text-center border-bottom">
     <h1 class="display-4 fw-bold">{{ dog?.name }}</h1>
     <div class="col-lg-6 mx-auto">
       <p class="lead mb-4">{{ dog.breed }}. {{ dog.comment }}</p>
@@ -18,10 +18,10 @@
       </div>
     </div>
 
-    @if (!currentRating && averageRating() > 0) {
+    @if (!currentRating() && averageRating() > 0) {
       <h3>{{ averageRating() | number: '1.2-2' }} / 5</h3>
     } @else {
-      <h3>{{ currentRating }} / 5</h3>
+      <h3>{{ currentRating() }} / 5</h3>
     }
 
     <div class="d-grid gap-2 d-sm-flex justify-content-center mb-5">

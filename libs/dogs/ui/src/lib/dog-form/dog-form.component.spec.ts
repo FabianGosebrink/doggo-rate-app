@@ -20,7 +20,6 @@ describe('DogFormComponent', () => {
     fixture = TestBed.createComponent(DogFormComponent);
     component = fixture.componentInstance;
     cameraService = TestBed.inject(CameraService);
-    fixture.detectChanges();
   });
 
   describe('setFormData', () => {

@@ -1,10 +1,10 @@
-import { CommonModule } from '@angular/common';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
 import { Device } from '@capacitor/device';
 
 @Component({
   selector: 'lib-dog-rating-about',
-  imports: [CommonModule],
+  imports: [KeyValuePipe, JsonPipe],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })

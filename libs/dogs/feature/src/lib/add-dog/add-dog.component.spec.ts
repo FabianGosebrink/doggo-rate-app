@@ -7,7 +7,7 @@ import { AddDogStore } from './add-dog.store';
 describe('AddDogComponent', () => {
   let component: AddDogComponent;
   let fixture: ComponentFixture<AddDogComponent>;
-  let store: AddDogStore;
+  let store: InstanceType<typeof AddDogStore>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,7 +28,6 @@ describe('AddDogComponent', () => {
     fixture = TestBed.createComponent(AddDogComponent);
     component = fixture.componentInstance;
     store = fixture.debugElement.injector.get(AddDogStore);
-    fixture.detectChanges();
   });
 
   it('should create', () => {

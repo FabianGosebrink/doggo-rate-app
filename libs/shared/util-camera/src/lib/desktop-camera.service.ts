@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { from, Observable, throwError, timer } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { from, Observable, of, timer } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { CameraService } from './camera.service';
 import { getFilename, urlToFile } from './utils';
 
@@ -13,9 +13,9 @@ export class DesktopCameraService implements CameraService {
     formData: FormData;
     fileName: string;
     base64: string;
-  }> {
+  } | null> {
     if (!this.#window?.navigator?.mediaDevices?.getUserMedia) {
-      return throwError(() => 'Camera API not available');
+      return of(null);
     }
 
     return from(
@@ -27,15 +27,15 @@ export class DesktopCameraService implements CameraService {
       switchMap((stream) => {
         const tracks = stream.getVideoTracks();
         if (tracks.length === 0) {
-          return throwError(() => 'No video tracks found');
+          return of(null);
         }
 
-        // Wait a bit for the camera to auto-focus/adjust exposure
         return timer(300).pipe(
           map(() => this.captureFrame(stream)),
           tap(() => tracks.forEach((track) => track.stop())),
         );
       }),
+      catchError(() => of(null)),
     );
   }
 
@@ -51,7 +51,9 @@ export class DesktopCameraService implements CameraService {
     canvas.height = settings.height || 720;
 
     const ctx = canvas.getContext('2d');
-    if (!ctx) throw new Error('Could not get canvas context');
+    if (!ctx) {
+      return null;
+    }
 
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     const base64 = canvas.toDataURL('image/png');

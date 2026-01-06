@@ -12,7 +12,6 @@ describe('SingleDogComponent', () => {
 
     fixture = TestBed.createComponent(SingleDogComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {

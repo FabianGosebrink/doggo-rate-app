@@ -7,7 +7,7 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { delay, filter } from 'rxjs';
+import { filter } from 'rxjs';
 import { Dog } from '@dog-rating/dogs/domain';
 import { outputFromObservable, toObservable } from '@angular/core/rxjs-interop';
 
@@ -23,23 +23,15 @@ export class DogRateComponent {
   currentRating = signal(0);
 
   rated = outputFromObservable(
-    toObservable(this.currentRating).pipe(
-      filter((rating) => rating > 0),
-      delay(1000),
-    ),
+    toObservable(this.currentRating).pipe(filter((rating) => rating > 0)),
   );
 
   skipped = output();
-  averageRating = computed(() => {
-    this.currentRating.set(0);
-
-    return this.getAverageRating(this.currentDog());
-  });
-  status = signal<'fadeIn' | 'fadeOut'>('fadeIn');
+  averageRating = computed(() => this.getAverageRating(this.currentDog()));
 
   rateDog(rating: number): void {
+    this.currentRating.set(0);
     this.currentRating.set(rating);
-    this.status.set('fadeOut');
   }
 
   private getAverageRating(currentDog: Dog | null): number {

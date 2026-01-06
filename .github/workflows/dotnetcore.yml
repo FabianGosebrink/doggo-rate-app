@@ -32,6 +32,12 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Build with dotnet in Nx
+        run: npm run build:be
+
+      - name: dotnet publish
+        run: npm run publish:be
+
       - name: Show Current Directory
         run: |
           echo "The current working directory is:"
@@ -39,17 +45,11 @@ jobs:
           echo "Listing files in current directory:"
           ls -R
 
-      - name: Build with dotnet in Nx
-        run: npm run build:be
-
-      - name: dotnet publish
-        run: npm run publish:be
-
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ./dist/apps/dotnet-dog-api
+          path: dist/apps/dotnet-dog-api
 
   deploy:
     runs-on: windows-latest

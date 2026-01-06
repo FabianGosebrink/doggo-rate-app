@@ -20,7 +20,8 @@
     "show:projects": "nx show projects",
     "prettier": "prettier --write .",
     "run:be": "nx run dotnet-dog-api --launchProfile=http",
-    "build:be": "nx build dotnet-dog-api",
+    "build:be": "nx build dotnet-dog-api -- --configuration Release --output ./dist/apps/dotnet-dog-api",
+    "publish:be": "nx publish dotnet-dog-api -- --output ./dist/apps/dotnet-dog-api",
     "run:be:https": "nx run dotnet-dog-api --launchProfile=https",
     "start:all": "nx run-many --targets=serve,watch --projects=dog-rate-app,dotnet-dog-api --parallel=true"
   },

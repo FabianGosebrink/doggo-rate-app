@@ -61,8 +61,13 @@ describe('DesktopCameraService', () => {
     service = TestBed.inject(DesktopCameraService);
   });
 
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
   afterEach(() => {
     vi.restoreAllMocks();
+    vi.useRealTimers();
   });
 
   it('should be created', () => {
@@ -100,7 +105,10 @@ describe('DesktopCameraService', () => {
     // Arrange
     const brokenCanvas = { getContext: vi.fn().mockReturnValue(null) };
     mockWindow.document.createElement = vi.fn().mockImplementation((tag) => {
-      if (tag === 'canvas') return brokenCanvas;
+      if (tag === 'canvas') {
+        return brokenCanvas;
+      }
+
       return { play: vi.fn(), srcObject: null };
     });
 
@@ -108,6 +116,6 @@ describe('DesktopCameraService', () => {
     const photoPromise = firstValueFrom(service.getPhoto());
     await vi.advanceTimersByTimeAsync(300);
 
-    await expect(photoPromise).rejects.toThrow('Could not get canvas context');
+    expect(photoPromise).rejects.toThrow('Could not get canvas context');
   });
 });

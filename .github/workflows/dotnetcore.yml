@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm ci --legacy-peer-deps
 
+      - name: Restore .NET dependencies
+        run: dotnet restore apps/dotnet-dog-api/dotnet-dog-api.csproj
+
       - name: Build with dotnet in Nx
         run: npm run build:be
 

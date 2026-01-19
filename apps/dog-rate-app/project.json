@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/dog-rate-app/src",
-  "tags": [],
+  "tags": ["scope:dog-rating-app", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular/build:application",

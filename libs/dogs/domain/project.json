@@ -4,7 +4,7 @@
   "sourceRoot": "libs/dogs/domain/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:dogs", "type:domain"],
   "targets": {
     "test": {
       "executor": "@nx/vitest:test",

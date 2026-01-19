@@ -4,7 +4,7 @@
   "sourceRoot": "libs/shared/ui-common/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:shared", "type:ui"],
   "targets": {
     "test": {
       "executor": "@nx/vitest:test",

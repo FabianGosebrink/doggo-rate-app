@@ -17,8 +17,44 @@ export default [
           allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$'],
           depConstraints: [
             {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
+              sourceTag: 'scope:dog-rating-app',
+              onlyDependOnLibsWithTags: [
+                'scope:dogs',
+                'scope:about',
+                'scope:shared',
+              ],
+            },
+            {
+              sourceTag: 'scope:about',
+              onlyDependOnLibsWithTags: ['scope:about', 'scope:shared'],
+            },
+            {
+              sourceTag: 'scope:dogs',
+              onlyDependOnLibsWithTags: ['scope:dogs', 'scope:shared'],
+            },
+            {
+              sourceTag: 'scope:shared',
+              onlyDependOnLibsWithTags: ['scope:shared'],
+            },
+            {
+              sourceTag: 'type:app',
+              onlyDependOnLibsWithTags: [
+                'type:feature',
+                'type:util',
+                'type:ui',
+              ],
+            },
+            {
+              sourceTag: 'type:feature',
+              onlyDependOnLibsWithTags: ['type:domain', 'type:ui', 'type:util'],
+            },
+            {
+              sourceTag: 'type:ui',
+              onlyDependOnLibsWithTags: ['type:util', 'type:domain'],
+            },
+            {
+              sourceTag: 'type:domain',
+              onlyDependOnLibsWithTags: ['type:util'],
             },
           ],
         },

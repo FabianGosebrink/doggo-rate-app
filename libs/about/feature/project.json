@@ -4,7 +4,7 @@
   "sourceRoot": "libs/about/feature/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:about", "type:feature"],
   "targets": {
     "test": {
       "executor": "@nx/vitest:test",

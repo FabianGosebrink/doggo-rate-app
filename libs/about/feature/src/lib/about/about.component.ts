@@ -1,5 +1,7 @@
 import { JsonPipe, KeyValuePipe } from '@angular/common';
-import { Component, OnInit, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Component } from '@angular/core';
+import { from } from 'rxjs';
 import { Device } from '@capacitor/device';
 
 @Component({
@@ -8,14 +10,8 @@ import { Device } from '@capacitor/device';
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
 })
-export class AboutComponent implements OnInit {
-  deviceInfo = signal<unknown>(null);
+export class AboutComponent {
+  deviceInfo = toSignal(from(Device.getInfo()), { initialValue: null });
 
   userAgent = window.navigator.userAgent;
-
-  async ngOnInit(): Promise<void> {
-    const deviceInfo = await Device.getInfo();
-
-    this.deviceInfo.set(deviceInfo);
-  }
 }

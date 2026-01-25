@@ -68,6 +68,46 @@ describe('PlatformInformationService', () => {
     });
   });
 
+  describe('isWeb', () => {
+    it('should return true when both isMobile and isElectron are false', () => {
+      // Arrange
+      vi.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('chrome');
+      vi.spyOn(Capacitor, 'isNativePlatform').mockReturnValue(false);
+
+      // Act
+      const result = service.isWeb;
+
+      // Assert
+      expect(result).toBe(true);
+    });
+
+    it('should return false when isMobile is true', () => {
+      // Arrange
+      vi.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue('chrome');
+      vi.spyOn(Capacitor, 'isNativePlatform').mockReturnValue(true);
+
+      // Act
+      const result = service.isWeb;
+
+      // Assert
+      expect(result).toBe(false);
+    });
+
+    it('should return false when isElectron is true', () => {
+      // Arrange
+      vi.spyOn(window.navigator, 'userAgent', 'get').mockReturnValue(
+        ' electron/',
+      );
+      vi.spyOn(Capacitor, 'isNativePlatform').mockReturnValue(false);
+
+      // Act
+      const result = service.isWeb;
+
+      // Assert
+      expect(result).toBe(false);
+    });
+  });
+
   describe('platform', () => {
     it('should return "Desktop" when isElectron is true', () => {
       // Arrange

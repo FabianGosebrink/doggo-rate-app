@@ -1,4 +1,4 @@
-# Doggo Rate App
+# Dog Rate App
 
 A demo application for uploading pictures of your dog and rate the Bois from zero to five paws 🐾
 

@@ -1,25 +1,25 @@
-<footer class="py-3 my-4 border-top">
-  <div class="d-flex flex-wrap justify-content-between">
-    <div class="d-flex flex-column bd-highlight mb-3">
-      <span class="mb-3 mb-md-0 text-muted"
+<footer class="py-3 my-4 border-t">
+  <div class="flex flex-wrap justify-between">
+    <div class="flex flex-col mb-3">
+      <span class="mb-3 md:mb-0 text-gray-500"
         >Backend:
         <a [href]="backendUrl() + '/swagger/'" target="_blank"
           >{{ backendUrl() }}
         </a></span
       >
-      <span class="mb-3 mb-md-0 text-muted"
+      <span class="mb-3 md:mb-0 text-gray-500"
         >RealTime: {{ realTimeConnection() }}
       </span>
-      <span class="mb-3 mb-md-0 text-muted"
+      <span class="mb-3 md:mb-0 text-gray-500"
         >&copy; {{ currentYear }} made with ♥️ by Fabian Gosebrink
       </span>
     </div>
-    <div class="d-flex flex-column bd-highlight mb-3">
-      <span class="mb-3 mb-md-0 text-muted"
+    <div class="flex flex-col mb-3">
+      <span class="mb-3 md:mb-0 text-gray-500"
         >Running on platform {{ platform() }}
       </span>
       @if (userEmail()) {
-        <span class="mb-3 mb-md-0 text-muted"
+        <span class="mb-3 md:mb-0 text-gray-500"
           >LoggedIn as {{ userEmail() }}
         </span>
       }

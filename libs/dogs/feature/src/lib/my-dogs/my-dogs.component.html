@@ -1,15 +1,15 @@
-<div class="d-flex justify-content-between">
+<div class="flex justify-between">
   <h2>Your Dogs</h2>
   <button
     [routerLink]="['/dogs/my/add']"
-    class="btn btn-primary mt-6"
+    class="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 mt-6"
     type="button"
   >
     <i class="fa-solid fa-plus"></i> Add Dog
   </button>
 </div>
 
-<div class="list-group w-auto mt-5">
+<div class="divide-y rounded border w-auto mt-5">
   @for (dog of store.myDogs(); track dog.id) {
     <lib-single-dog [dog]="dog" (dogDeleted)="deleteDog($event)" />
   } @empty {

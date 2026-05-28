@@ -1,18 +1,23 @@
-<div class="flex justify-between">
-  <h2>Your Dogs</h2>
+<header class="mb-8 flex items-end justify-between gap-4">
+  <div>
+    <p class="text-xs uppercase tracking-wider text-muted mb-2">Your pack</p>
+    <h1 class="text-3xl font-semibold text-ink">My Dogs</h1>
+  </div>
   <button
     [routerLink]="['/dogs/my/add']"
-    class="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 mt-6"
     type="button"
+    class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover transition-colors"
   >
     <i class="fa-solid fa-plus"></i> Add Dog
   </button>
-</div>
+</header>
 
-<div class="divide-y rounded border w-auto mt-5">
+<div class="space-y-3">
   @for (dog of store.myDogs(); track dog.id) {
     <lib-single-dog [dog]="dog" (dogDeleted)="deleteDog($event)" />
   } @empty {
-    <div>No 🐕 added yet. Add one!</div>
+    <div class="rounded-2xl ring-1 ring-line bg-white p-10 text-center text-muted">
+      No 🐕 added yet. Add one!
+    </div>
   }
 </div>

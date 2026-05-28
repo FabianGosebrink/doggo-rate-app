@@ -1,8 +1,8 @@
 @if (store.detailDog(); as dog) {
-  <div class="d-flex justify-content-between mb-3">
+  <div class="flex justify-between mb-3">
     <button
       type="button"
-      class="btn btn-primary"
+      class="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
       [routerLink]="['/dogs/my']"
       [queryParams]="{ dogId: dog.id }"
     >
@@ -10,26 +10,26 @@
     </button>
   </div>
 
-  <div class="row">
-    <div class="col-lg-4">
-      <div class="card mb-4">
-        <div class="card-body text-center">
+  <div class="flex flex-wrap -mx-2">
+    <div class="w-full lg:w-1/3 px-2">
+      <div class="rounded-lg border bg-white shadow-sm mb-4">
+        <div class="p-4 text-center">
           <img
             [ngSrc]="dog.imageUrl"
             width="100"
             height="100"
             alt="avatar"
-            class="img-fluid"
+            class="max-w-full h-auto"
             style="width: 350px"
           />
           <h5 class="my-3">{{ dog.name }}</h5>
-          <p class="text-muted mb-3">
+          <p class="text-gray-500 mb-3">
             {{ dog.ratingSum / (dog.ratingCount || 1) | number: '1.2-2' }}/5
           </p>
-          <div class="d-flex justify-content-center mb-2">
+          <div class="flex justify-center mb-2">
             <button
               type="button"
-              class="btn btn-primary"
+              class="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
               [routerLink]="['/dogs']"
               [queryParams]="{ dogId: dog.id }"
             >
@@ -37,7 +37,7 @@
             </button>
             <button
               type="button"
-              class="btn btn-outline-danger ms-1"
+              class="inline-flex items-center gap-1.5 rounded-md border border-red-600 px-4 py-2 text-red-600 hover:bg-red-50 ml-1"
               (click)="deleteDog(dog)"
             >
               <i class="fa-solid fa-trash"></i> Delete
@@ -46,53 +46,53 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-8">
-      <div class="card mb-4">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-3">
+    <div class="w-full lg:w-2/3 px-2">
+      <div class="rounded-lg border bg-white shadow-sm mb-4">
+        <div class="p-4">
+          <div class="flex flex-wrap -mx-2">
+            <div class="w-1/4 px-2">
               <p class="mb-0">Breed</p>
             </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">{{ dog.breed }}</p>
+            <div class="w-3/4 px-2">
+              <p class="text-gray-500 mb-0">{{ dog.breed }}</p>
             </div>
           </div>
           <hr />
-          <div class="row">
-            <div class="col-sm-3">
+          <div class="flex flex-wrap -mx-2">
+            <div class="w-1/4 px-2">
               <p class="mb-0">Comment</p>
             </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">{{ dog.comment }}</p>
+            <div class="w-3/4 px-2">
+              <p class="text-gray-500 mb-0">{{ dog.comment }}</p>
             </div>
           </div>
           <hr />
-          <div class="row">
-            <div class="col-sm-3">
+          <div class="flex flex-wrap -mx-2">
+            <div class="w-1/4 px-2">
               <p class="mb-0">Added</p>
             </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">
+            <div class="w-3/4 px-2">
+              <p class="text-gray-500 mb-0">
                 {{ dog.created | date: 'medium' }}
               </p>
             </div>
           </div>
           <hr />
-          <div class="row">
-            <div class="col-sm-3">
+          <div class="flex flex-wrap -mx-2">
+            <div class="w-1/4 px-2">
               <p class="mb-0">Rates Received</p>
             </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">{{ dog.ratingCount }}</p>
+            <div class="w-3/4 px-2">
+              <p class="text-gray-500 mb-0">{{ dog.ratingCount }}</p>
             </div>
           </div>
           <hr />
-          <div class="row">
-            <div class="col-sm-3">
+          <div class="flex flex-wrap -mx-2">
+            <div class="w-1/4 px-2">
               <p class="mb-0">Image Url</p>
             </div>
-            <div class="col-sm-9">
-              <p class="text-muted mb-0">
+            <div class="w-3/4 px-2">
+              <p class="text-gray-500 mb-0">
                 <a [href]="dog.imageUrl">{{ dog.imageUrl }}</a>
               </p>
             </div>

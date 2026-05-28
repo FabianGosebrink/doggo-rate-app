@@ -1,52 +1,47 @@
-<header class="flex flex-wrap justify-between py-3 mb-4 border-b">
-  <div>
-    <ul class="flex w-full md:w-auto mb-2 justify-center md:mb-0">
-      <li>
-        <a
-          [routerLinkActiveOptions]="isActiveMatchOptions"
-          [routerLink]="'/dogs'"
-          queryParamsHandling="preserve"
-          class="px-2 py-1 text-gray-900 hover:underline [&.active]:underline [&.active]:decoration-gray-500 [&.active]:underline-offset-4"
-          routerLinkActive="active"
-        >Home</a>
-      </li>
+<header class="flex items-center justify-between py-5 border-b border-line">
+  <a [routerLink]="'/dogs'" class="text-lg font-semibold text-ink tracking-tight">Doggo</a>
 
-      @if (loggedIn()) {
-        <li>
-          <a
-            [routerLink]="'/dogs/my'"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="isActiveMatchOptions"
-            class="px-2 py-1 text-gray-900 hover:underline [&.active]:underline [&.active]:decoration-gray-500 [&.active]:underline-offset-4"
-          >My Dogs</a>
-        </li>
-      }
+  <nav class="hidden md:flex items-center gap-1">
+    <a
+      [routerLinkActiveOptions]="isActiveMatchOptions"
+      [routerLink]="'/dogs'"
+      queryParamsHandling="preserve"
+      routerLinkActive="active"
+      class="px-3 py-1.5 text-sm font-medium text-muted rounded-full hover:text-ink hover:bg-surface-2 [&.active]:text-brand-ink [&.active]:bg-brand-soft transition-colors"
+    >Home</a>
 
-      <li>
-        <a
-          [routerLinkActiveOptions]="isActiveMatchOptions"
-          [routerLink]="'about'"
-          class="px-2 py-1 text-gray-900 hover:underline [&.active]:underline [&.active]:decoration-gray-500 [&.active]:underline-offset-4"
-          routerLinkActive="active"
-        >About</a>
-      </li>
-    </ul>
-  </div>
-  <div>
     @if (loggedIn()) {
-      <button
-        (click)="logout.emit()"
-        type="button"
-        class="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-4 py-2 text-blue-600 hover:bg-blue-50">
-        <i class="fa-solid fa-right-from-bracket"></i> Logout
-      </button>
-    } @else {
-      <button
-        (click)="login.emit()"
-        type="button"
-        class="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-4 py-2 text-blue-600 hover:bg-blue-50">
-        <i class="fa-solid fa-right-to-bracket"></i> Login
-      </button>
+      <a
+        [routerLink]="'/dogs/my'"
+        [routerLinkActiveOptions]="isActiveMatchOptions"
+        routerLinkActive="active"
+        class="px-3 py-1.5 text-sm font-medium text-muted rounded-full hover:text-ink hover:bg-surface-2 [&.active]:text-brand-ink [&.active]:bg-brand-soft transition-colors"
+      >My Dogs</a>
     }
-  </div>
+
+    <a
+      [routerLinkActiveOptions]="isActiveMatchOptions"
+      [routerLink]="'about'"
+      routerLinkActive="active"
+      class="px-3 py-1.5 text-sm font-medium text-muted rounded-full hover:text-ink hover:bg-surface-2 [&.active]:text-brand-ink [&.active]:bg-brand-soft transition-colors"
+    >About</a>
+  </nav>
+
+  @if (loggedIn()) {
+    <button
+      (click)="logout.emit()"
+      type="button"
+      class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-2.5 text-sm font-medium text-ink hover:bg-surface-2 transition-colors"
+    >
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+  } @else {
+    <button
+      (click)="login.emit()"
+      type="button"
+      class="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-hover transition-colors"
+    >
+      <i class="fa-solid fa-right-to-bracket"></i> Login
+    </button>
+  }
 </header>

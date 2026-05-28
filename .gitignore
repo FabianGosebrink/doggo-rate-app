@@ -49,3 +49,4 @@ Thumbs.db
 /artifacts/
 
 vitest.config.*.timestamp*
+/.temp

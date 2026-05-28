@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { DogFormComponent } from '@dog-rating/dogs/ui';
+import { AddedDogPayload, DogFormComponent } from '@dog-rating/dogs/ui';
 import { AddDogStore } from './add-dog.store';
 
 @Component({
@@ -12,7 +12,7 @@ import { AddDogStore } from './add-dog.store';
 export class AddDogComponent {
   store = inject(AddDogStore);
 
-  addDog({ name, comment, breed, formData }): void {
+  addDog({ name, comment, breed, formData }: AddedDogPayload): void {
     this.store.addDogWithPicture({
       name,
       comment,

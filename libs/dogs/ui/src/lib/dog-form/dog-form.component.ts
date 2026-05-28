@@ -1,6 +1,19 @@
 import { Component, inject, input, output, signal } from '@angular/core';
 import { CameraService } from '@dog-rating/shared/util-camera';
-import { form, FormField, FormRoot, required } from '@angular/forms/signals';
+import {
+  form,
+  FormField,
+  FormRoot,
+  required,
+  validate,
+} from '@angular/forms/signals';
+
+export type AddedDogPayload = {
+  name: string;
+  comment: string;
+  breed: string;
+  formData: FormData;
+};
 
 @Component({
   selector: 'lib-dog-form',
@@ -13,12 +26,7 @@ export class DogFormComponent {
 
   loading = input(false);
 
-  dogAdded = output<{
-    name: string;
-    comment: string;
-    breed: string;
-    formData: FormData;
-  }>();
+  dogAdded = output<AddedDogPayload>();
 
   formModel = signal({
     name: '',
@@ -26,15 +34,27 @@ export class DogFormComponent {
     comment: '',
   });
 
+  base64 = signal('');
+  filename = signal('');
+  private formData?: FormData;
+
   form = form(
     this.formModel,
     (formModel) => {
       required(formModel.name, { message: 'Name is required' });
       required(formModel.breed, { message: 'Breed is required' });
+      validate(formModel, () =>
+        this.filename()
+          ? null
+          : { kind: 'photo', message: 'A photo is required' },
+      );
     },
     {
       submission: {
         action: async (field) => {
+          if (!this.formData) {
+            return;
+          }
           const { name, comment, breed } = field().value();
 
           this.dogAdded.emit({
@@ -48,15 +68,9 @@ export class DogFormComponent {
     },
   );
 
-  private formData: FormData;
-
-  base64 = signal('');
-  filename = signal('');
-
   setFormData(files: FileList): void {
     if (files[0]) {
       const formData = new FormData();
-      console.log(files[0]);
       formData.append(files[0].name, files[0]);
       this.filename.set(files[0].name);
       this.formData = formData;

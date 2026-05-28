@@ -1,27 +1,41 @@
-<form (ngSubmit)="addDog()" [formGroup]="formGroup">
+<form [formRoot]="form">
   <div class="mb-3">
     <label class="form-label" for="dogname">Name</label>
     <input
       class="form-control"
-      formControlName="name"
+      [formField]="form.name"
       id="dogname"
       type="text"
     />
+    @if (form.name().touched() && form.name().invalid()) {
+      <ul class="error-list">
+        @for (error of form.name().errors(); track error) {
+          <li>{{ error.message }}</li>
+        }
+      </ul>
+    }
   </div>
   <div class="mb-3">
     <label class="form-label" for="dogreed">Breed</label>
     <input
       class="form-control"
-      formControlName="breed"
+      [formField]="form.breed"
       id="dogbreed"
       type="text"
     />
+    @if (form.breed().touched() && form.breed().invalid()) {
+      <ul class="error-list">
+        @for (error of form.breed().errors(); track error) {
+          <li>{{ error.message }}</li>
+        }
+      </ul>
+    }
   </div>
   <div class="mb-3">
     <label class="form-label" for="dogcomment">Comment</label>
     <input
       class="form-control"
-      formControlName="comment"
+      [formField]="form.comment"
       id="dogcomment"
       type="text"
     />
@@ -37,10 +51,10 @@
   />
 
   <div>
-    <img [src]="base64" alt="preview"  />
+    <img [src]="base64()" alt="preview" />
   </div>
 
-  <span>{{ filename }} </span>
+  <span>{{ filename() }} </span>
 
   <div class="d-flex justify-content-between mt-3">
     <div class="mb-10">
@@ -53,7 +67,7 @@
     </div>
 
     <button
-      [disabled]="!formGroup.valid || loading() === true"
+      [disabled]="!form().valid() || loading() === true"
       class="btn btn-primary mt-6"
       type="submit"
     >

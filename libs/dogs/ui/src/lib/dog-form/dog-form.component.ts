@@ -1,18 +1,18 @@
-import { Component, inject, input, output } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, input, output, signal } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CameraService } from '@dog-rating/shared/util-camera';
+import { form, FormField, FormRoot, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'lib-dog-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, FormRoot, FormField],
   templateUrl: './dog-form.component.html',
   styleUrl: './dog-form.component.scss',
 })
 export class DogFormComponent {
-  readonly #fb = inject(FormBuilder);
   readonly #cameraService = inject(CameraService);
 
-  loading = input<boolean>(false);
+  loading = input(false);
 
   dogAdded = output<{
     name: string;
@@ -21,22 +21,45 @@ export class DogFormComponent {
     formData: FormData;
   }>();
 
+  formModel = signal({
+    name: '',
+    breed: '',
+    comment: '',
+  });
+
+  form = form(
+    this.formModel,
+    (formModel) => {
+      required(formModel.name, { message: 'Name is required' });
+      required(formModel.breed, { message: 'Breed is required' });
+    },
+    {
+      submission: {
+        action: async (field) => {
+          const { name, comment, breed } = field().value();
+
+          this.dogAdded.emit({
+            name,
+            comment,
+            breed,
+            formData: this.formData,
+          });
+        },
+      },
+    },
+  );
+
   private formData: FormData;
 
-  formGroup = this.#fb.group({
-    name: ['', Validators.required],
-    breed: ['', Validators.required],
-    comment: ['', Validators.required],
-  });
-  base64 = '';
-  filename = '';
+  base64 = signal('');
+  filename = signal('');
 
   setFormData(files: FileList): void {
     if (files[0]) {
       const formData = new FormData();
       console.log(files[0]);
       formData.append(files[0].name, files[0]);
-      this.filename = files[0].name;
+      this.filename.set(files[0].name);
       this.formData = formData;
     }
   }
@@ -46,21 +69,8 @@ export class DogFormComponent {
       .getPhoto()
       .subscribe(({ formData, fileName, base64 }) => {
         this.formData = formData;
-        this.filename = fileName;
-        this.base64 = base64;
+        this.filename.set(fileName);
+        this.base64.set(base64);
       });
-  }
-
-  addDog(): void {
-    if (this.formGroup.valid) {
-      const { name, comment, breed } = this.formGroup.value;
-
-      this.dogAdded.emit({
-        name,
-        comment,
-        breed,
-        formData: this.formData,
-      });
-    }
   }
 }

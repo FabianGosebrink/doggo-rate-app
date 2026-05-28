@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DogFormComponent } from './dog-form.component';
 import { MockProvider } from 'ng-mocks';
 import { CameraService } from '@dog-rating/shared/util-camera';
-import { ReactiveFormsModule } from '@angular/forms';
+import { submit } from '@angular/forms/signals';
 import { of } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -13,7 +13,7 @@ describe('DogFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DogFormComponent, ReactiveFormsModule],
+      imports: [DogFormComponent],
       providers: [MockProvider(CameraService, { getPhoto: vi.fn() })],
     }).compileComponents();
 
@@ -24,33 +24,26 @@ describe('DogFormComponent', () => {
 
   describe('setFormData', () => {
     it('should set filename and internal formData when a file is provided', () => {
-      // Arrange
       const file = new File(['content'], 'dog.png', { type: 'image/png' });
       const fileList = { 0: file, length: 1 } as unknown as FileList;
 
-      // Act
       component.setFormData(fileList);
 
-      // Assert
-      expect(component.filename).toBe('dog.png');
+      expect(component.filename()).toBe('dog.png');
     });
 
     it('should not update filename if no file is provided', () => {
-      // Arrange
-      component.filename = 'existing.png';
+      component.filename.set('existing.png');
       const fileList = { length: 0 } as unknown as FileList;
 
-      // Act
       component.setFormData(fileList);
 
-      // Assert
-      expect(component.filename).toBe('existing.png');
+      expect(component.filename()).toBe('existing.png');
     });
   });
 
   describe('takePhoto', () => {
     it('should update component properties when camera service returns data', () => {
-      // Arrange
       const mockResult = {
         formData: new FormData(),
         fileName: 'captured.jpg',
@@ -58,33 +51,28 @@ describe('DogFormComponent', () => {
       };
       vi.spyOn(cameraService, 'getPhoto').mockReturnValue(of(mockResult));
 
-      // Act
       component.takePhoto();
 
-      // Assert
-      expect(component.filename).toBe('captured.jpg');
-      expect(component.base64).toBe('data:image/jpg;base64,123');
+      expect(component.filename()).toBe('captured.jpg');
+      expect(component.base64()).toBe('data:image/jpg;base64,123');
     });
   });
 
-  describe('addDog', () => {
-    it('should emit dogAdded event with form values and the formData from a file', () => {
-      // Arrange
+  describe('form submission', () => {
+    it('should emit dogAdded with form values and formData when form is valid', async () => {
       const emitSpy = vi.spyOn(component.dogAdded, 'emit');
       const file = new File(['content'], 'dog.png', { type: 'image/png' });
       const fileList = { 0: file, length: 1 } as unknown as FileList;
 
       component.setFormData(fileList);
-      component.formGroup.setValue({
+      component.formModel.set({
         name: 'Rex',
         breed: 'German Shepherd',
         comment: 'Very brave',
       });
 
-      // Act
-      component.addDog();
+      await submit(component.form);
 
-      // Assert
       expect(emitSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           name: 'Rex',
@@ -95,19 +83,16 @@ describe('DogFormComponent', () => {
       );
     });
 
-    it('should NOT emit dogAdded event if the form is invalid', () => {
-      // Arrange
+    it('should NOT emit dogAdded when form is invalid', async () => {
       const emitSpy = vi.spyOn(component.dogAdded, 'emit');
-      component.formGroup.setValue({
-        name: '', // Required field missing
+      component.formModel.set({
+        name: '',
         breed: 'Husky',
         comment: 'Loud',
       });
 
-      // Act
-      component.addDog();
+      await submit(component.form);
 
-      // Assert
       expect(emitSpy).not.toHaveBeenCalled();
     });
   });

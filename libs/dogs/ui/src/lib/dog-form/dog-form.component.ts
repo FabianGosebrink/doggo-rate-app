@@ -1,11 +1,10 @@
 import { Component, inject, input, output, signal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { CameraService } from '@dog-rating/shared/util-camera';
 import { form, FormField, FormRoot, required } from '@angular/forms/signals';
 
 @Component({
   selector: 'lib-dog-form',
-  imports: [ReactiveFormsModule, FormRoot, FormField],
+  imports: [FormRoot, FormField],
   templateUrl: './dog-form.component.html',
   styleUrl: './dog-form.component.scss',
 })

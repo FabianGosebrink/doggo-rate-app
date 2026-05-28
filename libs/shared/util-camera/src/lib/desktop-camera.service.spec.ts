@@ -9,6 +9,7 @@ describe('DesktopCameraService', () => {
   let mockWindow: any;
   let mockStream: any;
   let mockTrack: any;
+  let mockVideo: any;
 
   beforeEach(() => {
     mockTrack = {
@@ -29,10 +30,36 @@ describe('DesktopCameraService', () => {
       height: 0,
     };
 
-    const mockVideo = {
-      play: vi.fn(),
+    // The new captureFrame() flow listens for `onloadedmetadata` and `onplaying`
+    // on the video element, then schedules a setTimeout + requestAnimationFrame
+    // before drawing. Mock the video element so assigning a handler fires it on
+    // the next microtask, simulating the real DOM event flow.
+    mockVideo = {
       srcObject: null,
+      muted: false,
+      playsInline: false,
+      videoWidth: 1280,
+      videoHeight: 720,
+      play: vi.fn().mockResolvedValue(undefined),
     };
+    Object.defineProperty(mockVideo, 'onloadedmetadata', {
+      set(fn) {
+        this._lm = fn;
+        queueMicrotask(() => fn?.());
+      },
+      get() {
+        return this._lm;
+      },
+    });
+    Object.defineProperty(mockVideo, 'onplaying', {
+      set(fn) {
+        this._pl = fn;
+        queueMicrotask(() => fn?.());
+      },
+      get() {
+        return this._pl;
+      },
+    });
 
     mockWindow = {
       navigator: {
@@ -46,6 +73,11 @@ describe('DesktopCameraService', () => {
           if (tag === 'video') return mockVideo;
           return {};
         }),
+      },
+      setTimeout: (cb: () => void, ms: number) => setTimeout(cb, ms),
+      requestAnimationFrame: (cb: () => void) => {
+        queueMicrotask(cb);
+        return 0;
       },
     };
 
@@ -66,9 +98,7 @@ describe('DesktopCameraService', () => {
   });
 
   afterEach(async () => {
-    // 1. Run any remaining timers to completion
     await vi.runOnlyPendingTimersAsync();
-    // 2. Clear anything else
     vi.clearAllTimers();
     vi.restoreAllMocks();
     vi.useRealTimers();
@@ -79,38 +109,33 @@ describe('DesktopCameraService', () => {
   });
 
   it('should return error if getUserMedia is not available', async () => {
-    // Arrange
     mockWindow.navigator.mediaDevices = undefined;
 
-    // Act
     const result = await lastValueFrom(service.getPhoto());
 
-    // Assert
     expect(result).toBeNull();
   });
 
   it('should capture a photo and stop tracks', async () => {
-    // Arrange
     const photoPromise = firstValueFrom(service.getPhoto());
 
-    // Act
-    await vi.advanceTimersByTimeAsync(300); // Replaces tick(300)
+    // Advance past the 1500ms warmup; fake-timer advancement also flushes
+    // the microtasks queued by onloadedmetadata/onplaying setters and by
+    // requestAnimationFrame.
+    await vi.advanceTimersByTimeAsync(1500);
+
     const result = await photoPromise;
 
-    // Assert
     expect(result).not.toBeNull();
-    expect(result.base64).toContain('data:image/png;base64');
+    expect(result?.base64).toContain('data:image/png;base64');
     expect(mockTrack.stop).toHaveBeenCalled();
   });
 
   it('should return null if getUserMedia is not available', async () => {
-    // Arrange
     mockWindow.navigator.mediaDevices = undefined;
 
-    // Act
     const result = await lastValueFrom(service.getPhoto());
 
-    // Assert
     expect(result).toBeNull();
   });
 });

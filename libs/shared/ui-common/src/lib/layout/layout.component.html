@@ -1,11 +1,13 @@
-<div class="container">
+<div class="max-w-6xl mx-auto px-6 md:px-8 min-h-screen flex flex-col">
   <lib-navigation
     (login)="authStore.login()"
     (logout)="authStore.logout()"
     [loggedIn]="authStore.isLoggedIn()"
   ></lib-navigation>
 
-  <router-outlet/>
+  <main class="flex-1 py-10 md:py-14">
+    <router-outlet/>
+  </main>
 
   <lib-footer
     [backendUrl]="backendUrl"

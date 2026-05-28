@@ -1,22 +1,19 @@
+<header class="mb-8">
+  <p class="text-xs uppercase tracking-wider text-muted mb-2">Diagnostics</p>
+  <h1 class="text-3xl font-semibold text-ink">About this device</h1>
+</header>
+
 @if (deviceInfo()) {
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Key</th>
-        <th scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>userAgent</td>
-        <td>{{ userAgent }}</td>
-      </tr>
-      @for (item of deviceInfo() | keyvalue; track item.key) {
-        <tr>
-          <td>{{ item.key }}</td>
-          <td>{{ item.value | json }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+  <dl class="divide-y divide-line rounded-2xl ring-1 ring-line bg-white">
+    <div class="flex items-center justify-between gap-4 px-5 py-3 text-sm">
+      <dt class="text-muted">userAgent</dt>
+      <dd class="font-mono text-ink text-right break-all">{{ userAgent }}</dd>
+    </div>
+    @for (item of deviceInfo() | keyvalue; track item.key) {
+      <div class="flex items-center justify-between gap-4 px-5 py-3 text-sm">
+        <dt class="text-muted">{{ item.key }}</dt>
+        <dd class="font-mono text-ink text-right break-all">{{ item.value | json }}</dd>
+      </div>
+    }
+  </dl>
 }

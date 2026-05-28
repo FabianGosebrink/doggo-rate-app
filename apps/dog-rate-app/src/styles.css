@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@source "../../../libs";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-brand: oklch(54.6% 0.245 262.881);
+  --color-brand-hover: oklch(48.8% 0.243 264.376);
+  --color-brand-soft: oklch(97% 0.014 254.604);
+  --color-brand-ink: oklch(45.7% 0.24 277.023);
+  --color-ink: oklch(13% 0.028 261.692);
+  --color-muted: oklch(55.1% 0.027 264.364);
+  --color-line: oklch(92.8% 0.006 264.531);
+  --color-surface: #ffffff;
+  --color-surface-2: oklch(96.7% 0.003 264.542);
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    color: var(--color-ink);
+    background: var(--color-surface);
+  }
+  body { -webkit-font-smoothing: antialiased; }
+}

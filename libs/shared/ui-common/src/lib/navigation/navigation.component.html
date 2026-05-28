@@ -1,17 +1,14 @@
-<header
-  class="d-flex flex-wrap d-flex justify-content-between py-3 mb-4 border-bottom"
->
+<header class="flex flex-wrap justify-between py-3 mb-4 border-b">
   <div>
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+    <ul class="flex w-full md:w-auto mb-2 justify-center md:mb-0">
       <li>
         <a
           [routerLinkActiveOptions]="isActiveMatchOptions"
           [routerLink]="'/dogs'"
           queryParamsHandling="preserve"
-          class="nav-link px-2 link-dark"
+          class="px-2 py-1 text-gray-900 hover:underline [&.active]:underline [&.active]:decoration-gray-500 [&.active]:underline-offset-4"
           routerLinkActive="active"
-        >Home</a
-        >
+        >Home</a>
       </li>
 
       @if (loggedIn()) {
@@ -20,9 +17,8 @@
             [routerLink]="'/dogs/my'"
             routerLinkActive="active"
             [routerLinkActiveOptions]="isActiveMatchOptions"
-            class="nav-link px-2 link-dark"
-          >My Dogs</a
-          >
+            class="px-2 py-1 text-gray-900 hover:underline [&.active]:underline [&.active]:decoration-gray-500 [&.active]:underline-offset-4"
+          >My Dogs</a>
         </li>
       }
 
@@ -30,22 +26,25 @@
         <a
           [routerLinkActiveOptions]="isActiveMatchOptions"
           [routerLink]="'about'"
-          class="nav-link px-2 link-dark"
+          class="px-2 py-1 text-gray-900 hover:underline [&.active]:underline [&.active]:decoration-gray-500 [&.active]:underline-offset-4"
           routerLinkActive="active"
-        >About</a
-        >
+        >About</a>
       </li>
     </ul>
   </div>
   <div>
     @if (loggedIn()) {
       <button
-        (click)="logout.emit()" type="button" class="btn btn-outline-primary">
+        (click)="logout.emit()"
+        type="button"
+        class="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-4 py-2 text-blue-600 hover:bg-blue-50">
         <i class="fa-solid fa-right-from-bracket"></i> Logout
       </button>
     } @else {
       <button
-        (click)="login.emit()" type="button" class="btn btn-outline-primary">
+        (click)="login.emit()"
+        type="button"
+        class="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-4 py-2 text-blue-600 hover:bg-blue-50">
         <i class="fa-solid fa-right-to-bracket"></i> Login
       </button>
     }

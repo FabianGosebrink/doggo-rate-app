@@ -1,55 +1,44 @@
 @if (dog(); as dog) {
-  <div
-    class="flex gap-3 py-3 px-3 hover:bg-gray-50"
-    aria-current="true"
-  >
+  <article class="flex items-center gap-4 rounded-2xl bg-white ring-1 ring-line p-4 hover:shadow-sm transition-shadow">
     <div
-      class="rounded-full shrink-0"
-      style="
-        background-image: url('{{ dog.imageUrl }}');
-        width: 80px;
-        height: 80px;
-        background-size: 90px;
-        background-position: center;
-      "
+      class="w-20 h-20 rounded-2xl bg-surface-2 bg-cover bg-center flex-shrink-0"
+      style="background-image: url('{{ dog.imageUrl }}');"
     ></div>
-    <div class="flex gap-2 w-full justify-between">
-      <div>
-        <h6 class="mb-0 font-semibold">{{ dog.name }} ({{ dog.breed }})</h6>
-        <p class="mb-0 opacity-75">
-          {{ dog.ratingSum / (dog.ratingCount || 1) | number: '1.2-2' }}/5
-        </p>
-        <p class="mb-0 opacity-75">
-          {{ dog.comment }}
-        </p>
-        <p class="mb-0 opacity-75">{{ dog.created | date: 'medium' }}</p>
-      </div>
-      <div>
-        <button
-          type="button"
-          class="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 mr-1"
-          [routerLink]="['/dogs']"
-          [queryParams]="{ dogId: dog.id }"
-        >
-          <i class="fa-solid fa-star"></i> Rate
-        </button>
 
-        <button
-          type="button"
-          class="inline-flex items-center gap-1.5 rounded-md border border-blue-600 px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 mr-1"
-          [routerLink]="['/dogs/details', dog.id]"
-        >
-          <i class="fa-solid fa-arrow-right"></i> Go to
-        </button>
-
-        <button
-          type="button"
-          class="inline-flex items-center gap-1.5 rounded-md border border-red-600 px-3 py-1 text-sm text-red-600 hover:bg-red-50"
-          (click)="dogDeleted.emit(dog)"
-        >
-          <i class="fa-solid fa-trash"></i> Delete
-        </button>
-      </div>
+    <div class="flex-1 min-w-0">
+      <h3 class="font-semibold text-ink truncate">{{ dog.name }} <span class="text-muted font-normal">· {{ dog.breed }}</span></h3>
+      <p class="text-sm text-muted mt-0.5">
+        {{ dog.ratingSum / (dog.ratingCount || 1) | number: '1.2-2' }} / 5 · {{ dog.created | date: 'mediumDate' }}
+      </p>
+      @if (dog.comment) {
+        <p class="text-sm text-muted mt-1 truncate">{{ dog.comment }}</p>
+      }
     </div>
-  </div>
+
+    <div class="flex items-center gap-2 flex-shrink-0">
+      <a
+        [routerLink]="['/dogs']"
+        [queryParams]="{ dogId: dog.id }"
+        class="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-3 py-1 text-xs font-medium text-brand-ink hover:bg-indigo-100 transition-colors"
+        title="Rate"
+      >
+        <i class="fa-solid fa-star"></i> Rate
+      </a>
+      <a
+        [routerLink]="['/dogs/details', dog.id]"
+        class="inline-flex items-center gap-1.5 rounded-full border border-line bg-white px-3 py-1 text-xs font-medium text-ink hover:bg-surface-2 transition-colors"
+        title="Go to detail"
+      >
+        <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <button
+        type="button"
+        (click)="dogDeleted.emit(dog)"
+        class="inline-flex items-center justify-center rounded-full border border-red-200 bg-white w-8 h-8 text-red-600 hover:bg-red-50 transition-colors"
+        title="Delete"
+      >
+        <i class="fa-solid fa-trash text-xs"></i>
+      </button>
+    </div>
+  </article>
 }

@@ -1,8 +1,8 @@
 <form [formRoot]="form">
   <div class="mb-3">
-    <label class="form-label" for="dogname">Name</label>
+    <label class="block mb-2 text-sm font-medium text-gray-700" for="dogname">Name</label>
     <input
-      class="form-control"
+      class="block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
       [formField]="form.name"
       id="dogname"
       type="text"
@@ -16,9 +16,9 @@
     }
   </div>
   <div class="mb-3">
-    <label class="form-label" for="dogreed">Breed</label>
+    <label class="block mb-2 text-sm font-medium text-gray-700" for="dogreed">Breed</label>
     <input
-      class="form-control"
+      class="block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
       [formField]="form.breed"
       id="dogbreed"
       type="text"
@@ -32,9 +32,9 @@
     }
   </div>
   <div class="mb-3">
-    <label class="form-label" for="dogcomment">Comment</label>
+    <label class="block mb-2 text-sm font-medium text-gray-700" for="dogcomment">Comment</label>
     <input
-      class="form-control"
+      class="block w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
       [formField]="form.comment"
       id="dogcomment"
       type="text"
@@ -56,24 +56,32 @@
 
   <span>{{ filename() }} </span>
 
-  <div class="d-flex justify-content-between mt-3">
+  <div class="flex justify-between mt-3">
     <div class="mb-10">
-      <button (click)="takePhoto()" class="btn btn-primary me-2" type="button">
+      <button
+        (click)="takePhoto()"
+        class="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 mr-2"
+        type="button"
+      >
         <i class="fa-solid fa-camera"></i> Take picture
       </button>
-      <button (click)="fileInput.click()" class="btn btn-primary" type="button">
+      <button
+        (click)="fileInput.click()"
+        class="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+        type="button"
+      >
         <i class="fa-regular fa-file"></i> Choose File
       </button>
     </div>
 
     <button
       [disabled]="!form().valid() || loading() === true"
-      class="btn btn-primary mt-6"
+      class="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50 mt-6"
       type="submit"
     >
       @if (loading()) {
-        <div class="spinner-border spinner-border-sm" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div class="h-4 w-4 animate-spin rounded-full border-2 border-current border-r-transparent" role="status">
+          <span class="sr-only">Loading...</span>
         </div>
       }
       <i class="fa-solid fa-plus"></i> Add Dog

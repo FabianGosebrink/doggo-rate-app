@@ -1,46 +1,45 @@
 @if (currentDog(); as dog) {
-  <div class="px-4 my-5 text-center border-b">
-    <h1 class="text-5xl font-bold">{{ dog?.name }}</h1>
-    <div class="lg:w-1/2 mx-auto">
-      <p class="text-lg text-gray-600 mb-4">{{ dog.breed }}. {{ dog.comment }}</p>
-    </div>
-    <div class="grid gap-2 sm:flex sm:justify-center mb-3">
-      <div class="inline-flex" role="group">
-        @for (rating of [1, 2, 3, 4, 5]; track $index) {
-          <div
-            (click)="rateDog(rating)"
-            [class]="{ checked: averageRating() > $index }"
-            aria-hidden="true"
-          >
-            <i class="fa fa-paw fa-xl"></i>
-          </div>
-        }
-      </div>
+  <article class="max-w-2xl mx-auto">
+    <div class="overflow-hidden rounded-3xl ring-1 ring-line">
+      <img
+        [src]="dog.imageUrl"
+        [alt]="dog.name"
+        class="w-full aspect-[4/3] object-cover"
+        loading="lazy"
+      />
     </div>
 
-    <h3>{{ averageRating() | number: '1.2-2' }} / 5</h3>
+    <header class="text-center mt-8">
+      <h1 class="text-4xl font-semibold text-ink">{{ dog?.name }}</h1>
+      <p class="mt-3 text-lg text-muted">{{ dog.breed }} · {{ dog.comment }}</p>
+    </header>
 
-    <div class="grid gap-2 sm:flex sm:justify-center mb-5">
+    <div class="mt-8 flex items-center justify-center gap-2" role="group" aria-label="Rate this dog">
+      @for (rating of [1, 2, 3, 4, 5]; track $index) {
+        <button
+          (click)="rateDog(rating)"
+          type="button"
+          class="w-11 h-11 inline-flex items-center justify-center rounded-full text-2xl text-muted hover:bg-surface-2 transition-colors"
+          [class.checked]="averageRating() > $index"
+          [attr.aria-label]="'Rate ' + rating"
+        >
+          <i class="fa fa-paw"></i>
+        </button>
+      }
+    </div>
+
+    <p class="text-center mt-4 text-sm text-muted">
+      {{ averageRating() | number: '1.2-2' }} / 5
+    </p>
+
+    <div class="mt-8 flex justify-center">
       <button
         (click)="skipped.emit()"
-        class="inline-flex items-center gap-1.5 rounded-md border border-gray-500 px-3 py-1 text-sm text-gray-700 hover:bg-gray-100"
         type="button"
+        class="inline-flex items-center gap-2 rounded-full border border-line bg-white px-5 py-2.5 text-sm font-medium text-ink hover:bg-surface-2 transition-colors"
       >
         Skip
       </button>
     </div>
-
-    <div class="overflow-hidden">
-      <div class="container mx-auto px-5">
-        <img
-          [src]="dog.imageUrl"
-          alt="Example image"
-          class="max-w-full h-auto border rounded-lg mb-4"
-          height="500"
-          loading="lazy"
-          width="700"
-        />
-      </div>
-    </div>
-  </div>
+  </article>
 }

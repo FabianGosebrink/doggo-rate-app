@@ -12,7 +12,7 @@
   </button>
 </header>
 
-<div class="space-y-3">
+<div class="flex flex-col gap-4">
   @for (dog of store.myDogs(); track dog.id) {
     <lib-single-dog [dog]="dog" (dogDeleted)="deleteDog($event)" />
   } @empty {

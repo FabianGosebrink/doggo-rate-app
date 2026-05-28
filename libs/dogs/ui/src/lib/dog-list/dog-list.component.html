@@ -1,21 +1,21 @@
-<div class="grid grid-cols-1 lg:grid-cols-3 items-stretch gap-4 py-5">
+<header class="mb-8">
+  <p class="text-xs uppercase tracking-wider text-muted mb-2">Today's lineup</p>
+  <h1 class="text-3xl font-semibold text-ink">Rate the dogs</h1>
+</header>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
   @for (dog of dogs(); track dog.id) {
-    <div>
-      <div
-        class="h-full overflow-hidden bg-gray-900 text-white rounded-xl shadow-lg cursor-pointer bg-no-repeat bg-center bg-cover"
-        style="background-image: url('{{ dog.imageUrl }}');"
-        tabindex="0"
-        role="button"
-        (click)="dogSelected.emit(dog.id)"
-        (keydown.enter)="dogSelected.emit(dog.id)"
-      >
-        <div class="flex flex-col h-full p-5 pb-3 text-white">
-          <h3
-            class="pt-5 mt-5 mb-4 text-3xl leading-none font-bold [text-shadow:0_0.25rem_0.5rem_rgba(0,0,0,0.25)]"
-          >
-            {{ dog.name }}
-          </h3>
-        </div>
+    <div
+      class="group relative aspect-[3/4] overflow-hidden rounded-2xl bg-surface-2 cursor-pointer ring-1 ring-line transition-transform hover:-translate-y-0.5 hover:shadow-md bg-no-repeat bg-center bg-cover"
+      style="background-image: url('{{ dog.imageUrl }}');"
+      tabindex="0"
+      role="button"
+      (click)="dogSelected.emit(dog.id)"
+      (keydown.enter)="dogSelected.emit(dog.id)"
+    >
+      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+      <div class="absolute inset-x-0 bottom-0 p-5">
+        <h3 class="text-2xl font-semibold text-white drop-shadow-md">{{ dog.name }}</h3>
       </div>
     </div>
   }

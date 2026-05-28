@@ -1,11 +1,11 @@
 @if (currentDog(); as dog) {
-  <div class="px-4 my-5 text-center border-bottom">
-    <h1 class="display-4 fw-bold">{{ dog?.name }}</h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="lead mb-4">{{ dog.breed }}. {{ dog.comment }}</p>
+  <div class="px-4 my-5 text-center border-b">
+    <h1 class="text-5xl font-bold">{{ dog?.name }}</h1>
+    <div class="lg:w-1/2 mx-auto">
+      <p class="text-lg text-gray-600 mb-4">{{ dog.breed }}. {{ dog.comment }}</p>
     </div>
-    <div class="d-grid gap-2 d-sm-flex justify-content-center mb-3">
-      <div class="btn-group" role="group">
+    <div class="grid gap-2 sm:flex sm:justify-center mb-3">
+      <div class="inline-flex" role="group">
         @for (rating of [1, 2, 3, 4, 5]; track $index) {
           <div
             (click)="rateDog(rating)"
@@ -20,10 +20,10 @@
 
     <h3>{{ averageRating() | number: '1.2-2' }} / 5</h3>
 
-    <div class="d-grid gap-2 d-sm-flex justify-content-center mb-5">
+    <div class="grid gap-2 sm:flex sm:justify-center mb-5">
       <button
         (click)="skipped.emit()"
-        class="btn btn-outline-secondary btn-sm px-4"
+        class="inline-flex items-center gap-1.5 rounded-md border border-gray-500 px-3 py-1 text-sm text-gray-700 hover:bg-gray-100"
         type="button"
       >
         Skip
@@ -31,11 +31,11 @@
     </div>
 
     <div class="overflow-hidden">
-      <div class="container px-5">
+      <div class="container mx-auto px-5">
         <img
           [src]="dog.imageUrl"
           alt="Example image"
-          class="img-fluid border rounded-3 mb-4"
+          class="max-w-full h-auto border rounded-lg mb-4"
           height="500"
           loading="lazy"
           width="700"

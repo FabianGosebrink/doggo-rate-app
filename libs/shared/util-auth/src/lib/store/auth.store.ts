@@ -1,10 +1,4 @@
-import {
-  patchState,
-  signalStore,
-  withComputed,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
+import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { computed, inject } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
@@ -37,11 +31,19 @@ export const AuthStore = signalStore(
         authService.login();
       },
 
-      logout() {
-        authService.logout();
-        patchState(store, initialState);
-        router.navigate(['/dogs']);
-      },
+      logout: rxMethod<void>(
+        exhaustMap(() => {
+          return authService.logout().pipe(
+            tapResponse({
+              next: () => {
+                patchState(store, initialState);
+                router.navigate(['/dogs']);
+              },
+              error: (err) => console.error(err),
+            }),
+          );
+        }),
+      ),
 
       checkAuth: rxMethod<string | null>(
         exhaustMap((url: string | null) => {
@@ -52,7 +54,7 @@ export const AuthStore = signalStore(
                   isLoggedIn: response.isAuthenticated,
                   userProfile: response.userData,
                 }),
-              error: (err) => console.log(err),
+              error: (err) => console.error(err),
             }),
           );
         }),

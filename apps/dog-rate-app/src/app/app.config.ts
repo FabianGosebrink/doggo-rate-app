@@ -6,8 +6,12 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { APP_ROUTES } from './app.routes';
 import { environment } from '@dog-rating/shared/util-environments';
 import { PlatformInformationService } from '@dog-rating/shared/util-platform-information';
-import { authInterceptor, provideAuth, StsConfigLoader, StsConfigStaticLoader } from 'angular-auth-oidc-client';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import {
+  authInterceptor,
+  provideAuth,
+  StsConfigLoader,
+  StsConfigStaticLoader,
+} from 'angular-auth-oidc-client';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 
@@ -51,7 +55,6 @@ const authFactory = (
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideAnimationsAsync(),
     provideRouter(APP_ROUTES, withComponentInputBinding()),
     provideHttpClient(withInterceptors([authInterceptor()])),
     provideAuth({
@@ -63,6 +66,6 @@ export const appConfig: ApplicationConfig = {
     }),
     provideToastr({
       positionClass: 'toast-bottom-right',
-    })
+    }),
   ],
 };

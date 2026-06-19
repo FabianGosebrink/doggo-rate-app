@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { AuthStore } from './auth.store';
 import { AuthService } from '../auth.service';
 import { provideRouter, Router } from '@angular/router';
-import { MockProvider } from 'ng-mocks';
 import { of, throwError } from 'rxjs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { LoginResponse } from 'angular-auth-oidc-client';
@@ -29,8 +28,7 @@ describe('AuthStore', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        AuthStore,
-        MockProvider(AuthService, authServiceMock),
+        { provide: AuthService, useValue: authServiceMock },
         provideRouter([]),
       ],
     });
@@ -47,7 +45,10 @@ describe('AuthStore', () => {
   });
 
   it('should call authService.login on login()', () => {
+    // Act
     store.login();
+
+    // Assert
     expect(authService.login).toHaveBeenCalled();
   });
 
@@ -65,7 +66,7 @@ describe('AuthStore', () => {
   });
 
   describe('checkAuth', () => {
-    it('should update state on successful authentication', async () => {
+    it('should update state on successful authentication', () => {
       // Arrange
       const response: LoginResponse = {
         isAuthenticated: true,
@@ -87,7 +88,7 @@ describe('AuthStore', () => {
       expect(store.userSub()).toBe('123');
     });
 
-    it('should handle authentication failure', async () => {
+    it('should handle authentication failure', () => {
       // Arrange
       const response: LoginResponse = {
         isAuthenticated: false,
@@ -107,8 +108,8 @@ describe('AuthStore', () => {
       expect(store.userProfile()).toBeNull();
     });
 
-    it('should log error on service failure', async () => {
-      const consoleSpy = vi.spyOn(console, 'log');
+    it('should log error on service failure', () => {
+      const consoleSpy = vi.spyOn(console, 'error');
       vi.spyOn(authService, 'checkAuth').mockReturnValue(
         throwError(() => 'API Error'),
       );

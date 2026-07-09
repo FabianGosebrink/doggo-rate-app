@@ -90,6 +90,31 @@ describe('AuthService', () => {
   });
 
   describe('checkAuth', () => {
+    it('should close the modal window opened by an Electron login', () => {
+      // Arrange
+      const mockWindow = { close: vi.fn() } as unknown as Window;
+      vi.spyOn(window, 'open').mockReturnValue(mockWindow);
+      vi.spyOn(platformInformationService, 'isElectron', 'get').mockReturnValue(
+        true,
+      );
+      vi.spyOn(oidcSecurityService, 'authorize').mockImplementation(
+        (configId, options) => {
+          options?.urlHandler?.('https://auth.example.com');
+        },
+      );
+      service.login();
+      const mockLoginResponse = { isAuthenticated: true } as any;
+      vi.spyOn(oidcSecurityService, 'checkAuth').mockReturnValue(
+        of(mockLoginResponse),
+      );
+
+      // Act
+      service.checkAuth('https://callback.url');
+
+      // Assert
+      expect(mockWindow.close).toHaveBeenCalled();
+    });
+
     it('should not throw error if modal window does not exist', () => {
       // Arrange
       const mockLoginResponse = { isAuthenticated: true } as any;

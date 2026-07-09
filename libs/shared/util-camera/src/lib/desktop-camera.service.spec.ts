@@ -116,6 +116,60 @@ describe('DesktopCameraService', () => {
     expect(result).toBeNull();
   });
 
+  it('should return null if the stream has no video tracks', async () => {
+    // Arrange
+    mockStream.getVideoTracks.mockReturnValue([]);
+
+    // Act
+    const result = await lastValueFrom(service.getPhoto());
+
+    // Assert
+    expect(result).toBeNull();
+  });
+
+  it('should return null when getUserMedia rejects', async () => {
+    // Arrange
+    mockWindow.navigator.mediaDevices.getUserMedia = vi
+      .fn()
+      .mockRejectedValue(new Error('Permission denied'));
+
+    // Act
+    const result = await lastValueFrom(service.getPhoto());
+
+    // Assert
+    expect(result).toBeNull();
+  });
+
+  it('should clean up and return null when the canvas has no 2d context', async () => {
+    // Arrange
+    mockWindow.document.createElement = vi.fn().mockImplementation((tag) => {
+      if (tag === 'canvas') return { getContext: vi.fn().mockReturnValue(null) };
+      if (tag === 'video') return mockVideo;
+      return {};
+    });
+    const photoPromise = firstValueFrom(service.getPhoto());
+
+    // Act
+    await vi.advanceTimersByTimeAsync(1500);
+    const result = await photoPromise;
+
+    // Assert
+    expect(result).toBeNull();
+    expect(mockTrack.stop).toHaveBeenCalled();
+  });
+
+  it('should clean up and return null when the video fails to play', async () => {
+    // Arrange
+    mockVideo.play = vi.fn().mockRejectedValue(new Error('Play failed'));
+
+    // Act
+    const result = await lastValueFrom(service.getPhoto());
+
+    // Assert
+    expect(result).toBeNull();
+    expect(mockTrack.stop).toHaveBeenCalled();
+  });
+
   it('should capture a photo and stop tracks', async () => {
     const photoPromise = firstValueFrom(service.getPhoto());
 
@@ -131,11 +185,19 @@ describe('DesktopCameraService', () => {
     expect(mockTrack.stop).toHaveBeenCalled();
   });
 
-  it('should return null if getUserMedia is not available', async () => {
-    mockWindow.navigator.mediaDevices = undefined;
+  it('should fall back to 1280x720 when the video reports no dimensions', async () => {
+    // Arrange
+    mockVideo.videoWidth = 0;
+    mockVideo.videoHeight = 0;
+    const mockCanvas = mockWindow.document.createElement('canvas');
+    const photoPromise = firstValueFrom(service.getPhoto());
 
-    const result = await lastValueFrom(service.getPhoto());
+    // Act
+    await vi.advanceTimersByTimeAsync(1500);
+    await photoPromise;
 
-    expect(result).toBeNull();
+    // Assert
+    expect(mockCanvas.width).toBe(1280);
+    expect(mockCanvas.height).toBe(720);
   });
 });

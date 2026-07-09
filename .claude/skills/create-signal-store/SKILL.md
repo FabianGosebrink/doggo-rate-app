@@ -9,13 +9,14 @@ In this workspace we manage state exclusively with the NgRx Signal Store.
 When asked to create a store, follow these rules:
 
 - Create the store with `signalStore` from `@ngrx/signals`.
-- A global store that serves the whole domain is `{ providedIn: 'root' }`. A
-  store that belongs to one container component is provided in that component
-  instead, so its lifetime matches the component.
+- Decide `providedIn: 'root'` vs. component-provided scope using the
+  placement test in the `state-management` skill — don't default to root.
 - Keep collections with `withEntities<T>()`; keep flags and scalar values
   with `withState({ ... })`.
-- Implement every asynchronous action as an `rxMethod` and wrap the HTTP
-  call in `tapResponse` so success and error are always handled.
+- Implement every asynchronous action as an `rxMethod`, wrap the HTTP call
+  in `tapResponse`, and track in-flight/error state with the shared
+  `withRequestStatus()` feature (see the `state-management` skill's "Async
+  loads and request status" section) instead of a hand-rolled `loading` flag.
 - On success, patch the state AND show a success notification through the
   injected `WebNotificationService`. On error, show an error notification.
 - Inject services through default parameters of the `withMethods` factory.
@@ -28,6 +29,7 @@ When asked to create a store, follow these rules:
 export const DogsStore = signalStore(
   { providedIn: 'root' },
   withEntities<Dog>(),
+  withRequestStatus(),
   withMethods(
     (
       store,
@@ -35,17 +37,22 @@ export const DogsStore = signalStore(
       dogsApiService = inject(DogsApiService),
     ) => ({
       loadDogs: rxMethod<void>(
-        exhaustMap(() =>
-          dogsApiService.getDogs().pipe(
+        exhaustMap(() => {
+          patchState(store, setPending());
+
+          return dogsApiService.getDogs().pipe(
             tapResponse({
               next: (dogs) => {
-                patchState(store, setAllEntities(dogs));
+                patchState(store, setAllEntities(dogs), setFulfilled());
                 notificationService.showSuccess('Dogs Loaded');
               },
-              error: () => notificationService.showError(),
+              error: () => {
+                patchState(store, setError('Failed to load dogs'));
+                notificationService.showError();
+              },
             }),
-          ),
-        ),
+          );
+        }),
       ),
     }),
   ),

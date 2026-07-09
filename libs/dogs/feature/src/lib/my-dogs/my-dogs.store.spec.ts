@@ -1,8 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { MyDogsStore } from './my-dogs.store';
-import { Dog, DogsApiService, DogsStore } from '@dog-rating/dogs/domain';
+import {
+  Dog,
+  dogAPIEvents,
+  DogsApiService,
+  DogsStore,
+} from '@dog-rating/dogs/domain';
 import { NotificationService } from '@dog-rating/shared/util-notification';
 import { MockProvider } from 'ng-mocks';
+import { Dispatcher } from '@ngrx/signals/events';
 import { of, throwError } from 'rxjs';
 import { vi } from 'vitest';
 
@@ -84,5 +90,20 @@ describe('MyDogsStore', () => {
 
     // Assert
     expect(notificationService.showError).toHaveBeenCalled();
+  });
+
+  it('should remove a dog from myDogsIds when it is deleted elsewhere', () => {
+    // Arrange
+    vi.spyOn(dogsApiService, 'getMyDogs').mockReturnValue(of(mockDogs));
+    store = TestBed.inject(MyDogsStore);
+    store.loadMyDogs();
+
+    // Act
+    TestBed.inject(Dispatcher).dispatch(
+      dogAPIEvents.deleteDogSuccess(mockDogs[0]),
+    );
+
+    // Assert
+    expect(store.myDogsIds()).toEqual(['2']);
   });
 });

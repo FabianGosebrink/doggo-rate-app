@@ -42,6 +42,7 @@ describe('AuthStore', () => {
     expect(store.isLoggedIn()).toBe(false);
     expect(store.userProfile()).toBeNull();
     expect(store.userEmail()).toBe('');
+    expect(store.userSub()).toBe('');
   });
 
   it('should call authService.login on login()', () => {
@@ -63,6 +64,20 @@ describe('AuthStore', () => {
     expect(authService.logout).toHaveBeenCalled();
     expect(store.isLoggedIn()).toBe(false);
     expect(routerSpy).toHaveBeenCalledWith(['/dogs']);
+  });
+
+  it('should log error on logout failure', () => {
+    // Arrange
+    const consoleSpy = vi.spyOn(console, 'error');
+    vi.spyOn(authService, 'logout').mockReturnValue(
+      throwError(() => 'Logout Error'),
+    );
+
+    // Act
+    store.logout();
+
+    // Assert
+    expect(consoleSpy).toHaveBeenCalledWith('Logout Error');
   });
 
   describe('checkAuth', () => {

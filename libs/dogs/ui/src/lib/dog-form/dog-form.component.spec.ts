@@ -95,5 +95,24 @@ describe('DogFormComponent', () => {
 
       expect(emitSpy).not.toHaveBeenCalled();
     });
+
+    it('should NOT emit dogAdded when the photo was never captured', async () => {
+      // Arrange
+      const emitSpy = vi.spyOn(component.dogAdded, 'emit');
+      // Passes the "photo required" validator without going through
+      // setFormData/takePhoto, so the internal formData stays unset.
+      component.filename.set('dog.png');
+      component.formModel.set({
+        name: 'Rex',
+        breed: 'German Shepherd',
+        comment: 'Very brave',
+      });
+
+      // Act
+      await submit(component.form);
+
+      // Assert
+      expect(emitSpy).not.toHaveBeenCalled();
+    });
   });
 });

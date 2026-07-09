@@ -6,6 +6,10 @@ const path = require('path');
 const coverageLibsDir = path.join(__dirname, '..', 'coverage', 'libs');
 const outputDir = path.join(__dirname, '..', 'coverage', 'combined');
 const tempDir = path.join(__dirname, '..', 'coverage', '.nyc_temp');
+// Report generation reads every *.json in this directory as a coverage map,
+// so it must hold only the merged coverage-final.json — never outputDir,
+// where a previous run's coverage-summary.json would get misread as one.
+const mergedDir = path.join(__dirname, '..', 'coverage', '.nyc_merged');
 
 // Find all coverage-final.json files recursively
 function findCoverageFiles(dir, files = []) {
@@ -41,14 +45,19 @@ if (!fs.existsSync(outputDir)) {
   fs.mkdirSync(outputDir, { recursive: true });
 }
 
+if (fs.existsSync(mergedDir)) {
+  fs.rmSync(mergedDir, { recursive: true });
+}
+fs.mkdirSync(mergedDir, { recursive: true });
+
 try {
   // Merge and generate report
-  execSync(`npx nyc merge "${tempDir}" "${outputDir}/coverage-final.json"`, {
+  execSync(`npx nyc merge "${tempDir}" "${mergedDir}/coverage-final.json"`, {
     stdio: 'inherit',
   });
 
   execSync(
-    `npx nyc report --temp-dir="${outputDir}" --reporter=html --reporter=text --report-dir="${outputDir}"`,
+    `npx nyc report --temp-dir="${mergedDir}" --reporter=html --reporter=text --reporter=json-summary --report-dir="${outputDir}"`,
     { stdio: 'inherit' },
   );
 
@@ -59,6 +68,7 @@ try {
   console.error('❌  Failed to generate combined coverage:', error.message);
   process.exit(1);
 } finally {
-  // Cleanup temp directory
+  // Cleanup temp directories
   fs.rmSync(tempDir, { recursive: true, force: true });
+  fs.rmSync(mergedDir, { recursive: true, force: true });
 }

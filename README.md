@@ -2,6 +2,7 @@
 
 A demo application for uploading pictures of your dog and rate the Bois from zero to five paws 🐾
 
+[![Frontend CI](https://github.com/FabianGosebrink/dog-rate-app/actions/workflows/angular.yml/badge.svg)](https://github.com/FabianGosebrink/dog-rate-app/actions/workflows/angular.yml)
 ![Statements](https://img.shields.io/badge/statements-100%25-brightgreen.svg?style=flat)
 ![Branches](https://img.shields.io/badge/branches-100%25-brightgreen.svg?style=flat)
 ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat)

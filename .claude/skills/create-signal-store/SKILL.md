@@ -18,7 +18,7 @@ When asked to create a store, follow these rules:
   `withRequestStatus()` feature (see the `state-management` skill's "Async
   loads and request status" section) instead of a hand-rolled `loading` flag.
 - On success, patch the state AND show a success notification through the
-  injected `WebNotificationService`. On error, show an error notification.
+  injected `NotificationService`. On error, show an error notification.
 - Inject services through default parameters of the `withMethods` factory.
 - If the store should load its data immediately, call the load method from
   a `withHooks({ onInit })` hook.
@@ -33,7 +33,7 @@ export const DogsStore = signalStore(
   withMethods(
     (
       store,
-      notificationService = inject(WebNotificationService),
+      notificationService = inject(NotificationService),
       dogsApiService = inject(DogsApiService),
     ) => ({
       loadDogs: rxMethod<void>(

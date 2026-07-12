@@ -44,7 +44,10 @@ describe('WebNotificationService', () => {
     it('should call toastr.error with default values when none are provided', () => {
       service.showError();
 
-      expect(toastrSpy.error).toHaveBeenCalledWith('There was an error', 'Error');
+      expect(toastrSpy.error).toHaveBeenCalledWith(
+        'There was an error',
+        'Error',
+      );
     });
   });
 

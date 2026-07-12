@@ -57,16 +57,14 @@ describe('DogsApiService', () => {
 
   it('should fetch a single dog (getSingleDog)', async () => {
     // Arrange
-    vi.mocked(httpMock.get).mockReturnValue(of(mockDog));
+    const getSpy = vi.mocked(httpMock.get).mockReturnValue(of(mockDog));
 
     // Act
     const result = await firstValueFrom(service.getSingleDog('1'));
 
     // Assert
     expect(result).toEqual(mockDog);
-    expect(httpMock.get).toHaveBeenCalledWith(
-      expect.stringContaining('api/dogs/1'),
-    );
+    expect(getSpy).toHaveBeenCalledWith(expect.stringContaining('api/dogs/1'));
   });
 
   it('should fetch user dogs (getMyDogs)', async () => {

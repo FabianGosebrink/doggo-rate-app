@@ -57,14 +57,16 @@ describe('DogDetailsStore', () => {
     it('should fetch the dog from API if NOT in dogsStore', () => {
       // Arrange
       const mockDog = { id: 'new-dog', name: 'Bolt' } as Dog;
-      vi.spyOn(dogsApiService, 'getSingleDog').mockReturnValue(of(mockDog));
+      const getSingleDogSpy = vi
+        .spyOn(dogsApiService, 'getSingleDog')
+        .mockReturnValue(of(mockDog));
       vi.spyOn(dogsStore, 'entityMap').mockReturnValue({});
 
       // Act
       store.loadSingleDogIfNotLoaded('new-dog');
 
       // Assert
-      expect(dogsApiService.getSingleDog).toHaveBeenCalledWith('new-dog');
+      expect(getSingleDogSpy).toHaveBeenCalledWith('new-dog');
       expect(dogsStore.addDog).toHaveBeenCalledWith(mockDog);
     });
 

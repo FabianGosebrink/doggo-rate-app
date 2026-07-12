@@ -60,6 +60,7 @@ describe('MyDogsStore', () => {
 
     dogsApiService = TestBed.inject(DogsApiService);
     notificationService = TestBed.inject(NotificationService);
+    store = TestBed.inject(MyDogsStore);
   });
 
   it('should load my dogs and map them from the entity store', () => {
@@ -67,9 +68,7 @@ describe('MyDogsStore', () => {
     const myDogsMock = [mockDogs[0]];
     vi.spyOn(dogsApiService, 'getMyDogs').mockReturnValue(of(myDogsMock));
 
-    // Act: Re-trigger load or use the instance.
-    // Since onInit already ran, we call the method to simulate the specific action.
-    store = TestBed.inject(MyDogsStore);
+    // Act
     store.loadMyDogs();
 
     // Assert
@@ -82,20 +81,18 @@ describe('MyDogsStore', () => {
     vi.spyOn(dogsApiService, 'getMyDogs').mockReturnValue(
       throwError(() => new Error('API Error')),
     );
-    vi.spyOn(notificationService, 'showError');
-    store = TestBed.inject(MyDogsStore);
+    const showErrorSpy = vi.spyOn(notificationService, 'showError');
 
     // Act
     store.loadMyDogs();
 
     // Assert
-    expect(notificationService.showError).toHaveBeenCalled();
+    expect(showErrorSpy).toHaveBeenCalled();
   });
 
   it('should remove a dog from myDogsIds when it is deleted elsewhere', () => {
     // Arrange
     vi.spyOn(dogsApiService, 'getMyDogs').mockReturnValue(of(mockDogs));
-    store = TestBed.inject(MyDogsStore);
     store.loadMyDogs();
 
     // Act

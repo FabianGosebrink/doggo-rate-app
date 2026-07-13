@@ -3,8 +3,8 @@ import { DogsApiService } from './dogs-api.service';
 import { HttpService } from '@dog-rating/shared/util-common';
 import { firstValueFrom, of } from 'rxjs';
 import { Dog } from '../models/dog';
-import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest';
-import { MockProvider, ngMocks } from 'ng-mocks';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { MockProvider } from 'ng-mocks';
 
 describe('DogsApiService', () => {
   let service: DogsApiService;
@@ -22,18 +22,17 @@ describe('DogsApiService', () => {
     userId: 'userId',
   };
 
-  beforeAll(() => {
-    ngMocks.defaultMock(HttpService, () => ({
-      get: vi.fn().mockReturnValue(of([mockDog])),
-      post: vi.fn().mockReturnValue(of(mockDog)),
-      put: vi.fn().mockReturnValue(of(mockDog)),
-      delete: vi.fn().mockReturnValue(of({})),
-    }));
-  });
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DogsApiService, MockProvider(HttpService)],
+      providers: [
+        DogsApiService,
+        MockProvider(HttpService, {
+          get: vi.fn().mockReturnValue(of([mockDog])),
+          post: vi.fn().mockReturnValue(of(mockDog)),
+          put: vi.fn().mockReturnValue(of(mockDog)),
+          delete: vi.fn().mockReturnValue(of({})),
+        }),
+      ],
     });
 
     service = TestBed.inject(DogsApiService);

@@ -1,65 +1,120 @@
 # Testing a signalStore
 
-Provide the store in `TestBed` (a container-scoped store takes no `providedIn`, so it is just
-a provider), mock its injected service, drive it through its public methods, and assert on its
-signals. Mutations you can't see any other way — the store exposes state as signals, so read
-them directly.
+Provide the store in `TestBed` (a local container store takes no `providedIn`, so it is just a
+provider), mock the services it injects, drive it through its public methods, and assert on its
+signals. The store exposes state as signals, so read them directly.
+
+A local store often builds on the root `DogsStore`, so provide the real `DogsStore` too and mock
+the API service underneath it. `MyDogsStore` derives `myDogs` from `DogsStore`:
 
 ```ts
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { SearchStore } from './search.store';
-import { SearchService } from '../domain/services/search.service';
+import { MockProvider } from 'ng-mocks';
+import { MyDogsStore } from './my-dogs.store';
+import { Dog, DogsApiService, DogsStore } from '@dog-rating/dogs/domain';
+import { NotificationService } from '@dog-rating/shared/util-notification';
 
-describe('SearchStore', () => {
-  let store: SearchStore;
-  let serviceMock: { search: ReturnType<typeof vi.fn> };
+describe('MyDogsStore', () => {
+  let store: InstanceType<typeof MyDogsStore>;
+  let dogsApiService: DogsApiService;
+
+  const mockDogs = [{ id: '1', name: 'Buddy' } as Dog];
 
   beforeEach(() => {
-    serviceMock = { search: vi.fn().mockReturnValue(of([/* results */])) };
     TestBed.configureTestingModule({
       providers: [
-        SearchStore,
-        { provide: SearchService, useValue: serviceMock },
+        MockProvider(DogsApiService, {
+          getDogs: () => of(mockDogs),
+          getMyDogs: () => of([]),
+        }),
+        MockProvider(NotificationService, { showError: vi.fn() }),
+        DogsStore,
+        MyDogsStore,
       ],
     });
 
-    store = TestBed.inject(SearchStore);
+    dogsApiService = TestBed.inject(DogsApiService);
+    store = TestBed.inject(MyDogsStore);
   });
 
-  it('should search when the query signal changes', () => {
+  it('should load my dogs and expose their ids', () => {
+    // Arrange
+    vi.spyOn(dogsApiService, 'getMyDogs').mockReturnValue(of(mockDogs));
+
     // Act
-    store.updateQuery('coffee');
-    TestBed.tick(); // flush the rxMethod's signal effect (loadByQuery(store.query))
+    store.loadMyDogs();
 
     // Assert
-    expect(serviceMock.search).toHaveBeenCalledWith('coffee');
-    expect(store.results()).toEqual([/* results */]);
+    expect(store.myDogsIds()).toEqual(['1']);
+    expect(store.myDogs()).toEqual(mockDogs);
   });
 });
 ```
 
-Why `TestBed.tick()` here: when an `rxMethod` is wired to a signal in `onInit`
-(`store.loadByQuery(store.query)`), it reacts through an Angular `effect`. Setting the signal
-schedules that effect; nothing runs until effects flush. `TestBed.tick()` flushes them
-synchronously — the zoneless replacement for a change-detection cycle. If the mocked service
-returns `of(...)` (synchronous), the whole pipeline then completes within that same tick and
-the state signals are already updated when you assert.
+`DogsStore` loads its collection in `onInit`, so mock `getDogs` too; `myDogs` is looked up from
+that loaded collection. The mocked service returns a synchronous `of(...)`, so the `rxMethod`
+completes within the same call and the signals are already updated when you assert.
 
-If the `rxMethod` also debounces internally (`debounceTime` inside its pipe), add
-`vi.useFakeTimers()` in `beforeEach` and `vi.advanceTimersByTime(300)` after `TestBed.tick()`.
+## Flush an `onInit` effect with `TestBed.tick()`
+
+When a store reacts through an Angular `effect` — for example `MainDogStore` navigates in an
+`onInit` effect whenever `selectedDog()` changes — nothing runs until effects flush. `TestBed.tick()`
+flushes them synchronously, the zoneless replacement for a change-detection cycle:
+
+```ts
+it('should navigate to the initially selected dog', () => {
+  // Arrange
+  const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+  // Act
+  TestBed.tick();
+
+  // Assert
+  expect(navigateSpy).toHaveBeenCalledWith(['/dogs'], {
+    queryParams: { dogId: 'd1' },
+  });
+});
+```
+
+If an `rxMethod` also runs a timer internally (an rxjs `delay`, `setTimeout`), add
+`vi.useFakeTimers()` in `beforeEach` and `vi.advanceTimersByTime(ms)` after `TestBed.tick()`.
 
 ## Inject the store once, in `beforeEach` — not per test
 
-`store = TestBed.inject(SearchStore)` belongs in `beforeEach`, not repeated inside every `it`.
+`store = TestBed.inject(MyDogsStore)` belongs in `beforeEach`, not repeated inside every `it`.
 Most tests want the same store instance; re-injecting per test is dead weight.
 
-If a test needs the store's `onInit` to see *different* data than the rest of the suite (e.g. an
-empty initial list instead of the shared fixture), don't defer injection just for that one case —
-re-spy the service and re-invoke the loading method the store already exposes
-(`store.loadDogs()`), the same way any other test re-triggers a load after changing a mock. Only
-reach for `TestBed.resetTestingModule()` plus a small local factory function (returning the
-services + store) when the *construction itself* must differ — e.g. a different provider list —
-and even then, call that factory from `beforeEach` by default, falling back to calling it again
-mid-test (after `resetTestingModule()`) only in the rare test that truly needs a different
-initial module.
+When a test needs the store's `onInit` to see *different* data than the rest of the suite (e.g. an
+empty dog list instead of the shared fixture), use a small factory that builds the module and
+returns the services plus the store, call it from `beforeEach` by default, and re-run it after
+`TestBed.resetTestingModule()` only in the rare test that truly needs a different initial module.
+`MainDogStore`'s spec does exactly this with a `configureMainDogStore(dogs)` helper:
+
+```ts
+function configureMainDogStore(dogs: Dog[]) {
+  TestBed.configureTestingModule({
+    providers: [
+      provideRouter([]),
+      MockProvider(DogsApiService, { getDogs: () => of(dogs) }),
+      DogsStore,
+      MainDogStore,
+    ],
+  });
+
+  return { router: TestBed.inject(Router), store: TestBed.inject(MainDogStore) };
+}
+
+it('should not navigate when there is no dog to select', () => {
+  // Arrange
+  TestBed.resetTestingModule();
+  ({ router, store } = configureMainDogStore([]));
+  const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
+
+  // Act
+  TestBed.tick();
+
+  // Assert
+  expect(navigateSpy).not.toHaveBeenCalled();
+});
+```

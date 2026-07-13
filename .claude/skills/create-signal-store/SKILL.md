@@ -13,10 +13,10 @@ When asked to create a store, follow these rules:
   placement test in the `state-management` skill — don't default to root.
 - Keep collections with `withEntities<T>()`; keep flags and scalar values
   with `withState({ ... })`.
-- Implement every asynchronous action as an `rxMethod`, wrap the HTTP call
-  in `tapResponse`, and track in-flight/error state with the shared
-  `withRequestStatus()` feature (see the `state-management` skill's "Async
-  loads and request status" section) instead of a hand-rolled `loading` flag.
+- Implement every asynchronous action as an `rxMethod` and wrap the HTTP
+  call in `tapResponse`. Track loading with a `loading` flag kept in
+  `withState({ loading: false })`: set it to `true` before the call in a
+  leading `tap`, and back to `false` when the data arrives.
 - On success, patch the state AND show a success notification through the
   injected `NotificationService`. On error, show an error notification.
 - Inject services through default parameters of the `withMethods` factory.
@@ -29,7 +29,7 @@ When asked to create a store, follow these rules:
 export const DogsStore = signalStore(
   { providedIn: 'root' },
   withEntities<Dog>(),
-  withRequestStatus(),
+  withState({ loading: false }),
   withMethods(
     (
       store,
@@ -37,22 +37,20 @@ export const DogsStore = signalStore(
       dogsApiService = inject(DogsApiService),
     ) => ({
       loadDogs: rxMethod<void>(
-        exhaustMap(() => {
-          patchState(store, setPending());
-
-          return dogsApiService.getDogs().pipe(
-            tapResponse({
-              next: (dogs) => {
-                patchState(store, setAllEntities(dogs), setFulfilled());
-                notificationService.showSuccess('Dogs Loaded');
-              },
-              error: () => {
-                patchState(store, setError('Failed to load dogs'));
-                notificationService.showError();
-              },
-            }),
-          );
-        }),
+        pipe(
+          tap(() => patchState(store, { loading: true })),
+          exhaustMap(() =>
+            dogsApiService.getDogs().pipe(
+              tapResponse({
+                next: (dogs) => {
+                  patchState(store, setAllEntities(dogs), { loading: false });
+                  notificationService.showSuccess('Dogs Loaded');
+                },
+                error: () => notificationService.showError(),
+              }),
+            ),
+          ),
+        ),
       ),
     }),
   ),

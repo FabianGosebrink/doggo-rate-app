@@ -1,5 +1,24 @@
 # Mocking and spies
 
+## Mock services inline in `MockProvider`, not with `ngMocks.defaultMock`
+
+Give a service its mock implementation directly in the `MockProvider` override, so the whole
+setup for a dependency sits in one place, right next to the `TestBed` that uses it:
+
+```ts
+providers: [
+  DogsApiService,
+  MockProvider(HttpService, {
+    get: vi.fn().mockReturnValue(of([mockDog])),
+    post: vi.fn().mockReturnValue(of(mockDog)),
+  }),
+],
+```
+
+Do **not** reach for `ngMocks.defaultMock(HttpService, () => ({ ... }))` in a `beforeAll` to do
+the same thing. The inline override keeps the mock beside its setup, and each method stays a
+`vi.fn()` you can still reconfigure per test with `vi.mocked(...)` or assert on directly.
+
 ## Capture a spy only when it's free — don't spend a line just to name one
 
 When the test itself creates or configures the spy with `vi.spyOn(...)`, capture its return
@@ -25,7 +44,7 @@ expect(httpMock.get).toHaveBeenCalledWith(expect.stringContaining('api/dogs/1'))
 ```
 
 **When the mock is already a `vi.fn()` set up elsewhere** — `MockProvider(..., { addDog: vi.fn() })`,
-`ngMocks.defaultMock(...)`, a module-level `vi.mock(...)`, or a manually-built mock object like
+a module-level `vi.mock(...)`, or a manually-built mock object like
 `{ close: vi.fn() }` — and this test isn't reconfiguring it with `vi.spyOn`/`vi.mocked(...)`,
 **don't** add a `const` just to alias it. That line has no other purpose, so it's pure noise;
 assert on the object's property directly instead:

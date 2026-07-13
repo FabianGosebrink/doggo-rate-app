@@ -4,9 +4,9 @@
 
 **Always create the fixture in the first `beforeEach`, not inside each test.** Declare
 `component`/`fixture` at `describe` scope, and in that first `beforeEach` call
-`TestBed.configureTestingModule(...)`, then `TestBed.createComponent(...)`, then read
-`fixture.componentInstance` into `component` — every describe block follows this shape, even
-if a given test never ends up reading `component`. Each test's own Arrange then only sets
+`TestBed.configureTestingModule(...).compileComponents()`, then `TestBed.createComponent(...)`,
+then read `fixture.componentInstance` into `component` — every describe block follows this shape,
+even if a given test never ends up reading `component`. Each test's own Arrange then only sets
 *that test's* inputs on the already-created fixture.
 
 **Trigger and observe rendering with `await fixture.whenStable()`, not `fixture.detectChanges()`.**
@@ -16,213 +16,139 @@ pass — and any other pending async work — to actually run, the zoneless-nati
 rendering. Every test whose Act touches rendering is therefore `async`:
 
 ```ts
-describe('ProgressCardComponent', () => {
-  let component: ProgressCardComponent;
-  let fixture: ComponentFixture<ProgressCardComponent>;
+describe('DogRateComponent', () => {
+  let component: DogRateComponent;
+  let fixture: ComponentFixture<DogRateComponent>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [ProgressCardComponent] });
+  const mockDog = { ratingCount: 10, ratingSum: 40 } as Dog; // average of 4.0
 
-    fixture = TestBed.createComponent(ProgressCardComponent);
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [DogRateComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(DogRateComponent);
     component = fixture.componentInstance;
   });
 
-  it('should create', async () => {
-    // Arrange
-    fixture.componentRef.setInput('title', 'Monthly budget');
-
-    // Act
-    await fixture.whenStable();
-
+  it('should create', () => {
     // Assert
     expect(component).toBeTruthy();
   });
 
-  it('should render a healthy, emerald status below 50% spent', async () => {
+  it('should calculate the average rating from the current dog', async () => {
     // Arrange
-    fixture.componentRef.setInput('title', 'Monthly budget');
-    fixture.componentRef.setInput('percentageSpent', 0.3);
+    fixture.componentRef.setInput('currentDog', mockDog);
 
     // Act
     await fixture.whenStable();
 
     // Assert
-    const text = fixture.nativeElement.textContent as string;
-    expect(text).toContain('Healthy');
+    expect(component.averageRating()).toBe(4);
   });
 });
 ```
 
-Include a `should create` test as the first test in every describe block — it gives
-`component` a real assertion beyond just sitting there for later tests to use.
+Include a `should create` test as the first test in every describe block — it gives `component` a
+real assertion beyond just sitting there for later tests to use.
 
 If a test truly has nothing to arrange beyond what `beforeEach` already set up, drop the
 `// Arrange` label rather than leaving it with nothing under it — go straight to `// Act`.
 
-## Testing a debounced reactive input (`FormControl` + `outputFromObservable`)
-
-When the debounce lives in a presentational input (a `FormControl` whose `valueChanges` is
-piped through `debounceTime` and exposed via `outputFromObservable`), drive the control and
-flush the timer. Subscribe to the output — an `OutputRef` is subscribable like an `output()`.
-
-```ts
-describe('SearchInputComponent', () => {
-  let component: SearchInputComponent;
-  let fixture: ComponentFixture<SearchInputComponent>;
-
-  beforeEach(() => {
-    vi.useFakeTimers();
-    TestBed.configureTestingModule({ imports: [SearchInputComponent] });
-
-    fixture = TestBed.createComponent(SearchInputComponent);
-    component = fixture.componentInstance;
-  });
-
-  afterEach(() => vi.useRealTimers());
-
-  it('should emit the debounced value after typing settles', () => {
-    // Arrange
-    const emitted: string[] = [];
-    component.queryChange.subscribe((v) => emitted.push(v));
-
-    // Act
-    component.searchControl.setValue('cof');
-    component.searchControl.setValue('coffee');
-    vi.advanceTimersByTime(300);
-
-    // Assert
-    expect(emitted).toEqual(['coffee']); // debounce collapsed the two setValues into one
-  });
-});
-```
-
-`vi.advanceTimersByTime` works because rxjs `debounceTime` schedules on timers that Vitest's
-fake timers patch — no Zone required.
-
 ## Testing presentational (dumb) components
 
 Set signal inputs with `componentRef.setInput`, `await fixture.whenStable()`, then assert on the
-rendered DOM (or subscribe to an `output()`). These components have no injected services, so
-`TestBed` needs no extra providers — unless the template pulls in a directive that does (see
-`libBlurIf` below). Prefer asserting behavior/rendered text over reaching into the class — a
-dumb component's contract is "inputs in → markup out" (one documented exception below).
+rendered DOM or on an `output()` emission. These components inject no store and no services, so
+`TestBed` needs no extra providers. Prefer asserting rendered markup or emitted outputs over
+reaching into the class — a dumb component's contract is "inputs in → markup/outputs out".
+
+An `output()` (and an `outputFromObservable`) is subscribable, so subscribe and assert it fired.
+`DogRateComponent` emits `skipped` and `rated`:
 
 ```ts
-describe('SearchResultsListComponent', () => {
-  let component: SearchResultsListComponent;
-  let fixture: ComponentFixture<SearchResultsListComponent>;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [SearchResultsListComponent] });
-
-    fixture = TestBed.createComponent(SearchResultsListComponent);
-    component = fixture.componentInstance;
-  });
-
-  it('should render the invoice date', async () => {
-    // Arrange
-    fixture.componentRef.setInput('items', items);
-
-    // Act
-    await fixture.whenStable();
-
-    // Assert
-    expect(fixture.nativeElement.textContent).toContain('June 2025');
-  });
-});
-```
-
-### `libBlurIf` needs the HTTP test stack
-
-A component's own inputs may have no HTTP dependency at all, but if its template applies
-`libBlurIf` (`BlurIfDirective` from `shared/feature-settings`), the directive injects the root
-`SettingsStore`, which fires `loadCategories()` (an HTTP call) in `onInit`. Without HTTP
-providers, rendering the component (`await fixture.whenStable()`) throws a `NullInjectorError`
-for `HttpClient`/`SERVER_URL`. Provide the same testing HTTP stack as a container test (see below).
-
-### Testing `ng-content` projection
-
-A component that renders part of its template via `<ng-content />` can't be exercised by
-setting inputs alone — create a tiny standalone host test component that wraps it, and assert
-on the projected content in the *host* fixture:
-
-```ts
-@Component({
-  imports: [ChartCardComponent],
-  template: `
-    <lib-chart-card title="Net worth">
-      <div data-testid="projected">Projected chart</div>
-    </lib-chart-card>
-  `,
-})
-class ChartCardHostComponent {}
-
-it('should project content into the card body', async () => {
+it('should emit skipped when the user skips', () => {
   // Arrange
-  fixture.componentRef.setInput('title', 'Net worth'); // zoneless CD is global — satisfy the shared fixture's required input too
-  const hostFixture = TestBed.createComponent(ChartCardHostComponent);
+  const skipSpy = vi.fn();
+  component.skipped.subscribe(skipSpy);
 
   // Act
-  await hostFixture.whenStable();
+  component.skipped.emit();
 
   // Assert
-  const projected = hostFixture.nativeElement.querySelector(
-    '[data-testid="projected"]',
-  ) as HTMLElement;
-  expect(projected.textContent).toContain('Projected chart');
+  expect(skipSpy).toHaveBeenCalled();
 });
 ```
 
-**Why that first Arrange line is there even though the test never reads `fixture`:** zoneless
-change detection is global — `whenStable()`/`detectChanges()` run through the app's real
-scheduler, which can sweep *every* root view currently attached to `ApplicationRef`, not just the
-fixture you called it on. The describe's `beforeEach` already created `fixture` for
-`ChartCardComponent` with no `title` set; awaiting `hostFixture.whenStable()` can trip that other
-fixture's `input.required<...>()` and throw `NG0950`, even though this test only cares about
-`hostFixture`. Satisfy every required input on the shared fixture before triggering rendering on
-*any* fixture in the test, not just the one under test.
+`SingleDogComponent` is the same shape with a `dog` input and a `dogDeleted` output: set the
+input, `await fixture.whenStable()`, and assert what it renders or emits.
 
 ### The one case where reaching into the class is correct
 
-A `computed` that the template only ever reads *inside* an `@if` guard is unreachable through
-the DOM when the guard's falsy branch is exactly that computed's "empty" case — Angular's
-control flow never evaluates the binding, so no fixture setup can exercise it through rendered
-markup. Call the signal directly in that one test instead:
+Prefer asserting rendered markup. But when a derived value has no reachable DOM path — a
+`computed` the template only reads inside an `@if` guard whose falsy branch is exactly that
+computed's "empty" case — Angular's control flow never evaluates the binding, so no fixture setup
+can exercise it through markup. Read the signal directly in that one test instead, the way the
+`DogRateComponent` spec reads the derived rating:
 
 ```ts
-it('should compute a neutral delta class when there is no delta', async () => {
+it('should return 0 average rating if no dog is provided', async () => {
   // Arrange
-  fixture.componentRef.setInput('title', 'Net worth');
+  fixture.componentRef.setInput('currentDog', null);
 
   // Act
   await fixture.whenStable();
 
   // Assert
-  expect(component.deltaClassName()).toBe('text-slate-500 dark:text-slate-300');
+  expect(component.averageRating()).toBe(0);
 });
 ```
 
-This is the only sanctioned exception to "assert markup, don't reach into the class" — reach
-for it only after confirming, by reading the template, that the branch truly has no DOM path.
+Reach for this only after confirming, by reading the template, that the branch truly has no DOM
+path.
 
 ## Testing a container component
 
-A container provides its own store, which injects a service that injects `HttpClient` — so the
-test injector must supply HTTP. Provide the testing HTTP stack and the `SERVER_URL` token; a
-plain create-and-assert smoke test is usually enough for a container (the real logic lives in
-the store and is tested there).
+A container's real logic lives in its store and its events, which are tested on their own, so the
+container test only checks the wiring. Mock the local store (via `overrideComponent`), replace
+child components with `MockComponent(...)`, provide the router, and mock the `Dispatcher` — no
+HTTP stack is needed, because the store is mocked. `MyDogsComponent` forwards a delete to an event:
 
 ```ts
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { SERVER_URL } from '@money-tracker-workspace/shared/util-http';
+import { MockComponent, MockProvider } from 'ng-mocks';
+import { provideRouter } from '@angular/router';
+import { signal } from '@angular/core';
+import { MyDogsStore } from './my-dogs.store';
+import { SingleDogComponent } from '@dog-rating/dogs/ui';
+import { Dog, dogUserEvents } from '@dog-rating/dogs/domain';
+import { Dispatcher } from '@ngrx/signals/events';
 
-TestBed.configureTestingModule({
-  imports: [SearchComponent],
-  providers: [
-    provideHttpClient(),
-    provideHttpClientTesting(),
-    { provide: SERVER_URL, useValue: 'http://localhost/api/' },
-  ],
+beforeEach(async () => {
+  await TestBed.configureTestingModule({
+    imports: [MyDogsComponent, MockComponent(SingleDogComponent)],
+    providers: [
+      provideRouter([]),
+      MockProvider(Dispatcher, { dispatch: vi.fn() }),
+    ],
+  })
+    .overrideComponent(MyDogsComponent, {
+      set: { providers: [MockProvider(MyDogsStore, { myDogs: signal([]) })] },
+    })
+    .compileComponents();
+
+  fixture = TestBed.createComponent(MyDogsComponent);
+  component = fixture.componentInstance;
+  dispatcher = TestBed.inject(Dispatcher);
+});
+
+it('should dispatch a deleteDog event when a dog is deleted', async () => {
+  // Arrange
+  const mockDog = { id: '123', name: 'Buddy' } as Dog;
+  await fixture.whenStable();
+
+  // Act
+  component.deleteDog(mockDog);
+
+  // Assert
+  expect(dispatcher.dispatch).toHaveBeenCalledWith(dogUserEvents.deleteDog(mockDog));
 });
 ```

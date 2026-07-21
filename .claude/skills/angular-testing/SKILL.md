@@ -93,6 +93,19 @@ branches, functions and lines are all 100%. Treat every gap as one of exactly tw
 missing DOM-reachable test for a real branch, or the unreachable-`computed` exception in
 `references/testing-components.md` — never leave an uncovered line unexplained.
 
+Two config rules keep that 100% honest — hold them when creating or editing a lib's test setup:
+
+- **Every lib's `vite.config.mts` sets `coverage.include: ['src/**/*.ts']`.** Without it, the
+  v8 provider only sees files the specs import, so an untested file is invisible and the number
+  lies. `exclude` is only for files with genuinely nothing to instrument (`src/test-setup.ts`,
+  the public-API `src/index.ts`, `**/*.spec.ts`, and documented cases like interface-only
+  models) — never exclude a file just because covering it is inconvenient.
+- **The `test` target's `outputs` in `project.json` uses the `{workspaceRoot}` prefix**
+  (`{workspaceRoot}/coverage/libs/<path>`), not `{options.reportsDirectory}` — that option holds
+  a project-relative `../../../` path Nx resolves from the workspace root, landing outside the
+  repo. With the wrong output, cache hits replay green tests but silently drop the lib from the
+  combined coverage report.
+
 ## Where to put the logic you're testing (so it's testable)
 
 Testing pain is usually a design smell. Before writing an elaborate DOM/async test, check the

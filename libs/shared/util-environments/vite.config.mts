@@ -25,11 +25,14 @@ export default defineConfig(() => ({
     coverage: {
       reportsDirectory: '../../../coverage/libs/shared/util-environments',
       provider: 'v8' as const,
+      include: ['src/**/*.ts'],
       // Plain build-time config objects, swapped by Angular's fileReplacements —
       // no branching logic, and their single top-level statement isn't
       // instrumentable by v8 coverage (reports a false 0% with nothing to cover).
       exclude: [
         ...coverageConfigDefaults.exclude,
+        'src/test-setup.ts',
+        'src/index.ts',
         'src/lib/environment.ts',
         'src/lib/environment.prod.ts',
       ],

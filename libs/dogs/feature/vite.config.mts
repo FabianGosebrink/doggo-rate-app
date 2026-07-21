@@ -23,6 +23,16 @@ export default defineConfig(() => ({
     coverage: {
       reportsDirectory: '../../../coverage/libs/dogs/feature',
       provider: 'v8' as const,
+      include: ['src/**/*.ts'],
+      // Route configs are a single top-level declaration, which isn't
+      // instrumentable by v8 coverage (reports a false 0% with nothing to
+      // cover). The route wiring is asserted in dogs-routes.spec.ts.
+      exclude: [
+        'src/test-setup.ts',
+        'src/index.ts',
+        '**/*.spec.ts',
+        'src/lib/dogs-routes.ts',
+      ],
     },
   },
 }));

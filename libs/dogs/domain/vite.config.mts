@@ -23,6 +23,15 @@ export default defineConfig(() => ({
     coverage: {
       reportsDirectory: '../../../coverage/libs/dogs/domain',
       provider: 'v8' as const,
+      include: ['src/**/*.ts'],
+      // models/ holds interface-only files — no executable code, and v8
+      // coverage reports a false 0% with nothing to cover.
+      exclude: [
+        'src/test-setup.ts',
+        'src/index.ts',
+        '**/*.spec.ts',
+        'src/lib/models/**',
+      ],
     },
   },
 }));

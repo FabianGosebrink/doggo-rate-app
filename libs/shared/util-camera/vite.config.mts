@@ -23,6 +23,8 @@ export default defineConfig(() => ({
     coverage: {
       reportsDirectory: '../../../coverage/libs/shared/util-camera',
       provider: 'v8' as const,
+      include: ['src/**/*.ts'],
+      exclude: ['src/test-setup.ts', 'src/index.ts', '**/*.spec.ts'],
     },
   },
 }));

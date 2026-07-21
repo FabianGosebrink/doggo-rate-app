@@ -80,4 +80,4 @@ An Nx monorepo with enforced module boundaries: `apps/` contains the Angular hos
 
 ## Authors
 
-- [@FabianGosebrink](https://twitter.com/FabianGosebrink)
+- [Fabian Gosebrink](https://www.linkedin.com/in/fabian-gosebrink/)

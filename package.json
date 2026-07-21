@@ -60,6 +60,7 @@
     "@angular/cli": "21.2.13",
     "@angular/compiler-cli": "21.2.14",
     "@angular/language-service": "21.2.14",
+    "@electron/packager": "^20.0.3",
     "@eslint/js": "^9.8.0",
     "@nx/angular": "22.3.1",
     "@nx/devkit": "22.3.1",

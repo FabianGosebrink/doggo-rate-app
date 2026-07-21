@@ -84,7 +84,7 @@
     "@vitest/coverage-v8": "^4.0.0",
     "@vitest/ui": "^4.0.0",
     "angular-eslint": "^21.0.1",
-    "electron": "^39.2.7",
+    "electron": "^42.7.0",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^10.0.0",
     "eslint-plugin-playwright": "^1.6.2",

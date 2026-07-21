@@ -5,7 +5,9 @@ const OUTPUT_TEMP_PATH = '.temp/desktop';
 const OUTPUT_DIST_PATH = 'dist/desktop';
 const ICON_PATH = 'assets/desktop/icon';
 const DESKTOP_ASSETS = 'assets/desktop/*';
-const ELECTRON_VERSION = '27.0.4';
+// Package against the Electron version we develop with instead of a
+// hardcoded one that silently drifts on every dependency update.
+const ELECTRON_VERSION = require('electron/package.json').version;
 
 shell.echo('Start building desktop');
 
@@ -26,7 +28,7 @@ shell.cp('-r', `${DESKTOP_ASSETS}`, `${OUTPUT_TEMP_PATH}`);
 // BUILD DESKTOP
 console.log('build desktop');
 shell.exec(
-  `npx electron-packager ${OUTPUT_TEMP_PATH} --electronVersion=${ELECTRON_VERSION} --overwrite --icon=${ICON_PATH} --platform=win32,linux --out=${OUTPUT_DIST_PATH}`,
+  `npx @electron/packager ${OUTPUT_TEMP_PATH} --electronVersion=${ELECTRON_VERSION} --overwrite --icon=${ICON_PATH} --platform=win32,linux --out=${OUTPUT_DIST_PATH}`,
 );
 
 console.log('DONE');

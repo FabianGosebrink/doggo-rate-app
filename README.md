@@ -19,6 +19,7 @@ You can [**download the book for free**](https://offering.solutions/ebook-modern
 Want your own Angular application reviewed along the same principles? We offer [**Angular frontend audits**](https://offering.solutions/angular-frontend-audit/).
 
 <br clear="right">
+<br>
 
 ![App Screenshot](.github/app.png)
 

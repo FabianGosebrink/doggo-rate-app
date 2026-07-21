@@ -8,6 +8,18 @@ A demo application for uploading pictures of your dog and rate the Bois from zer
 ![Functions](https://img.shields.io/badge/functions-100%25-brightgreen.svg?style=flat)
 ![Lines](https://img.shields.io/badge/lines-100%25-brightgreen.svg?style=flat)
 
+## 📖 The Book
+
+<a href="https://offering.solutions/ebook-modern-angular-apps-ngrx/"><img src=".github/book-cover.jpg" alt="Book cover: Creating Modern Applications with Nx, Angular & NgRx Signal Store" align="right" width="220"></a>
+
+This application is the foundation of the book **Creating Modern Applications with Nx, Angular & NgRx Signal Store** — everything the book teaches about architecture, Nx workspaces, the NgRx Signal Store, code quality and testing is built and explained on this very codebase.
+
+You can [**download the book for free**](https://offering.solutions/ebook-modern-angular-apps-ngrx/).
+
+Want your own Angular application reviewed along the same principles? We offer [**Angular frontend audits**](https://offering.solutions/angular-frontend-audit/).
+
+<br clear="right">
+
 ![App Screenshot](.github/app.png)
 
 ## Features

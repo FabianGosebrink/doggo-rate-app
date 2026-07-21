@@ -24,6 +24,8 @@ export default defineConfig(() => ({
       reportsDirectory:
         '../../../coverage/libs/shared/util-platform-information',
       provider: 'v8' as const,
+      include: ['src/**/*.ts'],
+      exclude: ['src/test-setup.ts', 'src/index.ts', '**/*.spec.ts'],
     },
   },
 }));

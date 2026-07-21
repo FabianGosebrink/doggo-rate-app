@@ -8,7 +8,7 @@
   "targets": {
     "test": {
       "executor": "@nx/vitest:test",
-      "outputs": ["{options.reportsDirectory}"],
+      "outputs": ["{workspaceRoot}/coverage/libs/about/feature"],
       "options": {
         "reportsDirectory": "../../../coverage/libs/about/feature"
       }
